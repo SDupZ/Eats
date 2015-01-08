@@ -1,7 +1,6 @@
 package com.sdp.apps.eats;
 
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +8,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -60,7 +64,31 @@ public class MainActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+            String[] dummyData= {
+                    "My Cheap Kebab",
+                    "Some cool pizza deal",
+                    "Sushi Surprise",
+                    "Thai Turkey",
+                    "Lucious Lemons",
+                    "Edible Eats ",
+                    "Cool Cucumbers",
+                    "Food 0",
+                    "Food 1",
+                    "Food 2",
+                    "Food 3",
+            };
+
+            List<String> currentDeals = new ArrayList<String>(Arrays.asList(dummyData));
+
+            ArrayAdapter<String> dealsAdapter = new ArrayAdapter<String>(getActivity(),
+                    R.layout.list_item_deals, R.id.list_item_deals_textview, currentDeals);
+
+            ListView view = (ListView) rootView.findViewById(R.id.listview_deals);
+            view.setAdapter(dealsAdapter);
+
             return rootView;
         }
+
     }
 }
