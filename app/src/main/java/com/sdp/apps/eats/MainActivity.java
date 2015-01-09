@@ -1,5 +1,7 @@
 package com.sdp.apps.eats;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -8,8 +10,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,13 +61,14 @@ public class MainActivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
+        ArrayAdapter<String> dealsAdapter;
+
         public PlaceholderFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
             String[] dummyData= {
                     "My Cheap Kebab",
@@ -81,11 +86,22 @@ public class MainActivity extends ActionBarActivity {
 
             List<String> currentDeals = new ArrayList<String>(Arrays.asList(dummyData));
 
-            ArrayAdapter<String> dealsAdapter = new ArrayAdapter<String>(getActivity(),
+            dealsAdapter = new ArrayAdapter<String>(getActivity(),
                     R.layout.list_item_deals, R.id.list_item_deals_textview, currentDeals);
+
+            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
             ListView view = (ListView) rootView.findViewById(R.id.listview_deals);
             view.setAdapter(dealsAdapter);
+            view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String dealName = dealsAdapter.getItem(position);
+                    Intent detailActivity = new Intent(getActivity(), DetailActivity.class)
+                            .putExtra(Intent.EXTRA_TEXT, dealName);
+                    startActivity(detailActivity);
+                }
+            });
 
             return rootView;
         }
