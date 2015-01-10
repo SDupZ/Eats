@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +23,7 @@ import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
 
+    private static String DEBUG_TAG = "SDUPZ DEBUG";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +35,35 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Log.d(DEBUG_TAG, "onStart");
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Log.d(DEBUG_TAG, "onResume");
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        Log.d(DEBUG_TAG, "onPause");
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        Log.d(DEBUG_TAG, "onStop");
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        Log.d(DEBUG_TAG, "onDestroy");
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -87,7 +118,7 @@ public class MainActivity extends ActionBarActivity {
             List<String> currentDeals = new ArrayList<String>(Arrays.asList(dummyData));
 
             dealsAdapter = new ArrayAdapter<String>(getActivity(),
-                    R.layout.list_item_deals, R.id.list_item_deals_textview, currentDeals);
+                    R.layout.list_item_deals, R.id.list_item_buisness_name, currentDeals);
 
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
