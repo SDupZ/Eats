@@ -1,24 +1,10 @@
 package com.sdp.apps.eats;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * 	Main activity. First screen to be loaded when the app opens.
@@ -107,60 +93,4 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //----------------------------------------------------------------------------------------------
-    // On Create for main activity.
-    //----------------------------------------------------------------------------------------------
-    /**
-     * This is where the application loads. When the application is first started, the deals list
-     * will need to be updated from the server.
-     */
-
-    public static class DealsListFragment extends Fragment {
-
-        ArrayAdapter<String> dealsAdapter;
-
-        public DealsListFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-
-            String[] dummyData= {
-                    "My Cheap Kebab",
-                    "Some cool pizza deal",
-                    "Sushi Surprise",
-                    "Thai Turkey",
-                    "Lucious Lemons",
-                    "Edible Eats ",
-                    "Cool Cucumbers",
-                    "Food 0",
-                    "Food 1",
-                    "Food 2",
-                    "Food 3",
-            };
-
-            List<String> currentDeals = new ArrayList<String>(Arrays.asList(dummyData));
-
-            dealsAdapter = new ArrayAdapter<String>(getActivity(),
-                    R.layout.list_item_deals, R.id.list_item_buisness_name, currentDeals);
-
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
-            ListView view = (ListView) rootView.findViewById(R.id.listview_deals);
-            view.setAdapter(dealsAdapter);
-            view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String dealName = dealsAdapter.getItem(position);
-                    Intent detailActivity = new Intent(getActivity(), DetailActivity.class)
-                            .putExtra(Intent.EXTRA_TEXT, dealName);
-                    startActivity(detailActivity);
-                }
-            });
-
-            return rootView;
-        }
-
-    }
 }
