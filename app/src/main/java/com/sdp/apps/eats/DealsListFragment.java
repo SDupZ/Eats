@@ -101,10 +101,10 @@ public class DealsListFragment extends Fragment {
         return rootView;
     }
 
-    public class FetchDealsTask extends AsyncTask<Void, Void, Void> {
+    public class FetchDealsTask extends AsyncTask<Void, Void, String[]> {
 
         @Override
-        protected Void doInBackground(Void... params){
+        protected String[] doInBackground(Void... params){
             // These two need to be declared outside the try/catch
             // so that they can be closed in the finally block.
             HttpURLConnection urlConnection = null;
@@ -145,14 +145,6 @@ public class DealsListFragment extends Fragment {
                     return null;
                 }
                 dealsJsonStr = buffer.toString();
-
-                try {
-                    getDealsDataFromJson(dealsJsonStr);
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
-
-
             } catch (IOException e) {
                 Log.e("PlaceholderFragment", "Error ", e);
                 // If the code didn't successfully get the data, there's no point in attempting
@@ -171,9 +163,25 @@ public class DealsListFragment extends Fragment {
                     }
                 }
             }
+            try {
+                return getDealsDataFromJson(dealsJsonStr);
+            }catch(JSONException e){
+                e.printStackTrace();
+            }
+
             return null;
         }
 
+        @Override
+        protected void onPostExecute(String[] result) {
+            if(result != null){
+                dealsAdapter.clear();
+                for(String dealStr : result){
+                    Log.v("EATS APP", dealStr);
+                    dealsAdapter.add(dealStr);
+                }
+            }
+        }
 
         //------------------------------------------------------------------------------------------
         // JSon String Parsing Helper Methods
@@ -197,8 +205,9 @@ public class DealsListFragment extends Fragment {
                 price = dealsArray.getJSONArray(i).getString(2);
 
                 resultStrs[i] = name + " " + description + " " + price + " ";
+                Log.v("EATS APP", resultStrs[i]);
             }
-            return null;
+            return resultStrs;
 
         }
 
