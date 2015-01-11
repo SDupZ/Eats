@@ -15,6 +15,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -141,7 +145,14 @@ public class DealsListFragment extends Fragment {
                     return null;
                 }
                 dealsJsonStr = buffer.toString();
-                Log.v("EATS APP", "JSON string: " + dealsJsonStr);
+
+                try {
+                    getDealsDataFromJson(dealsJsonStr);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+
             } catch (IOException e) {
                 Log.e("PlaceholderFragment", "Error ", e);
                 // If the code didn't successfully get the data, there's no point in attempting
@@ -161,6 +172,34 @@ public class DealsListFragment extends Fragment {
                 }
             }
             return null;
+        }
+
+
+        //------------------------------------------------------------------------------------------
+        // JSon String Parsing Helper Methods
+        //------------------------------------------------------------------------------------------
+
+        private String[] getDealsDataFromJson(String dealsJsonStr) throws JSONException {
+
+            final String DUE_ROWS = "rows";
+
+            JSONObject dealsJson = new JSONObject(dealsJsonStr);
+            JSONArray dealsArray = dealsJson.getJSONArray("rows");
+
+            String[] resultStrs = new String[dealsArray.length()];
+            for (int i=0; i< dealsArray.length(); i++){
+                String name;
+                String description;
+                String price;
+
+                name = dealsArray.getJSONArray(i).getString(0);
+                description = dealsArray.getJSONArray(i).getString(1);
+                price = dealsArray.getJSONArray(i).getString(2);
+
+                resultStrs[i] = name + " " + description + " " + price + " ";
+            }
+            return null;
+
         }
 
     }
