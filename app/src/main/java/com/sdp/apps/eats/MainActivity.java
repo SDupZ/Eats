@@ -20,17 +20,37 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 	Main activity. First screen to be loaded when the app opens.
+ *
+ * 	Currently showing list of all deals. No distinction between price ranges. Also data
+ * 	is dummmy. Need to transfer to google fusion.
+ *
+ * 2015/01/07
+ * @author 	Simon du Preez
+ * @version 0.1
+ */
+
 
 public class MainActivity extends ActionBarActivity {
 
     private static String DEBUG_TAG = "SDUPZ DEBUG";
+
+    //----------------------------------------------------------------------------------------------
+    // On Create for main activity.
+    //----------------------------------------------------------------------------------------------
+    /**
+     * This is where the application loads. When the application is first started, the deals list
+     * will need to be updated from the server.
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, new DealsListFragment())
                     .commit();
         }
     }
@@ -87,14 +107,19 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //----------------------------------------------------------------------------------------------
+    // On Create for main activity.
+    //----------------------------------------------------------------------------------------------
     /**
-     * A placeholder fragment containing a simple view.
+     * This is where the application loads. When the application is first started, the deals list
+     * will need to be updated from the server.
      */
-    public static class PlaceholderFragment extends Fragment {
+
+    public static class DealsListFragment extends Fragment {
 
         ArrayAdapter<String> dealsAdapter;
 
-        public PlaceholderFragment() {
+        public DealsListFragment() {
         }
 
         @Override
