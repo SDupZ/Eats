@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import org.json.JSONArray;
@@ -34,7 +33,7 @@ import java.util.List;
  */
 public class DealsListFragment extends Fragment {
 
-    ArrayAdapter<String> dealsAdapter;
+    CustomDealArrayAdapter dealsAdapter;
 
     public DealsListFragment() {
     }
@@ -65,24 +64,18 @@ public class DealsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        String[] dummyData= {
-                "My Cheap Kebab",
-                "Some cool pizza deal",
-                "Sushi Surprise",
-                "Thai Turkey",
-                "Lucious Lemons",
-                "Edible Eats ",
-                "Cool Cucumbers",
-                "Food 0",
-                "Food 1",
-                "Food 2",
-                "Food 3",
-        };
+        Deal[] dummyData= {
+                new Deal("KEBAB KING", "My Cheap Kebab",10.0),
+                new Deal("Pizza dudes", "Some cool pizza deal",5.0),
+                new Deal("Sashimi", "Sushi Surprise",30.0),
+                new Deal("Thai Turkey", "My Cheap Kebab",20.0),
+                new Deal("Lucious Lemons", "My Cheap Kebab",4.0),
+                new Deal("Edible Eats", "My Cheap Kebab",3.0),
+         };
 
-        List<String> currentDeals = new ArrayList<String>(Arrays.asList(dummyData));
+        List<Deal> currentDeals = new ArrayList<Deal>(Arrays.asList(dummyData));
 
-        dealsAdapter = new ArrayAdapter<String>(getActivity(),
-                R.layout.list_item_deals, R.id.list_item_buisness_name, currentDeals);
+        dealsAdapter = new CustomDealArrayAdapter(getActivity(),currentDeals);
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
@@ -91,9 +84,9 @@ public class DealsListFragment extends Fragment {
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String dealName = dealsAdapter.getItem(position);
+                Deal deal = dealsAdapter.getItem(position);
                 Intent detailActivity = new Intent(getActivity(), DetailActivity.class)
-                        .putExtra(Intent.EXTRA_TEXT, dealName);
+                        .putExtra(Intent.EXTRA_TEXT, deal.getDescription());
                 startActivity(detailActivity);
             }
         });
@@ -101,10 +94,10 @@ public class DealsListFragment extends Fragment {
         return rootView;
     }
 
-    public class FetchDealsTask extends AsyncTask<Void, Void, String[]> {
+    public class FetchDealsTask extends AsyncTask<Void, Void, Deal[]> {
 
         @Override
-        protected String[] doInBackground(Void... params){
+        protected Deal[] doInBackground(Void... params){
             // These two need to be declared outside the try/catch
             // so that they can be closed in the finally block.
             HttpURLConnection urlConnection = null;
@@ -173,12 +166,11 @@ public class DealsListFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(String[] result) {
+        protected void onPostExecute(Deal[] result) {
             if(result != null){
                 dealsAdapter.clear();
-                for(String dealStr : result){
-                    Log.v("EATS APP", dealStr);
-                    dealsAdapter.add(dealStr);
+                for(Deal deal : result){
+                    dealsAdapter.add(deal);
                 }
             }
         }
@@ -187,27 +179,27 @@ public class DealsListFragment extends Fragment {
         // JSon String Parsing Helper Methods
         //------------------------------------------------------------------------------------------
 
-        private String[] getDealsDataFromJson(String dealsJsonStr) throws JSONException {
+        private Deal[] getDealsDataFromJson(String dealsJsonStr) throws JSONException {
 
             final String DUE_ROWS = "rows";
 
             JSONObject dealsJson = new JSONObject(dealsJsonStr);
             JSONArray dealsArray = dealsJson.getJSONArray("rows");
 
-            String[] resultStrs = new String[dealsArray.length()];
+            Deal[] resultDeals = new Deal[dealsArray.length()];
+
             for (int i=0; i< dealsArray.length(); i++){
                 String name;
                 String description;
-                String price;
+                double price;
 
                 name = dealsArray.getJSONArray(i).getString(0);
                 description = dealsArray.getJSONArray(i).getString(1);
-                price = dealsArray.getJSONArray(i).getString(2);
+                price = Double.parseDouble(dealsArray.getJSONArray(i).getString(2));
 
-                resultStrs[i] = name + " " + description + " " + price + " ";
-                Log.v("EATS APP", resultStrs[i]);
+                resultDeals[i] = new Deal(name,description, price);
             }
-            return resultStrs;
+            return resultDeals;
 
         }
 
