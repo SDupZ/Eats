@@ -8,4 +8,8 @@
     <color name="bgnd_color_start">#2F3540</color>
     <color name="bgnd_color_end">#111317</color>
 
+    <color name="color_5">#ffffd989</color>
+    <color name="color_10">#ffaaffaa</color>
+    <color name="color_15">#ff8da9ff</color>
+
     </resources>

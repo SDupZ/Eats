@@ -38,18 +38,16 @@ public class MainFragment extends Fragment  {
 
         final int[] dealNumbers ={5,10,20};
         String[] dealItems= {
-                "Deals Under $5",
-                "Deals Under $10",
-                "Deals Under $20",
+                "5",
+                "10",
+                "15",
         };
 
         List<String> currentDeals = new ArrayList<String>(Arrays.asList(dealItems));
 
-        ArrayAdapter<String> menuAdapter =
-            new ArrayAdapter<String>(
+        CustomMainViewAdapter menuAdapter =
+            new CustomMainViewAdapter(
                     getActivity(),
-                    R.layout.list_item_main,
-                    R.id.listview_main_text,
                     currentDeals);
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
