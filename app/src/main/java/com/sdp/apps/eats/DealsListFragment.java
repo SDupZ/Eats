@@ -77,7 +77,7 @@ public class DealsListFragment extends Fragment {
 
         dealsAdapter = new CustomDealArrayAdapter(getActivity(),currentDeals);
 
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_list_deals, container, false);
 
         ListView view = (ListView) rootView.findViewById(R.id.listview_deals);
         view.setAdapter(dealsAdapter);
