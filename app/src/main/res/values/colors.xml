@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Generic Colors -->
     <color name="grey">#cccccc</color>
     <color name="white">#FFFFFF</color>
     <color name="light_blue">#ff64c2f4</color>
 
+    <!-- Color gradient for background-->
     <color name="bgnd_color_start">#2F3540</color>
     <color name="bgnd_color_end">#111317</color>
 
+    <!-- Colors for the color coding-->
     <color name="color_5">#ffffd989</color>
     <color name="color_10">#ffaaffaa</color>
     <color name="color_15">#ff8da9ff</color>
 
+    <!-- Action Bar Color -->
+    <color name="actionbar_color">#ff8288c2</color>
+
+    <color name="main_transparent_black">#64000000</color>
     </resources>

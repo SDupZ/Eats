@@ -5,6 +5,25 @@
     tools:context=".MainActivity$PlaceholderFragment"
     android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
+        android:paddingLeft="35dp"
+        android:paddingRight="35dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/ic_logo"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cheap Deals EveryDay!"
+        android:padding="2dp"
+        android:textSize="@dimen/abc_text_size_subtitle_material_toolbar"
+        android:gravity="center_horizontal"
+        android:background="@color/main_transparent_black"/>
+
     <ListView
         android:id="@+id/listview_main"
         android:layout_width="match_parent"
