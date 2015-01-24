@@ -10,8 +10,6 @@
     <style name="ActionBar.Solid.Eats"
         parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="background">@color/actionbar_color</item>
-        <item name="displayOptions">useLogo|showHome</item>
-        <item name="logo">@drawable/ic_logo</item>
     </style>
 
     <style name="ActionBar.Solid.Eats.MainActivity"
