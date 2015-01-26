@@ -31,8 +31,11 @@ public class Deal {
         this.description = description;
     }
 
-    public double getPrice() {
-        return price;
+    public String getPrice() {
+        if(price == (long) price)
+            return String.format("%d",(long)price);
+        else
+            return String.format("%s",price);
     }
 
     public void setPrice(double price) {
