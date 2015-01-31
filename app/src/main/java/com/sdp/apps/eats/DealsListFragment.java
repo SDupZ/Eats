@@ -35,14 +35,15 @@ import java.util.List;
 public class DealsListFragment extends Fragment {
 
     CustomDealArrayAdapter dealsAdapter;
-
-
+    int dealCostLimit;
     DisplayImageOptions options;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        dealCostLimit = 100;
 
         options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.ic_stub)
@@ -87,6 +88,12 @@ public class DealsListFragment extends Fragment {
                 new Deal("Lucious Lemons", "My Cheap Kebab",4.0, null),
                 new Deal("Edible Eats", "My Cheap Kebab",3.0, null)
          };*/
+        Intent intent =  getActivity().getIntent();
+
+        if(intent != null && intent.hasExtra(Intent.EXTRA_TEXT)){
+            dealCostLimit = Integer.parseInt(intent.getStringExtra(Intent.EXTRA_TEXT));
+            Log.v("EATS", "" + dealCostLimit);
+        }
 
         List<Deal> currentDeals = new ArrayList<Deal>();
 
@@ -219,7 +226,9 @@ public class DealsListFragment extends Fragment {
             if(result != null){
                 dealsAdapter.clear();
                 for(Deal deal : result){
-                    dealsAdapter.add(deal);
+                    if(Double.parseDouble(deal.getPrice()) <= dealCostLimit && Double.parseDouble(deal.getPrice()) > (dealCostLimit-5)) {
+                        dealsAdapter.add(deal);
+                    }
                 }
             }
         }

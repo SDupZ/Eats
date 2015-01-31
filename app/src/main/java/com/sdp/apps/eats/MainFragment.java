@@ -9,8 +9,6 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -36,7 +34,7 @@ public class MainFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final int[] dealNumbers ={5,10,20};
+        final int[] dealNumbers ={5,10,15};
         String[] dealItems= {
                 "5",
                 "10",
@@ -58,7 +56,7 @@ public class MainFragment extends Fragment  {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent detailActivity = new Intent(getActivity(), ListDealsActivity.class)
-                        .putExtra(Intent.EXTRA_TEXT, "" +dealNumbers[position]);
+                        .putExtra(Intent.EXTRA_TEXT, "" + dealNumbers[position]);
                 startActivity(detailActivity);
             }
         });
