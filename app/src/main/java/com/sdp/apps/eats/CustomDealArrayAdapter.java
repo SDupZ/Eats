@@ -8,14 +8,20 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import java.util.List;
 
 /**
  * Created by Simon on 12/01/2015.
  */
 public class CustomDealArrayAdapter extends ArrayAdapter<Deal> {
-    public CustomDealArrayAdapter(Context context, List<Deal> deals) {
+    DisplayImageOptions options;
+
+    public CustomDealArrayAdapter(Context context, List<Deal> deals, DisplayImageOptions options) {
         super(context, 0, deals);
+        this.options = options;
     }
 
     @Override
@@ -39,11 +45,13 @@ public class CustomDealArrayAdapter extends ArrayAdapter<Deal> {
         description.setText(deal.getDescription());
         price.setText("$" + deal.getPrice());
 
-        if (deal.getPhoto() == null) {
+        ImageLoader.getInstance().displayImage(deal.getPhotoURL(), photo, options);
+
+        /*if (deal.getPhoto() == null) {
             photo.setImageDrawable(convertView.getResources().getDrawable(R.drawable.ic_launcher));
         }else {
             photo.setImageBitmap(deal.getPhoto());
-        }
+        }*/
 
         // Return the completed view to render on screen
         return convertView;

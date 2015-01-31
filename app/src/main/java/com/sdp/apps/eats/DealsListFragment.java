@@ -1,8 +1,6 @@
 package com.sdp.apps.eats;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,12 +14,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.entity.BufferedHttpEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,11 +25,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -45,13 +36,21 @@ public class DealsListFragment extends Fragment {
 
     CustomDealArrayAdapter dealsAdapter;
 
-    public DealsListFragment() {
-    }
+
+    DisplayImageOptions options;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.drawable.ic_stub)
+                .showImageOnFail(R.drawable.ic_error)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .considerExifParams(true)
+                .build();
     }
 
     @Override
@@ -59,6 +58,12 @@ public class DealsListFragment extends Fragment {
         inflater.inflate(R.menu.dealslistfragement, menu);
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        FetchDealsTask dealsTask =  new FetchDealsTask();
+        dealsTask.execute();
+    }
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
 
@@ -74,21 +79,23 @@ public class DealsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Deal[] dummyData= {
+        /*Deal[] dummyData= {
                 new Deal("KEBAB KING", "My Cheap Kebab" , 10.0, null),
                 new Deal("Pizza dudes", "Some cool pizza deal",5.0, null),
                 new Deal("Sashimi", "Sushi Surprise",30.0, null),
                 new Deal("Thai Turkey", "My Cheap Kebab",20.0, null),
                 new Deal("Lucious Lemons", "My Cheap Kebab",4.0, null),
                 new Deal("Edible Eats", "My Cheap Kebab",3.0, null)
-         };
-        List<Deal> currentDeals = new ArrayList<Deal>(Arrays.asList(dummyData));
+         };*/
 
-        dealsAdapter = new CustomDealArrayAdapter(getActivity(),currentDeals);
+        List<Deal> currentDeals = new ArrayList<Deal>();
+
+        dealsAdapter = new CustomDealArrayAdapter(getActivity(),currentDeals, options);
 
         View rootView = inflater.inflate(R.layout.fragment_list_deals, container, false);
 
         ListView view = (ListView) rootView.findViewById(R.id.listview_deals);
+
         view.setAdapter(dealsAdapter);
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -167,6 +174,7 @@ public class DealsListFragment extends Fragment {
             }
             try {
                 Deal[] myDeals = getDealsDataFromJson(dealsJsonStr);
+                /*
                 for (Deal aDeal: myDeals){
                     Log.v("EATS", "TEST" + aDeal.getBusinessName() + aDeal.getPhotoURL());
                     if (aDeal.getPhotoURL() != null) {
@@ -197,7 +205,7 @@ public class DealsListFragment extends Fragment {
                             e.printStackTrace();
                         }
                     }
-                }
+                }*/
                 return myDeals;
             }catch(JSONException e){
                 e.printStackTrace();
