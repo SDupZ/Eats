@@ -1,6 +1,8 @@
 package com.sdp.apps.eats;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +16,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.entity.BufferedHttpEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,6 +31,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,14 +75,13 @@ public class DealsListFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         Deal[] dummyData= {
-                new Deal("KEBAB KING", "My Cheap Kebab",10.0),
-                new Deal("Pizza dudes", "Some cool pizza deal",5.0),
-                new Deal("Sashimi", "Sushi Surprise",30.0),
-                new Deal("Thai Turkey", "My Cheap Kebab",20.0),
-                new Deal("Lucious Lemons", "My Cheap Kebab",4.0),
-                new Deal("Edible Eats", "My Cheap Kebab",3.0),
+                new Deal("KEBAB KING", "My Cheap Kebab" , 10.0, null),
+                new Deal("Pizza dudes", "Some cool pizza deal",5.0, null),
+                new Deal("Sashimi", "Sushi Surprise",30.0, null),
+                new Deal("Thai Turkey", "My Cheap Kebab",20.0, null),
+                new Deal("Lucious Lemons", "My Cheap Kebab",4.0, null),
+                new Deal("Edible Eats", "My Cheap Kebab",3.0, null)
          };
-
         List<Deal> currentDeals = new ArrayList<Deal>(Arrays.asList(dummyData));
 
         dealsAdapter = new CustomDealArrayAdapter(getActivity(),currentDeals);
@@ -157,12 +166,44 @@ public class DealsListFragment extends Fragment {
                 }
             }
             try {
-                return getDealsDataFromJson(dealsJsonStr);
+                Deal[] myDeals = getDealsDataFromJson(dealsJsonStr);
+                for (Deal aDeal: myDeals){
+                    Log.v("EATS", "TEST" + aDeal.getBusinessName() + aDeal.getPhotoURL());
+                    if (aDeal.getPhotoURL() != null) {
+                        try {
+                            URL url = new URL(aDeal.getPhotoURL());
+                            HttpGet httpRequest = null;
+                            httpRequest = new HttpGet(url.toURI());
+
+                            HttpClient httpclient = new DefaultHttpClient();
+                            HttpResponse response = (HttpResponse) httpclient
+                                    .execute(httpRequest);
+
+                            HttpEntity entity = response.getEntity();
+                            BufferedHttpEntity b_entity = new BufferedHttpEntity(entity);
+                            InputStream input = b_entity.getContent();
+
+                            Bitmap bitmap = BitmapFactory.decodeStream(input);
+
+                            aDeal.setPhoto(bitmap);
+                        } catch (MalformedURLException e){
+                            aDeal.setPhoto(null);
+                            e.printStackTrace();
+                        } catch (URISyntaxException e) {
+                            aDeal.setPhoto(null);
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            aDeal.setPhoto(null);
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                return myDeals;
             }catch(JSONException e){
                 e.printStackTrace();
+                return null;
             }
 
-            return null;
         }
 
         @Override
@@ -192,12 +233,14 @@ public class DealsListFragment extends Fragment {
                 String name;
                 String description;
                 double price;
+                String photoURL;
 
                 name = dealsArray.getJSONArray(i).getString(0);
                 description = dealsArray.getJSONArray(i).getString(1);
                 price = Double.parseDouble(dealsArray.getJSONArray(i).getString(2));
+                photoURL = dealsArray.getJSONArray(i).getString(5).trim();
 
-                resultDeals[i] = new Deal(name,description, price);
+                resultDeals[i] = new Deal(name,description, price, photoURL);
             }
             return resultDeals;
 

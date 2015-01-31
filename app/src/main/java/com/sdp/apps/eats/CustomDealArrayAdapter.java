@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -30,12 +31,19 @@ public class CustomDealArrayAdapter extends ArrayAdapter<Deal> {
         TextView businessName = (TextView) convertView.findViewById(R.id.list_item_buisness_name);
         TextView description = (TextView) convertView.findViewById(R.id.list_item_small_deal_description);
         TextView price = (TextView) convertView.findViewById(R.id.list_item_price);
+        ImageView photo = (ImageView) convertView.findViewById(R.id.list_item_image);
 
 
         // Populate the data into the template view using the data object
         businessName.setText(deal.getBusinessName());
         description.setText(deal.getDescription());
         price.setText("$" + deal.getPrice());
+
+        if (deal.getPhoto() == null) {
+            photo.setImageDrawable(convertView.getResources().getDrawable(R.drawable.ic_launcher));
+        }else {
+            photo.setImageBitmap(deal.getPhoto());
+        }
 
         // Return the completed view to render on screen
         return convertView;
