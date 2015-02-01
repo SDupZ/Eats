@@ -60,6 +60,7 @@ public class DealsListFragment extends Fragment {
             dealCostLimit = savedInstanceState.getInt("dealPrice");
             Log.v("EATS", "STATE Resumed" + dealCostLimit);
         }
+
     }
 
     @Override
@@ -121,6 +122,10 @@ public class DealsListFragment extends Fragment {
 
         if(intent != null && intent.hasExtra(Intent.EXTRA_TEXT)){
             dealCostLimit = Integer.parseInt(intent.getStringExtra(Intent.EXTRA_TEXT));
+
+            SharedPreferences.Editor editor = this.settings.edit();
+            editor.putInt("dealCost", this.dealCostLimit);
+            editor.commit();
         }
 
         List<Deal> currentDeals = new ArrayList<Deal>();
