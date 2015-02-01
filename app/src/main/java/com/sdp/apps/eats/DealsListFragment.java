@@ -1,8 +1,10 @@
 package com.sdp.apps.eats;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,13 +40,14 @@ public class DealsListFragment extends Fragment {
     int dealCostLimit;
     DisplayImageOptions options;
 
+    private SharedPreferences settings;
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        dealCostLimit = 100;
-
+        settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
         options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.ic_stub)
                 .showImageOnFail(R.drawable.ic_error)
@@ -52,6 +55,11 @@ public class DealsListFragment extends Fragment {
                 .cacheOnDisk(true)
                 .considerExifParams(true)
                 .build();
+
+        if (savedInstanceState != null){
+            dealCostLimit = savedInstanceState.getInt("dealPrice");
+            Log.v("EATS", "STATE Resumed" + dealCostLimit);
+        }
     }
 
     @Override
@@ -62,9 +70,24 @@ public class DealsListFragment extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
+
+        settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        dealCostLimit = settings.getInt("dealCost", dealCostLimit);
+
         FetchDealsTask dealsTask =  new FetchDealsTask();
         dealsTask.execute();
     }
+
+    public void onStop()
+    {
+        super.onStop();
+
+        SharedPreferences.Editor editor = this.settings.edit();
+        editor.putInt("dealCost", this.dealCostLimit);
+        editor.commit();
+    }
+
+
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
 
@@ -74,6 +97,12 @@ public class DealsListFragment extends Fragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        savedInstanceState.putInt("dealPrice",dealCostLimit);
+        Log.v("EATS", "STATE SAVED");
     }
 
     @Override
@@ -92,7 +121,6 @@ public class DealsListFragment extends Fragment {
 
         if(intent != null && intent.hasExtra(Intent.EXTRA_TEXT)){
             dealCostLimit = Integer.parseInt(intent.getStringExtra(Intent.EXTRA_TEXT));
-            Log.v("EATS", "" + dealCostLimit);
         }
 
         List<Deal> currentDeals = new ArrayList<Deal>();
@@ -109,7 +137,7 @@ public class DealsListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Deal deal = dealsAdapter.getItem(position);
                 Intent detailActivity = new Intent(getActivity(), DetailActivity.class)
-                        .putExtra(Intent.EXTRA_TEXT, deal.getDescription());
+                        .putExtra("Deal", deal);
                 startActivity(detailActivity);
             }
         });

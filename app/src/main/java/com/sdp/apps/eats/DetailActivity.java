@@ -9,6 +9,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 
 public class DetailActivity extends ActionBarActivity {
@@ -61,9 +65,19 @@ public class DetailActivity extends ActionBarActivity {
             Intent intent = getActivity().getIntent();
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
-            if(intent != null && intent.hasExtra(Intent.EXTRA_TEXT)){
-                String detailString = intent.getStringExtra(Intent.EXTRA_TEXT);
-                //((TextView) rootView.findViewById(R.id.detail_text)).setText(detailString);
+            if(intent != null && intent.hasExtra("Deal")){
+                Deal deal = (Deal) intent.getParcelableExtra("Deal");
+
+                ImageView image = (ImageView) rootView.findViewById(R.id.detail_image);
+                TextView name = (TextView) rootView.findViewById(R.id.detail_name);
+                TextView desc = (TextView) rootView.findViewById(R.id.detail_desc);
+                TextView price = (TextView) rootView.findViewById(R.id.detail_price);
+
+                ImageLoader.getInstance().displayImage(deal.getPhotoURL(), image);
+                name.setText(deal.getBusinessName());
+                desc.setText(deal.getDescription());
+                price.setText(deal.getPrice());
+
             }
             return rootView;
         }
