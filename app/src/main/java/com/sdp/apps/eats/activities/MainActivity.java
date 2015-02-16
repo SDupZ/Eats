@@ -1,4 +1,4 @@
-package com.sdp.apps.eats;
+package com.sdp.apps.eats.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -7,6 +7,8 @@ import android.view.Menu;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.sdp.apps.eats.fragments.MainFragment;
+import com.sdp.apps.eats.R;
 
 /**
  * 	Main activity. First screen to be loaded when the app opens.

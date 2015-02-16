@@ -1,4 +1,4 @@
-package com.sdp.apps.eats;
+package com.sdp.apps.eats.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.sdp.apps.eats.Deal;
+import com.sdp.apps.eats.R;
 
 
 public class DetailActivity extends ActionBarActivity {

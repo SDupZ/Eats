@@ -1,4 +1,4 @@
-package com.sdp.apps.eats;
+package com.sdp.apps.eats.adapters;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.sdp.apps.eats.R;
 
 import java.util.List;
 

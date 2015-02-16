@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.sdp.apps.eats.DetailActivity$PlaceholderFragment">
+    tools:context="com.sdp.apps.eats.activities.DetailActivity$PlaceholderFragment">
 
     <ImageView
         android:id="@+id/detail_image"

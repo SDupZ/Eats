@@ -1,4 +1,4 @@
-package com.sdp.apps.eats;
+package com.sdp.apps.eats.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.sdp.apps.eats.Deal;
+import com.sdp.apps.eats.R;
 
 import java.util.List;
 

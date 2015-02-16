@@ -1,4 +1,4 @@
-package com.sdp.apps.eats;
+package com.sdp.apps.eats.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.sdp.apps.eats.adapters.CustomMainViewAdapter;
+import com.sdp.apps.eats.R;
+import com.sdp.apps.eats.activities.ListDealsActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;

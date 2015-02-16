@@ -1,10 +1,12 @@
-package com.sdp.apps.eats;
+package com.sdp.apps.eats.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.sdp.apps.eats.fragments.DealsListFragment;
+import com.sdp.apps.eats.R;
 
 /**
  * Created by Simon on 21/01/2015.

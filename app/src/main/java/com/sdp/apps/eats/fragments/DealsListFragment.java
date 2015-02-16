@@ -1,4 +1,4 @@
-package com.sdp.apps.eats;
+package com.sdp.apps.eats.fragments;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +17,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.sdp.apps.eats.adapters.CustomDealArrayAdapter;
+import com.sdp.apps.eats.Deal;
+import com.sdp.apps.eats.R;
+import com.sdp.apps.eats.activities.DetailActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,20 +37,27 @@ import java.util.List;
 
 /**
  * Created by Simon on 11/01/2015.
+ *
+ * Fragment containing a list populated with the relevant deals. Eg. If set to display $5 deals
+ * it will populate with the deals that are $5 or under
  */
+
 public class DealsListFragment extends Fragment {
+    private CustomDealArrayAdapter dealsAdapter;        //Adapter for each deal
+    private int dealCostLimit;                          //The current cost filter.(Eg 5 dollars)
 
-    CustomDealArrayAdapter dealsAdapter;
-    int dealCostLimit;
-    DisplayImageOptions options;
+    DisplayImageOptions options;                        //Options for 3rd party image loader
+    private SharedPreferences settings;                 //Shared Prefs
 
-    private SharedPreferences settings;
-
+    //----------------------------------------------------------------------------------------------
+    // Oncreate for this activity.
+    //----------------------------------------------------------------------------------------------
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
+        //!!!------------{
         settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
         options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.ic_stub)
@@ -60,7 +71,7 @@ public class DealsListFragment extends Fragment {
             dealCostLimit = savedInstanceState.getInt("dealPrice");
             Log.v("EATS", "STATE Resumed" + dealCostLimit);
         }
-
+        //!!!------------}
     }
 
     @Override
@@ -68,17 +79,17 @@ public class DealsListFragment extends Fragment {
         inflater.inflate(R.menu.dealslistfragement, menu);
     }
 
+    //!!!------------{
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
 
         settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
         dealCostLimit = settings.getInt("dealCost", dealCostLimit);
 
-        FetchDealsTask dealsTask =  new FetchDealsTask();
+        FetchDealsTask dealsTask = new FetchDealsTask();
         dealsTask.execute();
     }
-
     public void onStop()
     {
         super.onStop();
@@ -87,8 +98,11 @@ public class DealsListFragment extends Fragment {
         editor.putInt("dealCost", this.dealCostLimit);
         editor.commit();
     }
+    //!!!------------}
 
-
+    //----------------------------------------------------------------------------------------------
+    // onOptionsItemSelected
+    //----------------------------------------------------------------------------------------------
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
 
@@ -100,24 +114,21 @@ public class DealsListFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    //!!!------------{
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
         savedInstanceState.putInt("dealPrice",dealCostLimit);
         Log.v("EATS", "STATE SAVED");
     }
+    //!!!------------}
 
+    //----------------------------------------------------------------------------------------------
+    // Creates and returns view hierachy associated with the fragment
+    //----------------------------------------------------------------------------------------------
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        /*Deal[] dummyData= {
-                new Deal("KEBAB KING", "My Cheap Kebab" , 10.0, null),
-                new Deal("Pizza dudes", "Some cool pizza deal",5.0, null),
-                new Deal("Sashimi", "Sushi Surprise",30.0, null),
-                new Deal("Thai Turkey", "My Cheap Kebab",20.0, null),
-                new Deal("Lucious Lemons", "My Cheap Kebab",4.0, null),
-                new Deal("Edible Eats", "My Cheap Kebab",3.0, null)
-         };*/
         Intent intent =  getActivity().getIntent();
 
         if(intent != null && intent.hasExtra(Intent.EXTRA_TEXT)){
@@ -150,6 +161,9 @@ public class DealsListFragment extends Fragment {
         return rootView;
     }
 
+    //----------------------------------------------------------------------------------------------
+    // Creates and returns view hierachy associated with the fragment
+    //----------------------------------------------------------------------------------------------
     public class FetchDealsTask extends AsyncTask<Void, Void, Deal[]> {
 
         @Override
