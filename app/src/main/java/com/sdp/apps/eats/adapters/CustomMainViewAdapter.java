@@ -1,7 +1,6 @@
 package com.sdp.apps.eats.adapters;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,61 +15,44 @@ import java.util.List;
 /**
  * Created by Simon on 12/01/2015.
  */
-public class CustomMainViewAdapter extends ArrayAdapter<String> {
+public class CustomMainViewAdapter extends ArrayAdapter<Integer> {
     private static final String mainMenuString = "Deals Under $";
 
-    public CustomMainViewAdapter(Context context, List<String> deals) {
+    //Circle colors and the corresponding base color.
+    private static final int[][] imageAndColorResources = {
+            {   R.drawable.circle_red       , R.color.color_eats_red    },
+            {   R.drawable.circle_green     , R.color.color_eats_green  },
+            {   R.drawable.circle_purple    , R.color.color_eats_purple }
+    };
+
+    public CustomMainViewAdapter(Context context, List<Integer> deals) {
         super(context, 0, deals);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // Get the data item for this position
-        String cost = getItem(position);
+        // Get the data item for this position. Transffered as extra text.
+        int priceFilter = getItem(position);
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_main, parent, false);
         }
 
-        TextView mainImage       = (TextView) convertView.findViewById(R.id.listview_main_textimage);
-        TextView mainText      = (TextView) convertView.findViewById(R.id.listview_main_text);
-        ImageView mainRectangle = (ImageView) convertView.findViewById(R.id.listview_main_color_tag_rect);
+        TextView listItemImage      = (TextView) convertView.findViewById(R.id.listview_main_textimage);
+        TextView listItemText       = (TextView) convertView.findViewById(R.id.listview_main_text);
+        ImageView listItemRectangle =
+                (ImageView) convertView.findViewById(R.id.listview_main_color_tag_rect);
 
         // Populate the data into the template view using the data object
-        mainText.setText(mainMenuString + cost);
-        mainImage.setText("$" + cost);
-        mainImage.setBackground(convertView.getResources().getDrawable(getIconForMainMenu(cost)));
-        //getColorForMainMenu(cost)
-        mainRectangle.setBackgroundColor(convertView.getResources().getColor(getColorForMainMenu(cost)));
-        // Return the completed view to render on screen
+        listItemText.setText(mainMenuString + priceFilter);
+        listItemImage.setText("$" + priceFilter);
+
+        listItemImage.setBackground(convertView.getResources().getDrawable(
+                imageAndColorResources[position][0]));
+        listItemRectangle.setBackgroundColor(convertView.getResources().getColor(
+                imageAndColorResources[position][1]));
+
         return convertView;
     }
-
-    private int getIconForMainMenu(String cost){
-        switch (cost){
-            case "5":
-                return R.drawable.circle_5;
-            case "10":
-                return R.drawable.circle_10;
-            case "15":
-                return R.drawable.circle_15;
-            default:
-                return R.drawable.circle_5;
-        }
-    }
-
-    private int getColorForMainMenu(String cost){
-        switch (cost){
-            case "5":
-                return R.color.color_5;
-            case "10":
-                return R.color.color_10;
-            case "15":
-                return R.color.color_15;
-            default:
-                return R.color.white;
-        }
-    }
-
 }

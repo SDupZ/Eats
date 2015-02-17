@@ -16,7 +16,6 @@ import com.sdp.apps.eats.R;
 import com.sdp.apps.eats.activities.DealListActivity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -24,6 +23,13 @@ import java.util.List;
  * Created by Simon on 21/01/2015.
  */
 public class MainFragment extends Fragment  {
+
+    //This is a Integer as the filter will use a Integer.
+    private static final List<Integer> priceOptionsMainMenu = new ArrayList<Integer>(){{
+            add(new Integer(5));
+            add(new Integer(10));
+            add(new Integer(15));}};
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -37,30 +43,16 @@ public class MainFragment extends Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        final int[] dealNumbers ={5,10,15};
-        String[] dealItems= {
-                "5",
-                "10",
-                "15",
-        };
-
-        List<String> currentDeals = new ArrayList<String>(Arrays.asList(dealItems));
-
-        CustomMainViewAdapter menuAdapter =
-            new CustomMainViewAdapter(
-                    getActivity(),
-                    currentDeals);
+        CustomMainViewAdapter menuAdapter = new CustomMainViewAdapter(getActivity(),priceOptionsMainMenu);
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
         ListView view = (ListView) rootView.findViewById(R.id.listview_main);
         view.setAdapter(menuAdapter);
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent detailActivity = new Intent(getActivity(), DealListActivity.class)
-                        .putExtra(Intent.EXTRA_TEXT, "" + dealNumbers[position]);
+                        .putExtra(Intent.EXTRA_TEXT, "" + priceOptionsMainMenu.get(position));
                 startActivity(detailActivity);
             }
         });

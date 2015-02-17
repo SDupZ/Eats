@@ -44,7 +44,7 @@ import java.util.List;
 
 public class DealsListFragment extends Fragment {
     private CustomDealArrayAdapter dealsAdapter;        //Adapter for each deal
-    private int dealCostLimit;                          //The current cost filter.(Eg 5 dollars)
+    private int priceFilter;                          //The current cost filter.(Eg 5 dollars)
 
     DisplayImageOptions options;                        //Options for 3rd party image loader
     private SharedPreferences settings;                 //Shared Prefs
@@ -68,8 +68,8 @@ public class DealsListFragment extends Fragment {
                 .build();
 
         if (savedInstanceState != null){
-            dealCostLimit = savedInstanceState.getInt("dealPrice");
-            Log.v("EATS", "STATE Resumed" + dealCostLimit);
+            priceFilter = savedInstanceState.getInt("dealPrice");
+            Log.v("EATS", "STATE Resumed" + priceFilter);
         }
         //!!!------------}
     }
@@ -80,22 +80,22 @@ public class DealsListFragment extends Fragment {
     }
 
     //!!!------------{
+
     @Override
     public void onResume() {
         super.onResume();
 
         settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        dealCostLimit = settings.getInt("dealCost", dealCostLimit);
+        priceFilter = settings.getInt("priceFilter", priceFilter);
 
-        FetchDealsTask dealsTask = new FetchDealsTask();
-        dealsTask.execute();
+        updateDeals();
     }
+
     public void onStop()
     {
         super.onStop();
-
         SharedPreferences.Editor editor = this.settings.edit();
-        editor.putInt("dealCost", this.dealCostLimit);
+        editor.putFloat("priceFilter", this.priceFilter);
         editor.commit();
     }
     //!!!------------}
@@ -113,8 +113,7 @@ public class DealsListFragment extends Fragment {
         int id = item.getItemId();
 
         if(id== R.id.action_refresh){
-            FetchDealsTask dealsTask =  new FetchDealsTask();
-            dealsTask.execute();
+            updateDeals();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -123,7 +122,7 @@ public class DealsListFragment extends Fragment {
     //!!!------------{
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
-        savedInstanceState.putInt("dealPrice",dealCostLimit);
+        savedInstanceState.putInt("dealPrice",priceFilter);
         Log.v("EATS", "STATE SAVED");
     }
     //!!!------------}
@@ -138,10 +137,10 @@ public class DealsListFragment extends Fragment {
         Intent intent =  getActivity().getIntent();
 
         if(intent != null && intent.hasExtra(Intent.EXTRA_TEXT)){
-            dealCostLimit = Integer.parseInt(intent.getStringExtra(Intent.EXTRA_TEXT));
+            priceFilter = Integer.parseInt(intent.getStringExtra(Intent.EXTRA_TEXT));
 
             SharedPreferences.Editor editor = this.settings.edit();
-            editor.putInt("dealCost", this.dealCostLimit);
+            editor.putInt("priceFilter", this.priceFilter);
             editor.commit();
         }
 
@@ -287,7 +286,7 @@ public class DealsListFragment extends Fragment {
             if(result != null){
                 dealsAdapter.clear();
                 for(Deal deal : result){
-                    if(Double.parseDouble(deal.getPrice()) <= dealCostLimit && Double.parseDouble(deal.getPrice()) > (dealCostLimit-5)) {
+                    if(Double.parseDouble(deal.getPrice()) <= priceFilter && Double.parseDouble(deal.getPrice()) > (priceFilter-5)) {
                         dealsAdapter.add(deal);
                     }
                 }

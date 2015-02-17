@@ -11,9 +11,9 @@
     <color name="bgnd_color_end">#111317</color>
 
     <!-- Colors for the color coding-->
-    <color name="color_5">#ffffd989</color>
-    <color name="color_10">#ffaaffaa</color>
-    <color name="color_15">#ff8da9ff</color>
+    <color name="color_eats_red">#ffffd989</color>
+    <color name="color_eats_green">#ffaaffaa</color>
+    <color name="color_eats_purple">#ff8da9ff</color>
 
     <!-- Action Bar Color -->
     <color name="actionbar_color">#1C2432</color>

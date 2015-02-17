@@ -40,11 +40,12 @@ public class DealDbHelper extends SQLiteOpenHelper{
             DealContract.LocationEntry.COLUMN_COORD_LAT     + "REAL NOT NULL,"+
             DealContract.LocationEntry.COLUMN_COORD_LONG    + "REAL NOT NULL,";
 
-    //-------------------------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
     // Constructors and creators.
-    //-------------------------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
     /**
-     * This class uses the singleton design pattern as there is no need for another instance of this class.
+     * This class uses the singleton design pattern as there is no need for another instance of this
+     * class.
      * @param context
      * @return ContactsDatabaseHelper
      */
@@ -76,9 +77,9 @@ public class DealDbHelper extends SQLiteOpenHelper{
         onCreate(db);
     }
 
-    //-------------------------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
     // Methods for interacting with the database.
-    //-------------------------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
     /**
      * This method gets a cursor which contains all the information in the database.
      * @return Cursor
@@ -142,9 +143,9 @@ public class DealDbHelper extends SQLiteOpenHelper{
         db.close();
     }
 
-    //-------------------------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
     // Helper Method - GetContentValues
-    //-------------------------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
     /**
      * Helper method to get the contentvalues for a deal so that it can then
      * be saved into the database.

@@ -23,8 +23,6 @@ import com.sdp.apps.eats.fragments.MainFragment;
 
 public class MainActivity extends ActionBarActivity {
 
-    private static String DEBUG_TAG = "SDUPZ DEBUG";
-
     //----------------------------------------------------------------------------------------------
     // On Create for main activity.
     //----------------------------------------------------------------------------------------------
