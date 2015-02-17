@@ -7,16 +7,40 @@ import android.os.Parcelable;
  * Created by Simon on 12/01/2015.
  */
 public class Deal implements Parcelable{
-    private String businessName;
+    //Soon to be not needed
     private String description;
+
+    private long id;
+    private String businessName;
+    private String shortDesc;
+    private String longDesc;
     private double price;
     private String photoURL;
+    private String voucherCode;
+    private int locationKey;
 
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!OLD CONSTRUCTOR
     public Deal(String businessName, String description, double price, String photoURL){
         this.businessName = businessName;
         this.description = description;
         this.price = price;
         this.photoURL = photoURL;
+    }
+
+    public Deal(String businessName,
+                String shortDesc,
+                String longDesc,
+                double price,
+                String photoURL,
+                String voucherCode,
+                int locationKey){
+        this.businessName   = businessName;
+        this.shortDesc      = shortDesc;
+        this.longDesc       = longDesc;
+        this.price          = price;
+        this.photoURL       = photoURL;
+        this.voucherCode    = voucherCode;
+        this.locationKey    = locationKey;
     }
 
     public String getBusinessName() {
@@ -47,6 +71,17 @@ public class Deal implements Parcelable{
     }
 
     public void setPhotoURL(String photoURL){ this.photoURL = photoURL; }
+
+    public String getShortDesc() {return shortDesc;}
+
+    public String getLongDesc() {return longDesc;}
+
+    public String getVoucherCode() {return voucherCode;}
+
+    public int getLocationKey() {return locationKey;}
+
+    public long getID(){ return id; }
+    public void setID(long id){this.id = id;}
 
     //----------------------Parcelable Methods----------------------------
 

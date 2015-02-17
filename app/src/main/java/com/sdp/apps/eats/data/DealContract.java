@@ -26,6 +26,8 @@ public class DealContract {
     public static final class DealEntry implements BaseColumns {
 
         public static final String TABLE_NAME               =   "deal";
+
+        public static final String COLUMN_ID                =   "deal_id";
         public static final String COLUMN_LOC_KEY           =   "location_id";
         public static final String COLUMN_BUSINESS_NAME     =   "business_name";
         public static final String COLUMN_SHORT_DESC        =   "short_description";
