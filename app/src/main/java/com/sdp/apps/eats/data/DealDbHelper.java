@@ -18,22 +18,31 @@ public class DealDbHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db){
-        final String SQL_CREATE_DEAL_TABLE = "CREATE TABLE " +
-                DealContract.DealEntry.TABLE_NAME + " (" +
-                DealContract.DealEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                DealContract.DealEntry.COLUMN_LOC_KEY + "INTEGER NOT NULL, "+
+        final String SQL_CREATE_DEAL_TABLE = "CREATE TABLE "+
+                DealContract.DealEntry.TABLE_NAME           + " (" +
+                DealContract.DealEntry._ID                  + "INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                DealContract.DealEntry.COLUMN_LOC_KEY       + "INTEGER NOT NULL, "+
                 DealContract.DealEntry.COLUMN_BUSINESS_NAME + "TEXT NOT NULL,"+
-                DealContract.DealEntry.COLUMN_SHORT_DESC + "TEXT NOT NULL,"+
-                DealContract.DealEntry.COLUMN_LONG_DESC + "TEXT,"+
-                DealContract.DealEntry.COLUMN_PRICE + "REAL NOT NULL,"+
-                DealContract.DealEntry.COLUMN_PHOTO_URI + "TEXT,"+
-                DealContract.DealEntry.COLUMN_VOUCHER_CODE + "TEXT" +
+                DealContract.DealEntry.COLUMN_SHORT_DESC    + "TEXT NOT NULL,"+
+                DealContract.DealEntry.COLUMN_LONG_DESC     + "TEXT,"+
+                DealContract.DealEntry.COLUMN_PRICE         + "REAL NOT NULL,"+
+                DealContract.DealEntry.COLUMN_PHOTO_URI     + "TEXT,"+
+                DealContract.DealEntry.COLUMN_VOUCHER_CODE  + "TEXT" +
 
                 // Set up the location column as a foreign key to the location table
                 " FOREIGN KEY (" + DealContract.DealEntry.COLUMN_LOC_KEY + ") REFERENCES" +
                 DealContract.LocationEntry.TABLE_NAME + " (" + DealContract.LocationEntry._ID +"),";
 
+        final String SQL_CREATE_LOCATION_TABLE = "CREATE TABLE " +
+                DealContract.LocationEntry.TABLE_NAME + " (" +
+                DealContract.LocationEntry._ID + " INTEGER PRIMARY KEY,"+
+                DealContract.LocationEntry.COLUMN_LOCATION_SETTING + "TEXT UNIQUE NOT NULL"+
+                DealContract.LocationEntry.COLUMN_CITY_NAME     + "TEXT NOT NULL,"+
+                DealContract.LocationEntry.COLUMN_COORD_LAT     + "REAL NOT NULL,"+
+                DealContract.LocationEntry.COLUMN_COORD_LONG    + "REAL NOT NULL,";
+
         db.execSQL(SQL_CREATE_DEAL_TABLE);
+        db.execSQL(SQL_CREATE_LOCATION_TABLE);
 
     }
 
