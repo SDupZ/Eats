@@ -24,13 +24,13 @@
         <activity
             android:name=".activities.DetailActivity"
             android:label="@string/title_activity_detail"
-            android:parentActivityName=".activities.ListDealsActivity" >
+            android:parentActivityName=".activities.DealListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
         </activity>
         <activity
-            android:name=".activities.ListDealsActivity"
+            android:name=".activities.DealListActivity"
             android:label="@string/title_activity_list_deal"
             android:parentActivityName=".activities.MainActivity" >
             <meta-data

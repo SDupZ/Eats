@@ -100,6 +100,12 @@ public class DealsListFragment extends Fragment {
     }
     //!!!------------}
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateDeals();
+    }
+
     //----------------------------------------------------------------------------------------------
     // onOptionsItemSelected
     //----------------------------------------------------------------------------------------------
@@ -143,7 +149,7 @@ public class DealsListFragment extends Fragment {
 
         dealsAdapter = new CustomDealArrayAdapter(getActivity(),currentDeals, options);
 
-        View rootView = inflater.inflate(R.layout.fragment_list_deals, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_deal_list, container, false);
 
         ListView view = (ListView) rootView.findViewById(R.id.listview_deals);
 
@@ -159,6 +165,14 @@ public class DealsListFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    //----------------------------------------------------------------------------------------------
+    // Update deals list helper method
+    //----------------------------------------------------------------------------------------------
+    private void updateDeals(){
+        FetchDealsTask dealsTask =  new FetchDealsTask();
+        dealsTask.execute();
     }
 
     //----------------------------------------------------------------------------------------------

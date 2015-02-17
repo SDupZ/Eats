@@ -2,13 +2,12 @@ package com.sdp.apps.eats.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.sdp.apps.eats.fragments.MainFragment;
 import com.sdp.apps.eats.R;
+import com.sdp.apps.eats.fragments.MainFragment;
 
 /**
  * 	Main activity. First screen to be loaded when the app opens.
@@ -46,36 +45,6 @@ public class MainActivity extends ActionBarActivity {
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
         ImageLoader.getInstance().init(config);
-    }
-
-    @Override
-    protected void onStart(){
-        super.onStart();
-        Log.d(DEBUG_TAG, "onStart");
-    }
-
-    @Override
-    protected void onResume(){
-        super.onResume();
-        Log.d(DEBUG_TAG, "onResume");
-    }
-
-    @Override
-    protected void onPause(){
-        super.onPause();
-        Log.d(DEBUG_TAG, "onPause");
-    }
-
-    @Override
-    protected void onStop(){
-        super.onStop();
-        Log.d(DEBUG_TAG, "onStop");
-    }
-
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
-        Log.d(DEBUG_TAG, "onDestroy");
     }
 
     @Override

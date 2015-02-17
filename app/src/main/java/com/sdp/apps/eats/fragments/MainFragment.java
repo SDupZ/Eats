@@ -13,7 +13,7 @@ import android.widget.ListView;
 
 import com.sdp.apps.eats.adapters.CustomMainViewAdapter;
 import com.sdp.apps.eats.R;
-import com.sdp.apps.eats.activities.ListDealsActivity;
+import com.sdp.apps.eats.activities.DealListActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,7 +59,7 @@ public class MainFragment extends Fragment  {
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent detailActivity = new Intent(getActivity(), ListDealsActivity.class)
+                Intent detailActivity = new Intent(getActivity(), DealListActivity.class)
                         .putExtra(Intent.EXTRA_TEXT, "" + dealNumbers[position]);
                 startActivity(detailActivity);
             }

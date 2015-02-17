@@ -11,7 +11,7 @@ import com.sdp.apps.eats.R;
 /**
  * Created by Simon on 21/01/2015.
  */
-public class ListDealsActivity extends ActionBarActivity{
+public class DealListActivity extends ActionBarActivity{
 
     private static String DEBUG_TAG = "SDUPZ DEBUG";
 
