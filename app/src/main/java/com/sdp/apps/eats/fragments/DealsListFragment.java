@@ -1,10 +1,10 @@
 package com.sdp.apps.eats.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,10 +17,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.sdp.apps.eats.adapters.CustomDealArrayAdapter;
 import com.sdp.apps.eats.Deal;
 import com.sdp.apps.eats.R;
 import com.sdp.apps.eats.activities.DetailActivity;
+import com.sdp.apps.eats.adapters.CustomDealArrayAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,22 +43,25 @@ import java.util.List;
  */
 
 public class DealsListFragment extends Fragment {
-    private CustomDealArrayAdapter dealsAdapter;        //Adapter for each deal
-    private int priceFilter;                          //The current cost filter.(Eg 5 dollars)
+
+    private CustomDealArrayAdapter dealsAdapter;
+
+    //The maximum price to list deals for. (-1 for all)
+    private int priceFilter;
 
     DisplayImageOptions options;                        //Options for 3rd party image loader
-    private SharedPreferences settings;                 //Shared Prefs
+
 
     //----------------------------------------------------------------------------------------------
-    // Oncreate for this activity.
+    // Lifecycle methods: oncreates, onresumes, onstops
     //----------------------------------------------------------------------------------------------
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
         //!!!------------{
-        settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
         options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.ic_stub)
                 .showImageOnFail(R.drawable.ic_error)
@@ -66,11 +69,6 @@ public class DealsListFragment extends Fragment {
                 .cacheOnDisk(true)
                 .considerExifParams(true)
                 .build();
-
-        if (savedInstanceState != null){
-            priceFilter = savedInstanceState.getInt("dealPrice");
-            Log.v("EATS", "STATE Resumed" + priceFilter);
-        }
         //!!!------------}
     }
 
@@ -79,14 +77,11 @@ public class DealsListFragment extends Fragment {
         inflater.inflate(R.menu.dealslistfragement, menu);
     }
 
-    //!!!------------{
-
     @Override
-    public void onResume() {
+    public void onStart() {
         super.onResume();
-
-        settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        priceFilter = settings.getInt("priceFilter", priceFilter);
+        SharedPreferences settings = getActivity().getPreferences(Activity.MODE_PRIVATE);
+        this.priceFilter = settings.getInt("priceFilter", -1);
 
         updateDeals();
     }
@@ -94,16 +89,9 @@ public class DealsListFragment extends Fragment {
     public void onStop()
     {
         super.onStop();
-        SharedPreferences.Editor editor = this.settings.edit();
-        editor.putFloat("priceFilter", this.priceFilter);
+        SharedPreferences.Editor editor = getActivity().getPreferences(Activity.MODE_PRIVATE).edit();
+        editor.putInt("priceFilter", this.priceFilter);
         editor.commit();
-    }
-    //!!!------------}
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        updateDeals();
     }
 
     //----------------------------------------------------------------------------------------------
@@ -119,14 +107,6 @@ public class DealsListFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    //!!!------------{
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState){
-        savedInstanceState.putInt("dealPrice",priceFilter);
-        Log.v("EATS", "STATE SAVED");
-    }
-    //!!!------------}
-
     //----------------------------------------------------------------------------------------------
     // Creates and returns view hierachy associated with the fragment
     //----------------------------------------------------------------------------------------------
@@ -139,7 +119,7 @@ public class DealsListFragment extends Fragment {
         if(intent != null && intent.hasExtra(Intent.EXTRA_TEXT)){
             priceFilter = Integer.parseInt(intent.getStringExtra(Intent.EXTRA_TEXT));
 
-            SharedPreferences.Editor editor = this.settings.edit();
+            SharedPreferences.Editor editor = getActivity().getPreferences(Activity.MODE_PRIVATE).edit();
             editor.putInt("priceFilter", this.priceFilter);
             editor.commit();
         }
@@ -286,7 +266,7 @@ public class DealsListFragment extends Fragment {
             if(result != null){
                 dealsAdapter.clear();
                 for(Deal deal : result){
-                    if(Double.parseDouble(deal.getPrice()) <= priceFilter && Double.parseDouble(deal.getPrice()) > (priceFilter-5)) {
+                    if(priceFilter == -1 || Double.parseDouble(deal.getPrice()) <= priceFilter && Double.parseDouble(deal.getPrice()) > (priceFilter-5)) {
                         dealsAdapter.add(deal);
                     }
                 }
