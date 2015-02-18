@@ -43,6 +43,9 @@ public class MainActivity extends ActionBarActivity {
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
         ImageLoader.getInstance().init(config);
+
+        //Start downloading the data and save it to the database.
+
     }
 
     @Override

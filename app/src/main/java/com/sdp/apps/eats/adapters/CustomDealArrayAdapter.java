@@ -44,7 +44,7 @@ public class CustomDealArrayAdapter extends ArrayAdapter<Deal> {
 
         // Populate the data into the template view using the data object
         businessName.setText(deal.getBusinessName());
-        description.setText(deal.getDescription());
+        description.setText(deal.getShortDesc());
         price.setText("$" + deal.getPrice());
 
         ImageLoader.getInstance().displayImage(deal.getPhotoURL(), photo, options);

@@ -3,10 +3,9 @@ package com.sdp.apps.eats.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,17 +20,10 @@ import com.sdp.apps.eats.Deal;
 import com.sdp.apps.eats.R;
 import com.sdp.apps.eats.activities.DetailActivity;
 import com.sdp.apps.eats.adapters.CustomDealArrayAdapter;
+import com.sdp.apps.eats.data.ContentDownloader;
+import com.sdp.apps.eats.data.DealContract;
+import com.sdp.apps.eats.data.DealDbHelper;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,8 +74,7 @@ public class DealsListFragment extends Fragment {
         super.onResume();
         SharedPreferences settings = getActivity().getPreferences(Activity.MODE_PRIVATE);
         this.priceFilter = settings.getInt("priceFilter", -1);
-
-        updateDeals();
+        updateAdapter();
     }
 
     public void onStop()
@@ -101,7 +92,8 @@ public class DealsListFragment extends Fragment {
         int id = item.getItemId();
 
         if(id== R.id.action_refresh){
-            updateDeals();
+            updateDatabase();
+            updateAdapter();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -138,7 +130,7 @@ public class DealsListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Deal deal = dealsAdapter.getItem(position);
                 Intent detailActivity = new Intent(getActivity(), DetailActivity.class)
-                        .putExtra("Deal", deal);
+                        .putExtra("deal_id", deal.getID());
                 startActivity(detailActivity);
             }
         });
@@ -147,162 +139,48 @@ public class DealsListFragment extends Fragment {
     }
 
     //----------------------------------------------------------------------------------------------
-    // Update deals list helper method
+    // Helper Methods
     //----------------------------------------------------------------------------------------------
-    private void updateDeals(){
-        FetchDealsTask dealsTask =  new FetchDealsTask();
-        dealsTask.execute();
+    private void updateAdapter(){
+        Cursor c = DealDbHelper.getHelper(getActivity()).getAllData();
+        dealsAdapter.clear();
+        if (c.moveToFirst()){
+            do{
+                double price        =
+                        c.getDouble(c.getColumnIndex(DealContract.DealEntry.COLUMN_PRICE));
+                if(price <= priceFilter) {
+                    String businessName =
+                            c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_BUSINESS_NAME));
+                    long id = c.getLong(c.getColumnIndex(DealContract.DealEntry._ID));
+                    String shortDesc =
+                            c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_SHORT_DESC));
+                    String longDesc =
+                            c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_LONG_DESC));
+
+                    String photoURL =
+                            c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_PHOTO_URI));
+                    String voucherCode =
+                            c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_VOUCHER_CODE));
+                    int locationKey =
+                            c.getInt(c.getColumnIndex(DealContract.DealEntry.COLUMN_LOC_KEY));
+
+                    Deal deal = new Deal(
+                            businessName,
+                            shortDesc,
+                            longDesc,
+                            price,
+                            photoURL,
+                            voucherCode,
+                            locationKey);
+                    deal.setID(id);
+
+                    dealsAdapter.add(deal);
+                }
+            }while(c.moveToNext());
+        }
     }
 
-    //----------------------------------------------------------------------------------------------
-    // Creates and returns view hierachy associated with the fragment
-    //----------------------------------------------------------------------------------------------
-    public class FetchDealsTask extends AsyncTask<Void, Void, Deal[]> {
-
-        @Override
-        protected Deal[] doInBackground(Void... params){
-            // These two need to be declared outside the try/catch
-            // so that they can be closed in the finally block.
-            HttpURLConnection urlConnection = null;
-            BufferedReader reader = null;
-
-            // Will contain the raw JSON response as a string.
-            String dealsJsonStr = null;
-
-            try {
-                URL url = new URL("https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20*%20FROM%20" +
-                        "1ZX1GX4igiJoMv1eT7etzM8MNXnS_1g2io75ioobv&" +
-                        "key=AIzaSyC7CYIsM_XEurrxSGqDsue30JCZ8Y4FwtE");
-
-                // Create the request and open the connection
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
-
-                // Read the input stream into a String
-                InputStream inputStream = urlConnection.getInputStream();
-                StringBuffer buffer = new StringBuffer();
-                if (inputStream == null) {
-                    // Nothing to do.
-                    return null;
-                }
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                    // But it does make debugging a *lot* easier if you print out the completed
-                    // buffer for debugging.
-                    buffer.append(line + "\n");
-                }
-
-                if (buffer.length() == 0) {
-                    // Stream was empty.  No point in parsing.
-                    return null;
-                }
-                dealsJsonStr = buffer.toString();
-            } catch (IOException e) {
-                Log.e("PlaceholderFragment", "Error ", e);
-                // If the code didn't successfully get the data, there's no point in attempting
-                // to parse it.
-                dealsJsonStr = null;
-                return null;
-            } finally{
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (final IOException e) {
-                        Log.e("PlaceholderFragment", "Error closing stream", e);
-                    }
-                }
-            }
-            try {
-                Deal[] myDeals = getDealsDataFromJson(dealsJsonStr);
-                /*
-                for (Deal aDeal: myDeals){
-                    Log.v("EATS", "TEST" + aDeal.getBusinessName() + aDeal.getPhotoURL());
-                    if (aDeal.getPhotoURL() != null) {
-                        try {
-                            URL url = new URL(aDeal.getPhotoURL());
-                            HttpGet httpRequest = null;
-                            httpRequest = new HttpGet(url.toURI());
-
-                            HttpClient httpclient = new DefaultHttpClient();
-                            HttpResponse response = (HttpResponse) httpclient
-                                    .execute(httpRequest);
-
-                            HttpEntity entity = response.getEntity();
-                            BufferedHttpEntity b_entity = new BufferedHttpEntity(entity);
-                            InputStream input = b_entity.getContent();
-
-                            Bitmap bitmap = BitmapFactory.decodeStream(input);
-
-                            aDeal.setPhoto(bitmap);
-                        } catch (MalformedURLException e){
-                            aDeal.setPhoto(null);
-                            e.printStackTrace();
-                        } catch (URISyntaxException e) {
-                            aDeal.setPhoto(null);
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            aDeal.setPhoto(null);
-                            e.printStackTrace();
-                        }
-                    }
-                }*/
-                return myDeals;
-            }catch(JSONException e){
-                e.printStackTrace();
-                return null;
-            }
-
-        }
-
-        @Override
-        protected void onPostExecute(Deal[] result) {
-            if(result != null){
-                dealsAdapter.clear();
-                for(Deal deal : result){
-                    if(priceFilter == -1 || Double.parseDouble(deal.getPrice()) <= priceFilter && Double.parseDouble(deal.getPrice()) > (priceFilter-5)) {
-                        dealsAdapter.add(deal);
-                    }
-                }
-            }
-        }
-
-        //------------------------------------------------------------------------------------------
-        // JSon String Parsing Helper Methods
-        //------------------------------------------------------------------------------------------
-
-        private Deal[] getDealsDataFromJson(String dealsJsonStr) throws JSONException {
-
-            final String DUE_ROWS = "rows";
-
-            JSONObject dealsJson = new JSONObject(dealsJsonStr);
-            JSONArray dealsArray = dealsJson.getJSONArray("rows");
-
-            Deal[] resultDeals = new Deal[dealsArray.length()];
-
-            for (int i=0; i< dealsArray.length(); i++){
-                String name;
-                String description;
-                double price;
-                String photoURL;
-
-                name = dealsArray.getJSONArray(i).getString(0);
-                description = dealsArray.getJSONArray(i).getString(1);
-                price = Double.parseDouble(dealsArray.getJSONArray(i).getString(2));
-                photoURL = dealsArray.getJSONArray(i).getString(5).trim();
-
-                resultDeals[i] = new Deal(name,description, price, photoURL);
-            }
-            return resultDeals;
-
-        }
-
+    private void updateDatabase(){
+        new ContentDownloader(getActivity()).updateDatabase();
     }
-
 }

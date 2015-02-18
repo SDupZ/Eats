@@ -19,18 +19,18 @@ public class DealDbHelper extends SQLiteOpenHelper{
 
     private final String SQL_CREATE_DEAL_TABLE = "CREATE TABLE "+
             DealContract.DealEntry.TABLE_NAME           + " (" +
-            DealContract.DealEntry._ID                  + "INTEGER PRIMARY KEY AUTOINCREMENT,"+
-            DealContract.DealEntry.COLUMN_LOC_KEY       + "INTEGER NOT NULL, "+
-            DealContract.DealEntry.COLUMN_BUSINESS_NAME + "TEXT NOT NULL,"+
-            DealContract.DealEntry.COLUMN_SHORT_DESC    + "TEXT NOT NULL,"+
-            DealContract.DealEntry.COLUMN_LONG_DESC     + "TEXT,"+
-            DealContract.DealEntry.COLUMN_PRICE         + "REAL NOT NULL,"+
-            DealContract.DealEntry.COLUMN_PHOTO_URI     + "TEXT,"+
-            DealContract.DealEntry.COLUMN_VOUCHER_CODE  + "TEXT" +
+            DealContract.DealEntry._ID                  + " INTEGER PRIMARY KEY AUTOINCREMENT, "+
+            DealContract.DealEntry.COLUMN_LOC_KEY       + " INTEGER, "+
+            DealContract.DealEntry.COLUMN_BUSINESS_NAME + " TEXT NOT NULL,"+
+            DealContract.DealEntry.COLUMN_SHORT_DESC    + " TEXT NOT NULL,"+
+            DealContract.DealEntry.COLUMN_LONG_DESC     + " TEXT,"+
+            DealContract.DealEntry.COLUMN_PRICE         + " REAL NOT NULL,"+
+            DealContract.DealEntry.COLUMN_PHOTO_URI     + " TEXT,"+
+            DealContract.DealEntry.COLUMN_VOUCHER_CODE  + " TEXT," +
 
             // Set up the location column as a foreign key to the location table
-            " FOREIGN KEY (" + DealContract.DealEntry.COLUMN_LOC_KEY + ") REFERENCES" +
-            DealContract.LocationEntry.TABLE_NAME + " (" + DealContract.LocationEntry._ID +"),";
+            " FOREIGN KEY (" + DealContract.DealEntry.COLUMN_LOC_KEY + ") REFERENCES " +
+            DealContract.LocationEntry.TABLE_NAME + " (" + DealContract.LocationEntry._ID +"));";
 
     private final String SQL_CREATE_LOCATION_TABLE = "CREATE TABLE " +
             DealContract.LocationEntry.TABLE_NAME + " (" +
@@ -39,6 +39,17 @@ public class DealDbHelper extends SQLiteOpenHelper{
             DealContract.LocationEntry.COLUMN_CITY_NAME     + "TEXT NOT NULL,"+
             DealContract.LocationEntry.COLUMN_COORD_LAT     + "REAL NOT NULL,"+
             DealContract.LocationEntry.COLUMN_COORD_LONG    + "REAL NOT NULL,";
+
+    private final String[] projection = {
+            DealContract.DealEntry._ID,
+            DealContract.DealEntry.COLUMN_LOC_KEY,
+            DealContract.DealEntry.COLUMN_BUSINESS_NAME,
+            DealContract.DealEntry.COLUMN_SHORT_DESC,
+            DealContract.DealEntry.COLUMN_LONG_DESC,
+            DealContract.DealEntry.COLUMN_PRICE,
+            DealContract.DealEntry.COLUMN_PHOTO_URI,
+            DealContract.DealEntry.COLUMN_VOUCHER_CODE,
+    };
 
     //----------------------------------------------------------------------------------------------
     // Constructors and creators.
@@ -64,7 +75,7 @@ public class DealDbHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db){
         db.execSQL(SQL_CREATE_DEAL_TABLE);
-        db.execSQL(SQL_CREATE_LOCATION_TABLE);
+        //db.execSQL(SQL_CREATE_LOCATION_TABLE);
     }
 
     //Used when changing the database. Adding columns etc.
@@ -86,17 +97,6 @@ public class DealDbHelper extends SQLiteOpenHelper{
      */
     public Cursor getAllData(){
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] projection = {
-                DealContract.DealEntry._ID,
-                DealContract.DealEntry.COLUMN_LOC_KEY,
-                DealContract.DealEntry.COLUMN_BUSINESS_NAME,
-                DealContract.DealEntry.COLUMN_SHORT_DESC,
-                DealContract.DealEntry.COLUMN_LONG_DESC,
-                DealContract.DealEntry.COLUMN_PRICE,
-                DealContract.DealEntry.COLUMN_PHOTO_URI,
-                DealContract.DealEntry.COLUMN_VOUCHER_CODE,
-
-        };
 
         String sortOrder = DealContract.DealEntry._ID + " DESC";
 
@@ -107,6 +107,15 @@ public class DealDbHelper extends SQLiteOpenHelper{
                 null,
                 null,
                 sortOrder);
+
+        return c;
+    }
+
+    public Cursor getDealWithID(long id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery("select * from " +
+                DealContract.DealEntry.TABLE_NAME + " where " +
+                DealContract.DealEntry._ID + "='" + id + "'" , null);
 
         return c;
     }
@@ -143,6 +152,10 @@ public class DealDbHelper extends SQLiteOpenHelper{
         db.close();
     }
 
+    public void deleteAllData(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM  " + DealContract.DealEntry.TABLE_NAME);
+    }
     //----------------------------------------------------------------------------------------------
     // Helper Method - GetContentValues
     //----------------------------------------------------------------------------------------------
@@ -153,6 +166,7 @@ public class DealDbHelper extends SQLiteOpenHelper{
      * @return ContentValues
      */
     private ContentValues getContentValues(Deal deal){
+
         ContentValues contentValues = new ContentValues();
         contentValues.put(DealContract.DealEntry.COLUMN_LOC_KEY,        deal.getLocationKey());
         contentValues.put(DealContract.DealEntry.COLUMN_BUSINESS_NAME, deal.getBusinessName());
@@ -163,5 +177,4 @@ public class DealDbHelper extends SQLiteOpenHelper{
         contentValues.put(DealContract.DealEntry.COLUMN_VOUCHER_CODE ,  deal.getVoucherCode());
         return contentValues;
     }
-
 }

@@ -16,7 +16,7 @@ public class DealContract {
      */
     public static final class LocationEntry implements BaseColumns {
         public static final String TABLE_NAME               =   "location";
-        public static final String COLUMN_LOCATION_SETTING  = "location_setting";
+        public static final String COLUMN_LOCATION_SETTING  =   "location_setting";
         public static final String COLUMN_CITY_NAME         =   "city_name";
         public static final String COLUMN_COORD_LAT         =   "coord_lat";
         public static final String COLUMN_COORD_LONG        =   "coord_long";
@@ -27,7 +27,7 @@ public class DealContract {
 
         public static final String TABLE_NAME               =   "deal";
 
-        public static final String COLUMN_ID                =   "deal_id";
+        //public static final String _ID                      =   "deal_id";
         public static final String COLUMN_LOC_KEY           =   "location_id";
         public static final String COLUMN_BUSINESS_NAME     =   "business_name";
         public static final String COLUMN_SHORT_DESC        =   "short_description";

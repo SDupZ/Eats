@@ -1,6 +1,7 @@
 package com.sdp.apps.eats.activities;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sdp.apps.eats.Deal;
 import com.sdp.apps.eats.R;
+import com.sdp.apps.eats.data.DealContract;
+import com.sdp.apps.eats.data.DealDbHelper;
 
 
 public class DetailActivity extends ActionBarActivity {
@@ -67,18 +70,48 @@ public class DetailActivity extends ActionBarActivity {
             Intent intent = getActivity().getIntent();
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
-            if(intent != null && intent.hasExtra("Deal")){
-                Deal deal = (Deal) intent.getParcelableExtra("Deal");
+            if(intent != null && intent.hasExtra("deal_id")){
+                Long id = intent.getLongExtra("deal_id", -1);
+                if (id != -1) {
+                    Cursor c = DealDbHelper.getHelper(getActivity()).getDealWithID(id);
+                    c.moveToFirst();
+                    String buisnessName =
+                            c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_BUSINESS_NAME));
+                    String shortDesc    =
+                            c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_SHORT_DESC ));
+                    String longDesc     =
+                            c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_LONG_DESC));
+                    double price        =
+                            c.getDouble(c.getColumnIndex(DealContract.DealEntry.COLUMN_PRICE));
+                    String photoURL     =
+                            c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_PHOTO_URI));
+                    String voucherCode  =
+                            c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_VOUCHER_CODE));
+                    int locationKey     =
+                            c.getInt(c.getColumnIndex(DealContract.DealEntry.COLUMN_LOC_KEY));
 
-                ImageView image = (ImageView) rootView.findViewById(R.id.detail_image);
-                TextView name = (TextView) rootView.findViewById(R.id.detail_name);
-                TextView desc = (TextView) rootView.findViewById(R.id.detail_desc);
-                TextView price = (TextView) rootView.findViewById(R.id.detail_price);
+                    Deal deal = new Deal(
+                            buisnessName,
+                            shortDesc,
+                            longDesc,
+                            price,
+                            photoURL,
+                            voucherCode,
+                            locationKey);
+                    deal.setID(id);
 
-                ImageLoader.getInstance().displayImage(deal.getPhotoURL(), image);
-                name.setText(deal.getBusinessName());
-                desc.setText(deal.getDescription());
-                price.setText(deal.getPrice());
+                    ImageView imageView = (ImageView) rootView.findViewById(R.id.detail_image);
+                    TextView nameView = (TextView) rootView.findViewById(R.id.detail_name);
+                    TextView descView = (TextView) rootView.findViewById(R.id.detail_desc);
+                    TextView priceView = (TextView) rootView.findViewById(R.id.detail_price);
+
+                    ImageLoader.getInstance().displayImage(deal.getPhotoURL(), imageView);
+                    nameView.setText(deal.getBusinessName());
+                    descView.setText(deal.getShortDesc());
+                    priceView.setText(deal.getPrice());
+                }
+
+                //ERROR CHECKING SHOUDL GO HERE
 
             }
             return rootView;
