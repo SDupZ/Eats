@@ -155,7 +155,9 @@ public class DealDbHelper extends SQLiteOpenHelper{
     public void deleteAllData(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM  " + DealContract.DealEntry.TABLE_NAME);
+        db.close();
     }
+
     //----------------------------------------------------------------------------------------------
     // Helper Method - GetContentValues
     //----------------------------------------------------------------------------------------------

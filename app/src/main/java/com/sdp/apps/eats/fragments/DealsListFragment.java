@@ -21,6 +21,7 @@ import com.sdp.apps.eats.R;
 import com.sdp.apps.eats.activities.DetailActivity;
 import com.sdp.apps.eats.adapters.CustomDealArrayAdapter;
 import com.sdp.apps.eats.data.ContentDownloader;
+import com.sdp.apps.eats.data.DatabaseListener;
 import com.sdp.apps.eats.data.DealContract;
 import com.sdp.apps.eats.data.DealDbHelper;
 
@@ -34,7 +35,7 @@ import java.util.List;
  * it will populate with the deals that are $5 or under
  */
 
-public class DealsListFragment extends Fragment {
+public class DealsListFragment extends Fragment implements DatabaseListener{
 
     private CustomDealArrayAdapter dealsAdapter;
 
@@ -93,7 +94,6 @@ public class DealsListFragment extends Fragment {
 
         if(id== R.id.action_refresh){
             updateDatabase();
-            updateAdapter();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -136,6 +136,13 @@ public class DealsListFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+
+    public void databaseUpdated(){
+        updateAdapter();
+        //Toast.makeText(this.getActivity().getApplicationContext(),
+        //        "Content Updated.", Toast.LENGTH_SHORT).show();
     }
 
     //----------------------------------------------------------------------------------------------
@@ -181,6 +188,8 @@ public class DealsListFragment extends Fragment {
     }
 
     private void updateDatabase(){
-        new ContentDownloader(getActivity()).updateDatabase();
+        ContentDownloader cd = new ContentDownloader(getActivity());
+        cd.addDatabaseListener(this);
+        cd.updateDatabase();
     }
 }

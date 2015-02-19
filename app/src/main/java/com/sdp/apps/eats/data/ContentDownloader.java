@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * Created by Simon on 18/02/2015.
@@ -23,12 +24,25 @@ import java.net.URL;
 public class ContentDownloader extends AsyncTask<Void, Void, Deal[]>{
 
     private Context context;
+    private ArrayList<DatabaseListener> listeners;
 
-    public ContentDownloader(Context context){this.context = context;}
+    public ContentDownloader(Context context){
+        this.context = context;
+        this.listeners = new ArrayList<DatabaseListener>();
+    }
 
     public void updateDatabase(){
-        ContentDownloader updateDealsTask =  new ContentDownloader(this.context);
-        updateDealsTask.execute();
+        this.execute();
+    }
+
+    public void addDatabaseListener(DatabaseListener databaseListener){
+        this.listeners.add(databaseListener);
+    }
+
+    private void notifyListeners(){
+        for (DatabaseListener listener: this.listeners){
+            listener.databaseUpdated();
+        }
     }
 
     @Override
@@ -93,38 +107,6 @@ public class ContentDownloader extends AsyncTask<Void, Void, Deal[]>{
         }
         try {
             Deal[] myDeals = getDealsDataFromJson(dealsJsonStr);
-            /*
-            for (Deal aDeal: myDeals){
-                Log.v("EATS", "TEST" + aDeal.getBusinessName() + aDeal.getPhotoURL());
-                if (aDeal.getPhotoURL() != null) {
-                    try {
-                        URL url = new URL(aDeal.getPhotoURL());
-                        HttpGet httpRequest = null;
-                        httpRequest = new HttpGet(url.toURI());
-
-                        HttpClient httpclient = new DefaultHttpClient();
-                        HttpResponse response = (HttpResponse) httpclient
-                                .execute(httpRequest);
-
-                        HttpEntity entity = response.getEntity();
-                        BufferedHttpEntity b_entity = new BufferedHttpEntity(entity);
-                        InputStream input = b_entity.getContent();
-
-                        Bitmap bitmap = BitmapFactory.decodeStream(input);
-
-                        aDeal.setPhoto(bitmap);
-                    } catch (MalformedURLException e){
-                        aDeal.setPhoto(null);
-                        e.printStackTrace();
-                    } catch (URISyntaxException e) {
-                        aDeal.setPhoto(null);
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        aDeal.setPhoto(null);
-                        e.printStackTrace();
-                    }
-                }
-            }*/
             return myDeals;
         }catch(JSONException e){
             e.printStackTrace();
@@ -141,6 +123,7 @@ public class ContentDownloader extends AsyncTask<Void, Void, Deal[]>{
             for(Deal deal : result){
                 db.insertData(deal);
             }
+            notifyListeners();
         }
     }
 
@@ -149,40 +132,42 @@ public class ContentDownloader extends AsyncTask<Void, Void, Deal[]>{
     //------------------------------------------------------------------------------------------
 
     private Deal[] getDealsDataFromJson(String dealsJsonStr) throws JSONException {
-
-        final String DUE_ROWS = "rows";
-
         JSONObject dealsJson = new JSONObject(dealsJsonStr);
+        JSONArray columnIndexArray = dealsJson.getJSONArray("columns");
+
+        ArrayList<String> columnNamesArrayList = new ArrayList<String>();
+
+        for (int i=0; i< columnIndexArray.length(); i++){
+            columnNamesArrayList.add(columnIndexArray.getString(i));
+        }
+
         JSONArray dealsArray = dealsJson.getJSONArray("rows");
 
         Deal[] resultDeals = new Deal[dealsArray.length()];
 
         for (int i=0; i< dealsArray.length(); i++){
-            String businessName;
-            String shortDesc;
-            String longDesc     =   null;
-            double price;
-            String photoURI;
-            String voucherCode  =   null;
+            String businessName;    String shortDesc;   String longDesc     =   null;
+            double price;           String photoURI;    String voucherCode  =   null;
             int locationKey     =   -1;
 
-            businessName = dealsArray.getJSONArray(i).getString(0);
-            shortDesc = dealsArray.getJSONArray(i).getString(1);
-            price = Double.parseDouble(dealsArray.getJSONArray(i).getString(2));
-            photoURI = dealsArray.getJSONArray(i).getString(5).trim();
+            businessName = dealsArray.getJSONArray(i).getString(columnNamesArrayList.indexOf(
+                    DealContract.DealEntry.COLUMN_BUSINESS_NAME));
+            shortDesc = dealsArray.getJSONArray(i).getString(columnNamesArrayList.indexOf(
+                    DealContract.DealEntry.COLUMN_SHORT_DESC));
+            longDesc = dealsArray.getJSONArray(i).getString(columnNamesArrayList.indexOf(
+                    DealContract.DealEntry.COLUMN_LONG_DESC));
+            price = Double.parseDouble(dealsArray.getJSONArray(i).getString(columnNamesArrayList.indexOf(
+                    DealContract.DealEntry.COLUMN_PRICE)));
+            photoURI = dealsArray.getJSONArray(i).getString(columnNamesArrayList.indexOf(
+                    DealContract.DealEntry.COLUMN_PHOTO_URI)).trim();
+            voucherCode = dealsArray.getJSONArray(i).getString(columnNamesArrayList.indexOf(
+                    DealContract.DealEntry.COLUMN_VOUCHER_CODE));
 
-            Deal deal = new Deal(
-                    businessName,
-                    shortDesc,
-                    longDesc,
-                    price,
-                    photoURI,
-                    voucherCode,
+            Deal deal = new Deal(businessName,shortDesc,longDesc,price,photoURI,voucherCode,
                     locationKey);
 
             resultDeals[i] = deal;
         }
         return resultDeals;
-
     }
 }

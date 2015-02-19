@@ -107,7 +107,7 @@ public class DetailActivity extends ActionBarActivity {
 
                     ImageLoader.getInstance().displayImage(deal.getPhotoURL(), imageView);
                     nameView.setText(deal.getBusinessName());
-                    descView.setText(deal.getShortDesc());
+                    descView.setText(deal.getLongDesc());
                     priceView.setText(deal.getPrice());
                 }
 

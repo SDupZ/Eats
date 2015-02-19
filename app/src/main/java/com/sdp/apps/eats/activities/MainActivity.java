@@ -7,6 +7,8 @@ import android.view.Menu;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.sdp.apps.eats.R;
+import com.sdp.apps.eats.data.ContentDownloader;
+import com.sdp.apps.eats.data.DealDbHelper;
 import com.sdp.apps.eats.fragments.MainFragment;
 
 /**
@@ -44,8 +46,12 @@ public class MainActivity extends ActionBarActivity {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
         ImageLoader.getInstance().init(config);
 
-        //Start downloading the data and save it to the database.
+        //Create the database here:
+        DealDbHelper.getHelper(this);
 
+        //Start downloading the data and save it to the database.
+        ContentDownloader cd = new ContentDownloader(this);
+        cd.updateDatabase();
     }
 
     @Override
