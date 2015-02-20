@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.sdp.apps.eats.Deal;
+import com.sdp.apps.eats.MyDeals;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,6 +18,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by Simon on 18/02/2015.
@@ -120,9 +122,11 @@ public class ContentDownloader extends AsyncTask<Void, Void, Deal[]>{
         if(result != null){
             DealDbHelper db = DealDbHelper.getHelper(context);
             db.deleteAllData();
-            for(Deal deal : result){
-                db.insertData(deal);
+            for(int i = 0; i <result.length; i++){
+                long id = db.insertData(result[i]);
+                result[i].setID(id);
             }
+            MyDeals.getDeals().updateDealsList(Arrays.asList(result));
             notifyListeners();
         }
     }

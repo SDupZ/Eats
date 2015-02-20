@@ -2,10 +2,9 @@
 <resources>
 
     <string name="app_name">Eats</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_detail">Details</string>
-    <string name="title_activity_list_deal">Todays Cheap Deals</string>
+    <string name="title_activity_detail">Deal Details</string>
+    <string name="title_activity_list_deal">Today\'s Deals!</string>
     <string name="action_refresh" translatable="false">Refresh</string>
 
 

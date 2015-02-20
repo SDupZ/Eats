@@ -3,7 +3,6 @@ package com.sdp.apps.eats.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,13 +16,12 @@ import android.widget.ListView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.sdp.apps.eats.Deal;
+import com.sdp.apps.eats.MyDeals;
 import com.sdp.apps.eats.R;
 import com.sdp.apps.eats.activities.DetailActivity;
 import com.sdp.apps.eats.adapters.CustomDealArrayAdapter;
 import com.sdp.apps.eats.data.ContentDownloader;
 import com.sdp.apps.eats.data.DatabaseListener;
-import com.sdp.apps.eats.data.DealContract;
-import com.sdp.apps.eats.data.DealDbHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +81,6 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
         editor.putInt("priceFilter", this.priceFilter);
         editor.commit();
     }
-
     //----------------------------------------------------------------------------------------------
     // onOptionsItemSelected
     //----------------------------------------------------------------------------------------------
@@ -128,7 +125,7 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Deal deal = dealsAdapter.getItem(position);
                 Intent detailActivity = new Intent(getActivity(), DetailActivity.class)
-                        .putExtra("deal_id", deal.getID());
+                        .putExtra("deal_position", position);
                 startActivity(detailActivity);
             }
         });
@@ -139,50 +136,19 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
 
     public void databaseUpdated(){
         updateAdapter();
-        //Toast.makeText(this.getActivity().getApplicationContext(),
-        //        "Content Updated.", Toast.LENGTH_SHORT).show();
     }
 
     //----------------------------------------------------------------------------------------------
     // Helper Methods
     //----------------------------------------------------------------------------------------------
     private void updateAdapter(){
-        Cursor c = DealDbHelper.getHelper(getActivity()).getAllData();
         dealsAdapter.clear();
-        if (c.moveToFirst()){
-            do{
-                double price        =
-                        c.getDouble(c.getColumnIndex(DealContract.DealEntry.COLUMN_PRICE));
-                if(price <= priceFilter) {
-                    String businessName =
-                            c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_BUSINESS_NAME));
-                    long id = c.getLong(c.getColumnIndex(DealContract.DealEntry._ID));
-                    String shortDesc =
-                            c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_SHORT_DESC));
-                    String longDesc =
-                            c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_LONG_DESC));
+        List<Deal> allDeals = MyDeals.getDeals().getDealsList();
 
-                    String photoURL =
-                            c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_PHOTO_URI));
-                    String voucherCode =
-                            c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_VOUCHER_CODE));
-                    int locationKey =
-                            c.getInt(c.getColumnIndex(DealContract.DealEntry.COLUMN_LOC_KEY));
-
-                    Deal deal = new Deal(
-                            businessName,
-                            shortDesc,
-                            longDesc,
-                            price,
-                            photoURL,
-                            voucherCode,
-                            locationKey);
-                    deal.setID(id);
-
-                    dealsAdapter.add(deal);
-                }
-            }while(c.moveToNext());
+        for (Deal deal:allDeals){
+            dealsAdapter.add(deal);
         }
+
     }
 
     private void updateDatabase(){

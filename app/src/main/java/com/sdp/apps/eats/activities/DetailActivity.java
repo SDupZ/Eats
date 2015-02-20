@@ -1,9 +1,12 @@
 package com.sdp.apps.eats.activities;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,24 +18,32 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sdp.apps.eats.Deal;
+import com.sdp.apps.eats.MyDeals;
 import com.sdp.apps.eats.R;
-import com.sdp.apps.eats.data.DealContract;
-import com.sdp.apps.eats.data.DealDbHelper;
 
 
 public class DetailActivity extends ActionBarActivity {
 
+    private int numDeals;
+    private ViewPager   mPager;
+    private PagerAdapter mPagerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }
-    }
+        setContentView(R.layout.detail_activity_slide);
 
+        numDeals = MyDeals.getDeals().getDealsList().size();
+
+        // Instantiate a ViewPager and a PagerAdapter.
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        mPager.setAdapter(mPagerAdapter);
+
+        Intent intent = getIntent();
+        int position = intent.getIntExtra("deal_position", -1);
+        mPager.setCurrentItem(position);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -61,8 +72,17 @@ public class DetailActivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
-        public PlaceholderFragment() {
+        /**
+         * Factory method for this fragment class. Constructs a new fragment for the given page number.
+         */
+        public static PlaceholderFragment create(int dealPosition) {
+            PlaceholderFragment fragment = new PlaceholderFragment();
+            Bundle args = new Bundle();
+            args.putInt("deal_position", dealPosition);
+            fragment.setArguments(args);
+            return fragment;
         }
+
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,30 +90,12 @@ public class DetailActivity extends ActionBarActivity {
             Intent intent = getActivity().getIntent();
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
-            if(intent != null && intent.hasExtra("deal_id")){
-                Long id = intent.getLongExtra("deal_id", -1);
-                if (id != -1) {
-                    Cursor c = DealDbHelper.getHelper(getActivity()).getDealWithID(id);
-                    c.moveToFirst();
-                    String buisnessName =
-                            c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_BUSINESS_NAME));
-                    String shortDesc    =
-                            c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_SHORT_DESC ));
-                    String longDesc     =
-                            c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_LONG_DESC));
-                    double price        =
-                            c.getDouble(c.getColumnIndex(DealContract.DealEntry.COLUMN_PRICE));
-                    String photoURL     =
-                            c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_PHOTO_URI));
-                    String voucherCode  =
-                            c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_VOUCHER_CODE));
-                    int locationKey     =
-                            c.getInt(c.getColumnIndex(DealContract.DealEntry.COLUMN_LOC_KEY));
 
-                    Deal deal = new Deal(buisnessName,shortDesc,longDesc,price,photoURL,voucherCode,
-                            locationKey);
-                    deal.setID(id);
+            if(intent != null && intent.hasExtra("deal_position")){
+                int position = getArguments().getInt("deal_position");
+                Deal deal = MyDeals.getDeals().getDealAtPosition(position);
 
+                if(deal != null) {
                     ImageView imageView = (ImageView) rootView.findViewById(R.id.detail_image);
                     TextView nameView = (TextView) rootView.findViewById(R.id.detail_name);
                     TextView descView = (TextView) rootView.findViewById(R.id.detail_desc);
@@ -104,20 +106,38 @@ public class DetailActivity extends ActionBarActivity {
                     descView.setText(deal.getLongDesc());
                     priceView.setText("$" + deal.getPrice());
 
-                    if(price <= 5 ){
+                    double price = Double.parseDouble(deal.getPrice());
+                    if (price <= 5) {
                         priceView.setTextColor(getResources().getColor(R.color.color_eats_red));
-                    }else if (price <= 10){
+                    } else if (price <= 10) {
                         priceView.setTextColor(getResources().getColor(R.color.color_eats_green));
-                    }else{
+                    } else {
                         priceView.setTextColor(getResources().getColor(R.color.color_eats_purple));
                     }
-
                 }
-
-                //ERROR CHECKING SHOUDL GO HERE
-
             }
             return rootView;
         }
     }
+
+    /**
+     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
+     * sequence.
+     */
+    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+        public ScreenSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return PlaceholderFragment.create(position);
+        }
+
+        @Override
+        public int getCount() {
+            return numDeals;
+        }
+    }
+
 }
