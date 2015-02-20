@@ -56,8 +56,6 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
 
         //!!!------------{
         options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.ic_stub)
-                .showImageOnFail(R.drawable.ic_error)
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
                 .considerExifParams(true)

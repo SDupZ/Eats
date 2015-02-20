@@ -20,10 +20,12 @@ import java.util.List;
  */
 public class CustomDealArrayAdapter extends ArrayAdapter<Deal> {
     DisplayImageOptions options;
+    Context context;
 
     public CustomDealArrayAdapter(Context context, List<Deal> deals, DisplayImageOptions options) {
         super(context, 0, deals);
         this.options = options;
+        this.context  = context;
     }
 
     @Override
@@ -49,11 +51,17 @@ public class CustomDealArrayAdapter extends ArrayAdapter<Deal> {
 
         ImageLoader.getInstance().displayImage(deal.getPhotoURL(), photo, options);
 
-        /*if (deal.getPhoto() == null) {
-            photo.setImageDrawable(convertView.getResources().getDrawable(R.drawable.ic_launcher));
-        }else {
-            photo.setImageBitmap(deal.getPhoto());
-        }*/
+        double dealPrice = Double.parseDouble(deal.getPrice());
+
+        ImageView rectangleColor = (ImageView) convertView.findViewById(R.id.rectangleColor);
+
+        if(dealPrice <= 5 ){
+            rectangleColor.setBackgroundColor(context.getResources().getColor(R.color.color_eats_red));
+        }else if (dealPrice <= 10){
+            rectangleColor.setBackgroundColor(context.getResources().getColor(R.color.color_eats_green));
+        }else{
+            rectangleColor.setBackgroundColor(context.getResources().getColor(R.color.color_eats_purple));
+        }
 
         // Return the completed view to render on screen
         return convertView;

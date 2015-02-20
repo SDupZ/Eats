@@ -90,13 +90,7 @@ public class DetailActivity extends ActionBarActivity {
                     int locationKey     =
                             c.getInt(c.getColumnIndex(DealContract.DealEntry.COLUMN_LOC_KEY));
 
-                    Deal deal = new Deal(
-                            buisnessName,
-                            shortDesc,
-                            longDesc,
-                            price,
-                            photoURL,
-                            voucherCode,
+                    Deal deal = new Deal(buisnessName,shortDesc,longDesc,price,photoURL,voucherCode,
                             locationKey);
                     deal.setID(id);
 
@@ -108,7 +102,16 @@ public class DetailActivity extends ActionBarActivity {
                     ImageLoader.getInstance().displayImage(deal.getPhotoURL(), imageView);
                     nameView.setText(deal.getBusinessName());
                     descView.setText(deal.getLongDesc());
-                    priceView.setText(deal.getPrice());
+                    priceView.setText("$" + deal.getPrice());
+
+                    if(price <= 5 ){
+                        priceView.setTextColor(getResources().getColor(R.color.color_eats_red));
+                    }else if (price <= 10){
+                        priceView.setTextColor(getResources().getColor(R.color.color_eats_green));
+                    }else{
+                        priceView.setTextColor(getResources().getColor(R.color.color_eats_purple));
+                    }
+
                 }
 
                 //ERROR CHECKING SHOUDL GO HERE

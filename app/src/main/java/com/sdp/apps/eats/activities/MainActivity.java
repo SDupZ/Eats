@@ -43,8 +43,10 @@ public class MainActivity extends ActionBarActivity {
                     .commit();
         }
 
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
-        ImageLoader.getInstance().init(config);
+        if(!ImageLoader.getInstance().isInited()) {
+            ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
+            ImageLoader.getInstance().init(config);
+        }
 
         //Create the database here:
         DealDbHelper.getHelper(this);
