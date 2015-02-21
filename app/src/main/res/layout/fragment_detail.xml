@@ -38,7 +38,6 @@
                     android:id="@+id/detail_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="THIS IS A VIEWPAGER TEST"
                     android:padding="12dp"
                     android:textAppearance="?android:attr/textAppearanceLarge"/>
             </LinearLayout>

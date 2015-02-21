@@ -13,6 +13,8 @@ import java.util.List;
 public class MyDeals {
 
     private List<Deal> myDeals;
+    private int priceFilter;
+
     private static MyDeals instance;
 
     //-----------------------------------------------------------------------------------------------
@@ -32,9 +34,13 @@ public class MyDeals {
 
     //Private constructor to ensure a new instance cannot be made by anything other than this class.
     private MyDeals(){
-        myDeals = new ArrayList();
+        myDeals = new ArrayList<Deal>();
+        this.priceFilter = -1;
     }
 
+    public int getPriceFilter(){return priceFilter;}
+
+    public void setPriceFilter(int priceFilter){this.priceFilter = priceFilter;}
 
     public void updateDealsList(List<Deal> myDeals){
         this.myDeals = myDeals;
@@ -45,14 +51,28 @@ public class MyDeals {
      * @return
      */
     public List<Deal> getDealsList(){
-        return myDeals;
+        List<Deal> tempList = new ArrayList<Deal>();
+
+        for (Deal deal: myDeals){
+            if (priceFilter == -1 || Double.parseDouble(deal.getPrice()) <= priceFilter){
+                tempList.add(deal);
+            }
+        }
+        return tempList;
     }
 
     public Deal getDealAtPosition(int position){
 
-        if(position == -1){
-            return null;
+        if(position == -1){return null;}
+
+        List<Deal> tempList = new ArrayList<Deal>();
+
+        for (Deal deal: myDeals){
+            if (priceFilter == -1 || Double.parseDouble(deal.getPrice()) <= priceFilter){
+                tempList.add(deal);
+            }
         }
-        return myDeals.get(position);
+
+        return tempList.get(position);
     }
 }

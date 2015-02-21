@@ -32,11 +32,11 @@ public class MainActivity extends ActionBarActivity {
      * This is where the application loads. When the application is first started, the deals list
      * will need to be updated from the server.
      */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new MainFragment())

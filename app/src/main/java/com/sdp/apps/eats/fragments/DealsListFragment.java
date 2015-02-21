@@ -37,9 +37,6 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
 
     private CustomDealArrayAdapter dealsAdapter;
 
-    //The maximum price to list deals for. (-1 for all)
-    private int priceFilter;
-
     DisplayImageOptions options;                        //Options for 3rd party image loader
 
 
@@ -68,9 +65,9 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
 
     @Override
     public void onStart() {
-        super.onResume();
+        super.onStart();
         SharedPreferences settings = getActivity().getPreferences(Activity.MODE_PRIVATE);
-        this.priceFilter = settings.getInt("priceFilter", -1);
+        MyDeals.getDeals().setPriceFilter(settings.getInt("priceFilter", -1));
         updateAdapter();
     }
 
@@ -78,7 +75,7 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
     {
         super.onStop();
         SharedPreferences.Editor editor = getActivity().getPreferences(Activity.MODE_PRIVATE).edit();
-        editor.putInt("priceFilter", this.priceFilter);
+        editor.putInt("priceFilter", MyDeals.getDeals().getPriceFilter());
         editor.commit();
     }
     //----------------------------------------------------------------------------------------------
@@ -104,10 +101,11 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
         Intent intent =  getActivity().getIntent();
 
         if(intent != null && intent.hasExtra(Intent.EXTRA_TEXT)){
-            priceFilter = Integer.parseInt(intent.getStringExtra(Intent.EXTRA_TEXT));
+            MyDeals.getDeals()
+                    .setPriceFilter(Integer.parseInt(intent.getStringExtra(Intent.EXTRA_TEXT)));
 
             SharedPreferences.Editor editor = getActivity().getPreferences(Activity.MODE_PRIVATE).edit();
-            editor.putInt("priceFilter", this.priceFilter);
+            editor.putInt("priceFilter", MyDeals.getDeals().getPriceFilter());
             editor.commit();
         }
 
@@ -133,7 +131,6 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
         return rootView;
     }
 
-
     public void databaseUpdated(){
         updateAdapter();
     }
@@ -148,7 +145,6 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
         for (Deal deal:allDeals){
             dealsAdapter.add(deal);
         }
-
     }
 
     private void updateDatabase(){

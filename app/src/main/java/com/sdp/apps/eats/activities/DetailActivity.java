@@ -31,7 +31,7 @@ public class DetailActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.detail_activity_slide);
+        setContentView(R.layout.activity_detail);
 
         numDeals = MyDeals.getDeals().getDealsList().size();
 

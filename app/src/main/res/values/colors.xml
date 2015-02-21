@@ -7,8 +7,13 @@
     <color name="light_blue">#ff64c2f4</color>
 
     <!-- Color gradient for background-->
-    <color name="bgnd_color_start">#2F3540</color>
-    <color name="bgnd_color_end">#111317</color>
+    <!-- OLD START:2F3540 OLD END:111317 -->
+
+    <color name="bgnd_color_start">#52596B</color>
+    <color name="bgnd_color_end">#52596B</color>
+
+    <color name="list_item_color_start">#0052596B</color>
+    <color name="list_item_color_end">#80000000</color>
 
     <!-- Colors for the color coding-->
     <color name="color_eats_red">#ffffd989</color>
@@ -16,9 +21,15 @@
     <color name="color_eats_purple">#ff8da9ff</color>
 
     <!-- Action Bar Color -->
-    <color name="actionbar_color">#1C2432</color>
+    <!-- OLD:1C2432 -->
+    <color name="actionbar_color">#3A4152</color>
+
     <color name="actionbar_text_color">#ffffd989</color>
 
     <color name="main_transparent_black">#64000000</color>
+    <color name="test_red">	#520000</color>
     <color name="subtitle_grey">#ffb9b9b9</color>
+
+
+    <color name="color_eats_blue">#2F3540</color>
     </resources>
