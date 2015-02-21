@@ -39,6 +39,7 @@ public class DetailActivity extends ActionBarActivity {
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
+        //mPager.setPageTransformer(true, new ZoomOutPageTransformer());
 
         Intent intent = getIntent();
         int position = intent.getIntExtra("deal_position", -1);
