@@ -43,7 +43,6 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
     int priceFilter;
     DisplayImageOptions options;                        //Options for 3rd party image loader
 
-
     //----------------------------------------------------------------------------------------------
     // Lifecycle methods: oncreates, onresumes, onstops
     //----------------------------------------------------------------------------------------------
@@ -121,7 +120,7 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
 
         List<Deal> currentDeals = new ArrayList<Deal>();
 
-        dealsAdapter = new CustomDealArrayAdapter(getActivity(),currentDeals, options);
+        dealsAdapter = new CustomDealArrayAdapter(getActivity(),currentDeals, options, priceFilter);
 
         View rootView = inflater.inflate(R.layout.fragment_deal_list, container, false);
 
