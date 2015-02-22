@@ -2,13 +2,13 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval">
 
-    <!--
+
     <solid
         android:color="@color/color_eats_purple"/>
-        -->
-
-    <gradient
-        android:startColor="#ff8da9ff"
-        android:endColor="#80ff55d8"
-        android:angle="135"/>
-</shape>
+    <!--
+        <gradient
+            android:startColor="#ff8da9ff"
+            android:endColor="#80ff55d8"
+            android:angle="135"/>
+            -->
+    </shape>

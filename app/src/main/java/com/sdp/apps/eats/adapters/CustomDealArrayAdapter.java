@@ -24,12 +24,10 @@ public class CustomDealArrayAdapter extends ArrayAdapter<Deal> {
     Context context;
 
     int price;
-    public CustomDealArrayAdapter(Context context, List<Deal> deals, DisplayImageOptions options,
-                                  int price) {
+    public CustomDealArrayAdapter(Context context, List<Deal> deals, DisplayImageOptions options) {
         super(context, 0, deals);
         this.options = options;
         this.context  = context;
-        this.price = price;
     }
 
     @Override
@@ -39,10 +37,7 @@ public class CustomDealArrayAdapter extends ArrayAdapter<Deal> {
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            if(price == 5)
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_deal, parent, false);
-            else
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.v2__list_item_deal, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.v2__list_item_deal, parent, false);
         }
 
         TextView businessName = (TextView) convertView.findViewById(R.id.list_item_buisness_name);

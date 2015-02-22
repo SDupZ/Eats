@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +18,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.sdp.apps.eats.Deal;
 import com.sdp.apps.eats.MyDeals;
 import com.sdp.apps.eats.R;
@@ -36,6 +39,8 @@ import java.util.List;
  */
 
 public class DealsListFragment extends Fragment implements DatabaseListener{
+
+    public static final String LOG_TAG = "Eats Debug";
 
     private CustomDealArrayAdapter dealsAdapter;
     private ProgressDialog mDialog;
@@ -79,6 +84,14 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
         updateAdapter();
         updateDatabase();
 
+    }
+
+    public void onResume(){
+        if(!ImageLoader.getInstance().isInited()) {
+            ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity()).build();
+            ImageLoader.getInstance().init(config);
+            Log.i(LOG_TAG, "Image Loader initiated");
+        }
     }
 
     public void onStop()
