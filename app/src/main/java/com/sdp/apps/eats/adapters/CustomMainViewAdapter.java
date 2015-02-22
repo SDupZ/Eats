@@ -51,6 +51,7 @@ public class CustomMainViewAdapter extends ArrayAdapter<Integer> {
         // Populate the data into the template view using the data object
         listItemText.setText(mainMenuString + priceFilter);
         listItemImage.setText("$" + priceFilter);
+        listItemImage.setTypeface(font);
 
         listItemImage.setBackground(convertView.getResources().getDrawable(
                 imageAndColorResources[position][0]));

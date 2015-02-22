@@ -21,7 +21,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sdp.apps.eats.Deal;
 import com.sdp.apps.eats.MyDeals;
 import com.sdp.apps.eats.R;
-import com.sdp.apps.eats.ZoomOutPageTransformer;
 
 
 public class DetailActivity extends FragmentActivity {
@@ -41,7 +40,8 @@ public class DetailActivity extends FragmentActivity {
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
-        mPager.setPageTransformer(true, new ZoomOutPageTransformer());
+
+        //mPager.setPageTransformer(true, new ZoomOutPageTransformer());
 
         Intent intent = getIntent();
         int position = intent.getIntExtra("deal_position", -1);
