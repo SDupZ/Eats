@@ -1,7 +1,7 @@
 package com.sdp.apps.eats.activities;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -9,7 +9,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.sdp.apps.eats.R;
 import com.sdp.apps.eats.data.ContentDownloader;
 import com.sdp.apps.eats.data.DealDbHelper;
-import com.sdp.apps.eats.fragments.MainFragment;
 
 /**
  * 	Main activity. First screen to be loaded when the app opens.
@@ -23,7 +22,7 @@ import com.sdp.apps.eats.fragments.MainFragment;
  */
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
     //----------------------------------------------------------------------------------------------
     // On Create for main activity.
@@ -36,12 +35,6 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new MainFragment())
-                    .commit();
-        }
 
         if(!ImageLoader.getInstance().isInited()) {
             ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();

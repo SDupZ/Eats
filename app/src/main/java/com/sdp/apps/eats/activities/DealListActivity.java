@@ -1,29 +1,23 @@
 package com.sdp.apps.eats.activities;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.sdp.apps.eats.fragments.DealsListFragment;
 import com.sdp.apps.eats.R;
 
 /**
  * Created by Simon on 21/01/2015.
  */
-public class DealListActivity extends ActionBarActivity{
+public class DealListActivity extends Activity {
 
     private static String DEBUG_TAG = "SDUPZ DEBUG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new DealsListFragment())
-                    .commit();
-        }
+        setContentView(R.layout.activity_deal_list);
     }
 
     @Override
@@ -47,5 +41,4 @@ public class DealListActivity extends ActionBarActivity{
 
         return super.onOptionsItemSelected(item);
     }
-
 }

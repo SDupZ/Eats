@@ -1,8 +1,8 @@
 package com.sdp.apps.eats.fragments;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.sdp.apps.eats.adapters.CustomMainViewAdapter;
 import com.sdp.apps.eats.R;
 import com.sdp.apps.eats.activities.DealListActivity;
+import com.sdp.apps.eats.adapters.CustomMainViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Created by Simon on 21/01/2015.
  */
-public class MainFragment extends Fragment  {
+public class MainFragment extends Fragment {
 
     //This is a Integer as the filter will use a Integer.
     private static final List<Integer> priceOptionsMainMenu = new ArrayList<Integer>(){{
