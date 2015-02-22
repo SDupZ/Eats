@@ -49,13 +49,11 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        //!!!------------{
         options = new DisplayImageOptions.Builder()
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
                 .considerExifParams(true)
                 .build();
-        //!!!------------}
     }
 
     @Override
