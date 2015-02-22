@@ -15,6 +15,13 @@
         android:scaleType="centerCrop"
         android:layout_centerHorizontal="true"/>
 
+    <ImageView
+        android:id="@+id/rectangleColor"
+        android:layout_width="5dp"
+        android:layout_height="180dp"
+        tools:background="@color/color_eats_red"
+        android:layout_alignRight="@id/list_item_image"/>
+
     <LinearLayout
         android:id="@+id/list_item_viewgroup"
         android:layout_width="match_parent"

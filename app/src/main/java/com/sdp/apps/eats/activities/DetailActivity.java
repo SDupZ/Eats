@@ -20,6 +20,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sdp.apps.eats.Deal;
 import com.sdp.apps.eats.MyDeals;
 import com.sdp.apps.eats.R;
+import com.sdp.apps.eats.ZoomOutPageTransformer;
 
 
 public class DetailActivity extends FragmentActivity {
@@ -39,7 +40,7 @@ public class DetailActivity extends FragmentActivity {
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
-        //mPager.setPageTransformer(true, new ZoomOutPageTransformer());
+        mPager.setPageTransformer(true, new ZoomOutPageTransformer());
 
         Intent intent = getIntent();
         int position = intent.getIntExtra("deal_position", -1);
@@ -106,15 +107,6 @@ public class DetailActivity extends FragmentActivity {
                     nameView.setText(deal.getBusinessName());
                     descView.setText(deal.getLongDesc());
                     priceView.setText("$" + deal.getPrice());
-
-                    double price = Double.parseDouble(deal.getPrice());
-                    if (price <= 5) {
-                        priceView.setTextColor(getResources().getColor(R.color.color_eats_red));
-                    } else if (price <= 10) {
-                        priceView.setTextColor(getResources().getColor(R.color.color_eats_green));
-                    } else {
-                        priceView.setTextColor(getResources().getColor(R.color.color_eats_purple));
-                    }
                 }
             }
             return rootView;

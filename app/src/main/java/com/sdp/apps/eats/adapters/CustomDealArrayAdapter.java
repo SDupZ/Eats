@@ -52,7 +52,15 @@ public class CustomDealArrayAdapter extends ArrayAdapter<Deal> {
         ImageLoader.getInstance().displayImage(deal.getPhotoURL(), photo, options);
 
         double dealPrice = Double.parseDouble(deal.getPrice());
+        ImageView rectangleColor = (ImageView) convertView.findViewById(R.id.rectangleColor);
 
+        if(dealPrice <= 5 ){
+            rectangleColor.setBackgroundColor(context.getResources().getColor(R.color.color_eats_red));
+        }else if (dealPrice <= 10){
+            rectangleColor.setBackgroundColor(context.getResources().getColor(R.color.color_eats_green));
+        }else{
+            rectangleColor.setBackgroundColor(context.getResources().getColor(R.color.color_eats_purple));
+        }
         // Return the completed view to render on screen
         return convertView;
     }

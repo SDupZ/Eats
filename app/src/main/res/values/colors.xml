@@ -10,9 +10,9 @@
     <color name="bgnd_color_end">#111317</color>
 
     <!-- Colors for the color coding-->
-    <color name="color_eats_red">#03A9F4</color>
-    <color name="color_eats_green">#FFEB3B</color>
-    <color name="color_eats_purple">#8BC34A</color>
+    <color name="color_eats_red">#ffffd989</color>
+    <color name="color_eats_green">#ffaaffaa</color>
+    <color name="color_eats_purple">#ff8da9ff</color>
 
     <color name="main_transparent_black">#64000000</color>
     <color name="subtitle_grey">#ffb9b9b9</color>
