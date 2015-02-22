@@ -8,11 +8,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cheap Deals EveryDay!"
+        android:text="@string/cheap_deals_header"
+        android:textStyle="italic"
         android:padding="2dp"
         android:textSize="@dimen/abc_text_size_subtitle_material_toolbar"
         android:gravity="center_horizontal"
-        android:background="@color/main_transparent_black"/>
+        android:background="@color/white"/>
     <ProgressBar
         android:id="@+id/deals_list_progress_bar"
         android:layout_width="match_parent"

@@ -6,6 +6,6 @@
     <string name="title_activity_detail">Deal Details</string>
     <string name="title_activity_list_deal">Today\'s Deals!</string>
     <string name="action_refresh" translatable="false">Refresh</string>
-
+    <string name="cheap_deals_header">Cheap deals every day!</string>
 
 </resources>

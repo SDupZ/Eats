@@ -120,7 +120,7 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
 
         List<Deal> currentDeals = new ArrayList<Deal>();
 
-        dealsAdapter = new CustomDealArrayAdapter(getActivity(),currentDeals, options, priceFilter);
+        dealsAdapter = new CustomDealArrayAdapter(getActivity(),currentDeals, options);
 
         View rootView = inflater.inflate(R.layout.fragment_deal_list, container, false);
 
@@ -154,7 +154,8 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
         List<Deal> viewableDeals = new ArrayList<Deal>();
 
         for (Deal deal:allDeals){
-            if (Double.parseDouble(deal.getPrice())<= priceFilter) {
+            double price = Double.parseDouble(deal.getPrice());
+            if (price<= priceFilter && price > priceFilter - 5) {
                 dealsAdapter.add(deal);
                 viewableDeals.add(deal);
             }

@@ -9,9 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/detail_image"
@@ -25,13 +26,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_below="@id/detail_image"
-                android:padding="4dp">
+                android:background="@drawable/box_with_border_background">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:background="@color/main_transparent_black"
                     android:padding="2dp">
                     <TextView
                         android:id="@+id/detail_name"
@@ -41,7 +41,7 @@
                         android:padding="12dp"
                         android:layout_weight="1"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         tools:text="Subway"/>
                     <TextView
                         android:id="@+id/detail_price"
@@ -49,16 +49,9 @@
                         android:layout_height="wrap_content"
                         android:padding="12dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-
+                        android:textColor="@color/actionbar_color"
                         tools:text="$10"/>
                 </LinearLayout>
-
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_marginRight="12dp"
-                    android:layout_marginLeft="12dp"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray"/>
 
                 <TextView
                     android:id="@+id/detail_desc"
@@ -68,18 +61,20 @@
                     android:padding="12dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/subtitle_grey"
-                    android:background="@color/main_transparent_black"
                     tools:text="Description of the deal. Yep this is a deal. More stuff to describe"/>
 
             </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
 
             <LinearLayout
                 android:id="@+id/viewgroup_voucher_code"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_below="@id/viewgroup_description"
-                android:padding="4dp">
+                android:background="@drawable/box_with_border_background">
 
                 <TextView
                     android:id="@+id/voucher_code"
@@ -89,18 +84,20 @@
                     android:padding="12dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/subtitle_grey"
-                    android:background="@color/main_transparent_black"
                     android:text="Voucher code: 12345"/>
 
             </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
 
             <LinearLayout
                 android:id="@+id/viewgroup_location"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_below="@id/viewgroup_voucher_code"
-                android:padding="4dp">
+                android:background="@drawable/box_with_border_background">
 
                 <TextView
                     android:id="@+id/location"
@@ -110,10 +107,9 @@
                     android:padding="12dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/subtitle_grey"
-                    android:background="@color/main_transparent_black"
                     android:text="Location Information"/>
 
             </LinearLayout>
-        </RelativeLayout>
+        </LinearLayout>
         </ScrollView>
 </LinearLayout>
