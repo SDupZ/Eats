@@ -2,6 +2,7 @@ package com.sdp.apps.eats.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.sdp.apps.eats.Deal;
@@ -36,7 +38,9 @@ import java.util.List;
 public class DealsListFragment extends Fragment implements DatabaseListener{
 
     private CustomDealArrayAdapter dealsAdapter;
+    private ProgressDialog mDialog;
 
+    int priceFilter;
     DisplayImageOptions options;                        //Options for 3rd party image loader
 
 
@@ -65,15 +69,21 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
     public void onStart() {
         super.onStart();
         SharedPreferences settings = getActivity().getPreferences(Activity.MODE_PRIVATE);
-        MyDeals.getDeals().setPriceFilter(settings.getInt("priceFilter", -1));
+        priceFilter = settings.getInt("priceFilter", -1);
+
+        if(MyDeals.getDeals().getDealsList().size() == 0){
+            ((ProgressBar)getActivity().findViewById(R.id.deals_list_progress_bar))
+                    .setVisibility(View.VISIBLE);
+        }
         updateAdapter();
+        updateDatabase();
     }
 
     public void onStop()
     {
         super.onStop();
         SharedPreferences.Editor editor = getActivity().getPreferences(Activity.MODE_PRIVATE).edit();
-        editor.putInt("priceFilter", MyDeals.getDeals().getPriceFilter());
+        editor.putInt("priceFilter", priceFilter);
         editor.commit();
     }
     //----------------------------------------------------------------------------------------------
@@ -99,11 +109,10 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
         Intent intent =  getActivity().getIntent();
 
         if(intent != null && intent.hasExtra(Intent.EXTRA_TEXT)){
-            MyDeals.getDeals()
-                    .setPriceFilter(Integer.parseInt(intent.getStringExtra(Intent.EXTRA_TEXT)));
+            priceFilter = Integer.parseInt(intent.getStringExtra(Intent.EXTRA_TEXT));
 
             SharedPreferences.Editor editor = getActivity().getPreferences(Activity.MODE_PRIVATE).edit();
-            editor.putInt("priceFilter", MyDeals.getDeals().getPriceFilter());
+            editor.putInt("priceFilter", priceFilter);
             editor.commit();
         }
 
@@ -119,7 +128,6 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Deal deal = dealsAdapter.getItem(position);
                 Intent detailActivity = new Intent(getActivity(), DetailActivity.class)
                         .putExtra("deal_position", position);
                 startActivity(detailActivity);
@@ -130,6 +138,8 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
     }
 
     public void databaseUpdated(){
+        ((ProgressBar)getActivity().findViewById(R.id.deals_list_progress_bar))
+                .setVisibility(View.GONE);
         updateAdapter();
     }
 
@@ -139,15 +149,21 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
     private void updateAdapter(){
         dealsAdapter.clear();
         List<Deal> allDeals = MyDeals.getDeals().getDealsList();
+        List<Deal> viewableDeals = new ArrayList<Deal>();
 
         for (Deal deal:allDeals){
-            dealsAdapter.add(deal);
+            if (Double.parseDouble(deal.getPrice())<= priceFilter) {
+                dealsAdapter.add(deal);
+                viewableDeals.add(deal);
+            }
         }
+        MyDeals.getDeals().setViewableDeals(viewableDeals);
     }
 
     private void updateDatabase(){
         ContentDownloader cd = new ContentDownloader(getActivity());
         cd.addDatabaseListener(this);
         cd.updateDatabase();
+
     }
 }

@@ -34,7 +34,7 @@ public class DetailActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        numDeals = MyDeals.getDeals().getDealsList().size();
+        numDeals = MyDeals.getDeals().getViewableDeals().size();
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -92,10 +92,9 @@ public class DetailActivity extends FragmentActivity {
             Intent intent = getActivity().getIntent();
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
-
             if(intent != null && intent.hasExtra("deal_position")){
                 int position = getArguments().getInt("deal_position");
-                Deal deal = MyDeals.getDeals().getDealAtPosition(position);
+                Deal deal = MyDeals.getDeals().getViewableDeals().get(position);
 
                 if(deal != null) {
                     ImageView imageView = (ImageView) rootView.findViewById(R.id.detail_image);

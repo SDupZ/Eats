@@ -13,7 +13,7 @@ import java.util.List;
 public class MyDeals {
 
     private List<Deal> myDeals;
-    private int priceFilter;
+    private List<Deal> viewableDeals;
 
     private static MyDeals instance;
 
@@ -35,12 +35,15 @@ public class MyDeals {
     //Private constructor to ensure a new instance cannot be made by anything other than this class.
     private MyDeals(){
         myDeals = new ArrayList<Deal>();
-        this.priceFilter = -1;
     }
 
-    public int getPriceFilter(){return priceFilter;}
+    public List<Deal> getViewableDeals() {
+        return viewableDeals;
+    }
 
-    public void setPriceFilter(int priceFilter){this.priceFilter = priceFilter;}
+    public void setViewableDeals(List<Deal> viewableDeals) {
+        this.viewableDeals = viewableDeals;
+    }
 
     public void updateDealsList(List<Deal> myDeals){
         this.myDeals = myDeals;
@@ -51,28 +54,15 @@ public class MyDeals {
      * @return
      */
     public List<Deal> getDealsList(){
-        List<Deal> tempList = new ArrayList<Deal>();
-
-        for (Deal deal: myDeals){
-            if (priceFilter == -1 || Double.parseDouble(deal.getPrice()) <= priceFilter){
-                tempList.add(deal);
-            }
-        }
-        return tempList;
+        return myDeals;
     }
 
-    public Deal getDealAtPosition(int position){
-
-        if(position == -1){return null;}
-
-        List<Deal> tempList = new ArrayList<Deal>();
-
+    public Deal getDealWithId(long id){
         for (Deal deal: myDeals){
-            if (priceFilter == -1 || Double.parseDouble(deal.getPrice()) <= priceFilter){
-                tempList.add(deal);
+            if (deal.getID() == id){
+                return deal;
             }
         }
-
-        return tempList.get(position);
+        return null;
     }
 }

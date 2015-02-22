@@ -13,7 +13,11 @@
         android:textSize="@dimen/abc_text_size_subtitle_material_toolbar"
         android:gravity="center_horizontal"
         android:background="@color/main_transparent_black"/>
-
+    <ProgressBar
+        android:id="@+id/deals_list_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
     <ListView
         android:id="@+id/listview_deals"
         android:layout_width="match_parent"
