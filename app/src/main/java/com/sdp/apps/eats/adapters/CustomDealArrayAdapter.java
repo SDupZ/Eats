@@ -1,6 +1,7 @@
 package com.sdp.apps.eats.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,10 @@ public class CustomDealArrayAdapter extends ArrayAdapter<Deal> {
         businessName.setText(deal.getBusinessName());
         description.setText(deal.getShortDesc());
         price.setText("$" + deal.getPrice());
+
+        Typeface font = Typeface.createFromAsset(getContext().getAssets(), "vintage.ttf");
+        price.setTypeface(font);
+        businessName.setTypeface(font);
 
         ImageLoader.getInstance().displayImage(deal.getPhotoURL(), photo, options);
 

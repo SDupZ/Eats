@@ -1,6 +1,7 @@
 package com.sdp.apps.eats.activities;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -106,6 +107,10 @@ public class DetailActivity extends FragmentActivity {
                     nameView.setText(deal.getBusinessName());
                     descView.setText(deal.getLongDesc());
                     priceView.setText("$" + deal.getPrice());
+
+                    Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "vintage.ttf");
+                    priceView.setTypeface(font);
+                    nameView.setTypeface(font);
                 }
             }
             return rootView;

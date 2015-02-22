@@ -77,6 +77,7 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
         }
         updateAdapter();
         updateDatabase();
+
     }
 
     public void onStop()

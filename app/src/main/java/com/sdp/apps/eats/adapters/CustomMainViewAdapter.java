@@ -1,6 +1,7 @@
 package com.sdp.apps.eats.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,9 @@ public class CustomMainViewAdapter extends ArrayAdapter<Integer> {
         TextView listItemText       = (TextView) convertView.findViewById(R.id.listview_main_text);
         ImageView listItemRectangle =
                 (ImageView) convertView.findViewById(R.id.listview_main_color_tag_rect);
+
+        Typeface font = Typeface.createFromAsset(getContext().getAssets(), "vintage.ttf");
+        listItemText.setTypeface(font);
 
         // Populate the data into the template view using the data object
         listItemText.setText(mainMenuString + priceFilter);
