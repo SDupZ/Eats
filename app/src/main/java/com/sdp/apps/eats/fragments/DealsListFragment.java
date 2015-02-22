@@ -58,6 +58,7 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
                 .cacheOnDisk(true)
                 .considerExifParams(true)
                 .showImageOnLoading(getResources().getDrawable(R.drawable.ic_image_loading))
+                .resetViewBeforeLoading(true)
                 .build();
     }
 
