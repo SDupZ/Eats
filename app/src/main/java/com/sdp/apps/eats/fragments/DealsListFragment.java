@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -87,10 +86,11 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
     }
 
     public void onResume(){
+        super.onResume();
         if(!ImageLoader.getInstance().isInited()) {
-            ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity()).build();
+            ImageLoaderConfiguration config = new ImageLoaderConfiguration.
+                    Builder(getActivity()).build();
             ImageLoader.getInstance().init(config);
-            Log.i(LOG_TAG, "Image Loader initiated");
         }
     }
 
