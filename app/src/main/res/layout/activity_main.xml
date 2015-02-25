@@ -1,18 +1,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
-    android:orientation="horizontal"
+
+    android:id="@+id/splash_background_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    tools:ignore="MergeRootFrame">
+    android:orientation="vertical"
+    android:gravity="center"
 
-    <fragment android:name="com.sdp.apps.eats.fragments.MainFragment"
-        android:id="@+id/main_fragment"
-        android:layout_weight="2"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        tools:layout="@layout/fragment_main" />
+    android:background="@color/color_splash"
+    tools:context=".ActivitySplash">
+
+    <ImageView
+        android:id="@+id/splash_eats_logo"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:src="@drawable/ic_logo" />
+
+    <ProgressBar
+        android:id="@+id/splash_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@android:style/Widget.Holo.ProgressBar"/>
 
 </LinearLayout>
-

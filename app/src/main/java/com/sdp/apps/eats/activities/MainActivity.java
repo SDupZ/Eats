@@ -1,8 +1,11 @@
 package com.sdp.apps.eats.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
+import android.view.View;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -30,6 +33,9 @@ public class MainActivity extends Activity {
      * This is where the application loads. When the application is first started, the deals list
      * will need to be updated from the server.
      */
+
+    private final int SPLASH_DISPLAY_LENGTH = 1500;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +45,16 @@ public class MainActivity extends Activity {
             ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
             ImageLoader.getInstance().init(config);
         }
+
+        new Handler().postDelayed(new Runnable(){
+            @Override
+            public void run() {
+                findViewById(R.id.splash_progress_bar).setVisibility(View.INVISIBLE);
+                Intent mainIntent = new Intent(MainActivity.this, DealListActivity.class);
+                MainActivity.this.startActivity(mainIntent);
+                MainActivity.this.finish();
+            }
+        }, SPLASH_DISPLAY_LENGTH);
 
         //Create the database here:
         DealDbHelper.getHelper(this);
