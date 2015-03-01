@@ -1,5 +1,6 @@
 package com.sdp.apps.eats.fragments;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -17,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -39,7 +41,8 @@ import java.util.List;
  * it will populate with the deals that are $5 or under
  */
 
-public class DealsListFragment extends Fragment implements DatabaseListener, AdapterView.OnItemSelectedListener {
+public class DealsListFragment extends Fragment implements DatabaseListener,
+        ActionBar.OnNavigationListener{
 
     public static final String LOG_TAG = "Eats Debug";
 
@@ -66,8 +69,15 @@ public class DealsListFragment extends Fragment implements DatabaseListener, Ada
                 .resetViewBeforeLoading(true)
                 .build();
 
+        getActivity().getActionBar().
+                setNavigationMode(getActivity().getActionBar().NAVIGATION_MODE_LIST);
+
         SharedPreferences settings = getActivity().getPreferences(Activity.MODE_PRIVATE);
         priceFilter = settings.getInt("priceFilter", -1);
+
+        SpinnerAdapter mSpinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.pricefilter_array, android.R.layout.simple_spinner_dropdown_item);
+        getActivity().getActionBar().setListNavigationCallbacks(mSpinnerAdapter, this);
     }
 
     @Override
@@ -105,12 +115,6 @@ public class DealsListFragment extends Fragment implements DatabaseListener, Ada
     // onOptionsItemSelected
     //----------------------------------------------------------------------------------------------
     public boolean onOptionsItemSelected(MenuItem item){
-        int id = item.getItemId();
-
-        if(id== R.id.action_refresh){
-            updateDatabase();
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -141,17 +145,6 @@ public class DealsListFragment extends Fragment implements DatabaseListener, Ada
             }
         });
 
-        Spinner spinner = (Spinner) rootView.findViewById(R.id.pricefilter_spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.pricefilter_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
-        setSpinnerValue(spinner);
-        spinner.setOnItemSelectedListener(this);
-
         return rootView;
     }
 
@@ -169,32 +162,24 @@ public class DealsListFragment extends Fragment implements DatabaseListener, Ada
         }
     }
 
-    public void onItemSelected(AdapterView<?> parent, View view,
-                               int pos, long id) {
-        String item = parent.getItemAtPosition(pos).toString();
-
-        switch (item){
-            case ("$5"):
+    @Override
+    public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+        switch (itemPosition){
+            case (0):
                 this.priceFilter = 5;
                 updateAdapter();
                 break;
-            case ("$10"):
+            case (1):
                 this.priceFilter = 10;
                 updateAdapter();
                 break;
-            case ("$15"):
+            case (2):
                 this.priceFilter = 15;
                 updateAdapter();
                 break;
         }
 
-        SharedPreferences.Editor editor = getActivity().getPreferences(Activity.MODE_PRIVATE).edit();
-        editor.putInt("priceFilter", priceFilter);
-        editor.commit();
-    }
-
-    public void onNothingSelected(AdapterView<?> parent) {
-        // Another interface callback
+        return false;
     }
 
     public void databaseUpdated(){
@@ -227,4 +212,5 @@ public class DealsListFragment extends Fragment implements DatabaseListener, Ada
         cd.updateDatabase();
 
     }
+
 }

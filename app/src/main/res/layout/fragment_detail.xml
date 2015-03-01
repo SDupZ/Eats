@@ -19,7 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="260dp"
                 android:scaleType="centerCrop"
-                tools:src="@drawable/ic_logo"/>
+                tools:src="@drawable/splash_logo"/>
 
             <LinearLayout
                 android:id="@+id/viewgroup_description"
