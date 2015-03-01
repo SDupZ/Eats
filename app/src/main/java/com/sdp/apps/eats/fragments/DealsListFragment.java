@@ -65,6 +65,9 @@ public class DealsListFragment extends Fragment implements DatabaseListener, Ada
                 .showImageOnLoading(getResources().getDrawable(R.drawable.ic_image_loading))
                 .resetViewBeforeLoading(true)
                 .build();
+
+        SharedPreferences settings = getActivity().getPreferences(Activity.MODE_PRIVATE);
+        priceFilter = settings.getInt("priceFilter", -1);
     }
 
     @Override
@@ -75,25 +78,20 @@ public class DealsListFragment extends Fragment implements DatabaseListener, Ada
     @Override
     public void onStart() {
         super.onStart();
-        SharedPreferences settings = getActivity().getPreferences(Activity.MODE_PRIVATE);
-        priceFilter = settings.getInt("priceFilter", -1);
 
-
-        if(MyDeals.getDeals().getDealsList().size() == 0){
-            ((ProgressBar)getActivity().findViewById(R.id.deals_list_progress_bar))
-                    .setVisibility(View.VISIBLE);
-        }
-        updateAdapter();
-        updateDatabase();
-    }
-
-    public void onResume(){
-        super.onResume();
         if(!ImageLoader.getInstance().isInited()) {
             ImageLoaderConfiguration config = new ImageLoaderConfiguration.
                     Builder(getActivity()).build();
             ImageLoader.getInstance().init(config);
         }
+
+        if(MyDeals.getDeals().getDealsList().size() == 0){
+            ((ProgressBar)getActivity().findViewById(R.id.deals_list_progress_bar))
+                    .setVisibility(View.VISIBLE);
+        }
+
+        updateAdapter();
+        updateDatabase();
     }
 
     public void onStop()
