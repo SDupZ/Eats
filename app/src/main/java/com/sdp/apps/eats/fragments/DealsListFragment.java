@@ -17,8 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -69,15 +67,21 @@ public class DealsListFragment extends Fragment implements DatabaseListener,
                 .resetViewBeforeLoading(true)
                 .build();
 
-        getActivity().getActionBar().
-                setNavigationMode(getActivity().getActionBar().NAVIGATION_MODE_LIST);
-
         SharedPreferences settings = getActivity().getPreferences(Activity.MODE_PRIVATE);
         priceFilter = settings.getInt("priceFilter", -1);
 
-        SpinnerAdapter mSpinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.pricefilter_array, android.R.layout.simple_spinner_dropdown_item);
+
+        getActivity().getActionBar().
+                setNavigationMode(getActivity().getActionBar().NAVIGATION_MODE_LIST);
+
+        final String[] dropdownValues = getResources().getStringArray(R.array.pricefilter_array);
+        ArrayAdapter mSpinnerAdapter = new ArrayAdapter(getActivity(),
+                R.layout.menu_spinner, android.R.id.text1,
+                dropdownValues);
+        mSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+
         getActivity().getActionBar().setListNavigationCallbacks(mSpinnerAdapter, this);
+        setSpinnerValue();
     }
 
     @Override
@@ -148,16 +152,16 @@ public class DealsListFragment extends Fragment implements DatabaseListener,
         return rootView;
     }
 
-    private void setSpinnerValue(Spinner spinner){
+    private void setSpinnerValue(){
         switch (priceFilter){
             case (5):
-                spinner.setSelection(0);
+                getActivity().getActionBar().setSelectedNavigationItem(0);
                 break;
             case (10):
-                spinner.setSelection(1);
+                getActivity().getActionBar().setSelectedNavigationItem(1);
                 break;
             case (15):
-                spinner.setSelection(2);
+                getActivity().getActionBar().setSelectedNavigationItem(2);
                 break;
         }
     }
