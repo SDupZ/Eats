@@ -13,8 +13,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -37,7 +39,7 @@ import java.util.List;
  * it will populate with the deals that are $5 or under
  */
 
-public class DealsListFragment extends Fragment implements DatabaseListener{
+public class DealsListFragment extends Fragment implements DatabaseListener, AdapterView.OnItemSelectedListener {
 
     public static final String LOG_TAG = "Eats Debug";
 
@@ -76,13 +78,13 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
         SharedPreferences settings = getActivity().getPreferences(Activity.MODE_PRIVATE);
         priceFilter = settings.getInt("priceFilter", -1);
 
+
         if(MyDeals.getDeals().getDealsList().size() == 0){
             ((ProgressBar)getActivity().findViewById(R.id.deals_list_progress_bar))
                     .setVisibility(View.VISIBLE);
         }
         updateAdapter();
         updateDatabase();
-
     }
 
     public void onResume(){
@@ -123,14 +125,6 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
 
         Intent intent =  getActivity().getIntent();
 
-        if(intent != null && intent.hasExtra(Intent.EXTRA_TEXT)){
-            priceFilter = Integer.parseInt(intent.getStringExtra(Intent.EXTRA_TEXT));
-
-            SharedPreferences.Editor editor = getActivity().getPreferences(Activity.MODE_PRIVATE).edit();
-            editor.putInt("priceFilter", priceFilter);
-            editor.commit();
-        }
-
         List<Deal> currentDeals = new ArrayList<Deal>();
 
         dealsAdapter = new CustomDealArrayAdapter(getActivity(),currentDeals, options);
@@ -149,7 +143,60 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
             }
         });
 
+        Spinner spinner = (Spinner) rootView.findViewById(R.id.pricefilter_spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.pricefilter_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+        setSpinnerValue(spinner);
+        spinner.setOnItemSelectedListener(this);
+
         return rootView;
+    }
+
+    private void setSpinnerValue(Spinner spinner){
+        switch (priceFilter){
+            case (5):
+                spinner.setSelection(0);
+                break;
+            case (10):
+                spinner.setSelection(1);
+                break;
+            case (15):
+                spinner.setSelection(2);
+                break;
+        }
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+        String item = parent.getItemAtPosition(pos).toString();
+
+        switch (item){
+            case ("$5"):
+                this.priceFilter = 5;
+                updateAdapter();
+                break;
+            case ("$10"):
+                this.priceFilter = 10;
+                updateAdapter();
+                break;
+            case ("$15"):
+                this.priceFilter = 15;
+                updateAdapter();
+                break;
+        }
+
+        SharedPreferences.Editor editor = getActivity().getPreferences(Activity.MODE_PRIVATE).edit();
+        editor.putInt("priceFilter", priceFilter);
+        editor.commit();
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Another interface callback
     }
 
     public void databaseUpdated(){

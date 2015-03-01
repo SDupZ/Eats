@@ -14,11 +14,18 @@
         android:textSize="@dimen/abc_text_size_subtitle_material_toolbar"
         android:gravity="center_horizontal"
         android:background="@color/white"/>
+
+    <Spinner
+        android:id="@+id/pricefilter_spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+
     <ProgressBar
         android:id="@+id/deals_list_progress_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"/>
+
     <ListView
         android:id="@+id/listview_deals"
         android:layout_width="match_parent"
