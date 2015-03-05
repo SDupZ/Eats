@@ -22,7 +22,9 @@
     <color name="color_eats_blue">#2F3540</color>
 
     <!-- Action Bar Color -->
-    <color name="actionbar_color">#5C6BC0</color>
-    <color name="color_splash">#5C6BC0</color>
+    <color name="actionbar_color">#76A045</color>
+    <color name="color_splash">#76A045</color>
+
+    <color name="color_splash_logo_filter">#FFFFFF</color>
 
     </resources>

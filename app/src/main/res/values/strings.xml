@@ -8,4 +8,7 @@
     <string name="action_refresh" translatable="false">Refresh</string>
     <string name="cheap_deals_header">Cheap deals every day!</string>
 
+    <string name="checkbox_1">Deals under $5</string>
+    <string name="checkbox_2">Deals under $10</string>
+    <string name="checkbox_3">Deals over $5</string>
 </resources>

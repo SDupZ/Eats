@@ -17,6 +17,17 @@
         android:paddingBottom="10dp"
         android:src="@drawable/splash_logo" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/cheap_deals_header"
+        android:textStyle="italic"
+        android:padding="2dp"
+        android:textSize="@dimen/abc_text_size_subtitle_material_toolbar"
+        android:gravity="center_horizontal"
+        android:textColor="@color/color_splash_logo_filter"
+        android:background="@color/color_splash"/>
+
     <ProgressBar
         android:id="@+id/splash_progress_bar"
         android:layout_width="wrap_content"
