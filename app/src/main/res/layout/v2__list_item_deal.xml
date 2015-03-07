@@ -3,8 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/list_item_image"
@@ -13,13 +12,6 @@
         android:scaleType="centerCrop"
         android:layout_centerHorizontal="true"
         android:background="@drawable/box_with_border_background"/>
-
-    <ImageView
-        android:id="@+id/rectangleColor"
-        android:layout_width="5dp"
-        android:layout_height="180dp"
-        tools:background="@color/color_eats_red"
-        android:layout_alignRight="@id/list_item_image"/>
 
     <LinearLayout
         android:id="@+id/list_item_viewgroup"
@@ -32,7 +24,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -53,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:paddingLeft="5dp"
-                android:textColor="@color/subtitle_grey"
+                android:textColor="@color/white"
 
                 tools:text="Small description"/>
 
