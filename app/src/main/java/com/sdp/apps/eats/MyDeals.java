@@ -13,7 +13,9 @@ import java.util.List;
 public class MyDeals {
 
     private List<Deal> myDeals;
-    private List<Deal> viewableDeals;
+    private List<Deal> changeRangeDeals;
+    private List<Deal> mealRangeDeals;
+
 
     private static MyDeals instance;
 
@@ -37,14 +39,6 @@ public class MyDeals {
         myDeals = new ArrayList<Deal>();
     }
 
-    public List<Deal> getViewableDeals() {
-        return viewableDeals;
-    }
-
-    public void setViewableDeals(List<Deal> viewableDeals) {
-        this.viewableDeals = viewableDeals;
-    }
-
     public void updateDealsList(List<Deal> myDeals){
         this.myDeals = myDeals;
     }
@@ -64,5 +58,22 @@ public class MyDeals {
             }
         }
         return null;
+    }
+
+
+    public List<Deal> getMealRangeDeals() {
+        return mealRangeDeals;
+    }
+
+    public void setMealRangeDeals(List<Deal> mealRangeDeals) {
+        this.mealRangeDeals = mealRangeDeals;
+    }
+
+    public List<Deal> getChangeRangeDeals() {
+        return changeRangeDeals;
+    }
+
+    public void setChangeRangeDeals(List<Deal> changeRangeDeals) {
+        this.changeRangeDeals = changeRangeDeals;
     }
 }

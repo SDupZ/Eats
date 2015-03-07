@@ -26,6 +26,7 @@ import com.sdp.apps.eats.R;
 public class DetailActivity extends FragmentActivity {
 
     private int numDeals;
+    private int priceFilter;
     private ViewPager   mPager;
     private PagerAdapter mPagerAdapter;
 
@@ -34,11 +35,15 @@ public class DetailActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        numDeals = MyDeals.getDeals().getViewableDeals().size();
+        priceFilter = getIntent().getIntExtra("price_filter", 1);
+        if (priceFilter == 0)
+            numDeals = MyDeals.getDeals().getChangeRangeDeals().size();
+        else
+            numDeals = MyDeals.getDeals().getMealRangeDeals().size();
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
-        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), priceFilter);
         mPager.setAdapter(mPagerAdapter);
 
         //mPager.setPageTransformer(true, new ZoomOutPageTransformer());
@@ -78,10 +83,11 @@ public class DetailActivity extends FragmentActivity {
         /**
          * Factory method for this fragment class. Constructs a new fragment for the given page number.
          */
-        public static PlaceholderFragment create(int dealPosition) {
+        public static PlaceholderFragment create(int dealPosition, int priceFilter) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt("deal_position", dealPosition);
+            args.putInt("price_filter", priceFilter);
             fragment.setArguments(args);
             return fragment;
         }
@@ -92,10 +98,16 @@ public class DetailActivity extends FragmentActivity {
             Intent intent = getActivity().getIntent();
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
-            if(intent != null && intent.hasExtra("deal_position")){
+            if(intent != null && intent.hasExtra("deal_position") && intent.hasExtra("price_filter")){
                 int position = getArguments().getInt("deal_position");
-                Deal deal = MyDeals.getDeals().getViewableDeals().get(position);
+                int priceFilter = getArguments().getInt("price_filter");
+                Deal deal;
 
+                if (priceFilter == 0)
+                    deal = MyDeals.getDeals().getChangeRangeDeals().get(position);
+                else
+                    deal = MyDeals.getDeals().getMealRangeDeals().get(position);
+                
                 if(deal != null) {
                     ImageView imageView = (ImageView) rootView.findViewById(R.id.detail_image);
                     TextView nameView = (TextView) rootView.findViewById(R.id.detail_name);
@@ -121,13 +133,15 @@ public class DetailActivity extends FragmentActivity {
      * sequence.
      */
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-        public ScreenSlidePagerAdapter(FragmentManager fm) {
+        int pricefilter;
+        public ScreenSlidePagerAdapter(FragmentManager fm, int pricefilter) {
             super(fm);
+            this.pricefilter = pricefilter;
         }
 
         @Override
         public Fragment getItem(int position) {
-            return PlaceholderFragment.create(position);
+            return PlaceholderFragment.create(position, pricefilter);
         }
 
         @Override

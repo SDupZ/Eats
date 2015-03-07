@@ -1,21 +1,18 @@
 <resources>
     <!-- Base application theme. (No Actionbar) -->
-    <style name="AppTheme" parent="@android:style/Theme.Holo.Light">
+    <style name="AppTheme" parent="@android:style/Theme.Holo.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@drawable/background_gradient</item>
     </style>
 
 
     <!-- Theme for main activity needs to be done separetly since it has no actionbar-->
-    <style name="ActionBar.Solid.Eats.DetailActivity"
+    <style name="ActionBar.Solid.Eats.MainActivity"
         parent="@android:style/Theme.Holo.Light.DarkActionBar">
-        <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="android:displayOptions">showHome|homeAsUp|useLogo</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
     </style>
 
-    <!-- ActionBar styles -->
-    <style name="MyActionBar"
-        parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@color/actionbar_color</item>
-    </style>
 
 </resources>

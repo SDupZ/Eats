@@ -121,6 +121,7 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent detailActivity = new Intent(getActivity(), DetailActivity.class)
                         .putExtra("deal_position", position);
+                detailActivity.putExtra("price_filter", priceFilter);
                 startActivity(detailActivity);
             }
         });
@@ -158,7 +159,10 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
                 viewableDeals.add(deal);
             }
         }
-        MyDeals.getDeals().setViewableDeals(viewableDeals);
+        if (priceFilter==0)
+            MyDeals.getDeals().setChangeRangeDeals(viewableDeals);
+        else
+            MyDeals.getDeals().setMealRangeDeals(viewableDeals);
     }
 
     private void updateDatabase(){
