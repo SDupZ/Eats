@@ -1,11 +1,7 @@
 package com.sdp.apps.eats.fragments;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -39,15 +34,9 @@ import java.util.List;
  * it will populate with the deals that are $5 or under
  */
 
-public class DealsListFragment extends Fragment implements DatabaseListener,
-        ActionBar.OnNavigationListener{
-
-    public static final String LOG_TAG = "Eats Debug";
+public class DealsListFragment extends Fragment implements DatabaseListener{
 
     private CustomDealArrayAdapter dealsAdapter;
-    private ProgressDialog mDialog;
-
-    int priceFilter;
     DisplayImageOptions options;                        //Options for 3rd party image loader
 
     //----------------------------------------------------------------------------------------------
@@ -66,22 +55,6 @@ public class DealsListFragment extends Fragment implements DatabaseListener,
                 .showImageOnLoading(getResources().getDrawable(R.drawable.ic_image_loading))
                 .resetViewBeforeLoading(true)
                 .build();
-
-        SharedPreferences settings = getActivity().getPreferences(Activity.MODE_PRIVATE);
-        priceFilter = settings.getInt("priceFilter", -1);
-
-
-        getActivity().getActionBar().
-                setNavigationMode(getActivity().getActionBar().NAVIGATION_MODE_LIST);
-
-        final String[] dropdownValues = getResources().getStringArray(R.array.pricefilter_array);
-        ArrayAdapter mSpinnerAdapter = new ArrayAdapter(getActivity(),
-                R.layout.menu_spinner, android.R.id.text1,
-                dropdownValues);
-        mSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-
-        getActivity().getActionBar().setListNavigationCallbacks(mSpinnerAdapter, this);
-        setSpinnerValue();
     }
 
     @Override
@@ -108,13 +81,6 @@ public class DealsListFragment extends Fragment implements DatabaseListener,
         updateDatabase();
     }
 
-    public void onStop()
-    {
-        super.onStop();
-        SharedPreferences.Editor editor = getActivity().getPreferences(Activity.MODE_PRIVATE).edit();
-        editor.putInt("priceFilter", priceFilter);
-        editor.commit();
-    }
     //----------------------------------------------------------------------------------------------
     // onOptionsItemSelected
     //----------------------------------------------------------------------------------------------
@@ -152,40 +118,6 @@ public class DealsListFragment extends Fragment implements DatabaseListener,
         return rootView;
     }
 
-    private void setSpinnerValue(){
-        switch (priceFilter){
-            case (5):
-                getActivity().getActionBar().setSelectedNavigationItem(0);
-                break;
-            case (10):
-                getActivity().getActionBar().setSelectedNavigationItem(1);
-                break;
-            case (15):
-                getActivity().getActionBar().setSelectedNavigationItem(2);
-                break;
-        }
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-        switch (itemPosition){
-            case (0):
-                this.priceFilter = 5;
-                updateAdapter();
-                break;
-            case (1):
-                this.priceFilter = 10;
-                updateAdapter();
-                break;
-            case (2):
-                this.priceFilter = 15;
-                updateAdapter();
-                break;
-        }
-
-        return false;
-    }
-
     public void databaseUpdated(){
         ((ProgressBar)getActivity().findViewById(R.id.deals_list_progress_bar))
                 .setVisibility(View.GONE);
@@ -202,10 +134,8 @@ public class DealsListFragment extends Fragment implements DatabaseListener,
 
         for (Deal deal:allDeals){
             double price = Double.parseDouble(deal.getPrice());
-            if (price<= priceFilter && price > priceFilter - 5) {
-                dealsAdapter.add(deal);
-                viewableDeals.add(deal);
-            }
+            dealsAdapter.add(deal);
+            viewableDeals.add(deal);
         }
         MyDeals.getDeals().setViewableDeals(viewableDeals);
     }
