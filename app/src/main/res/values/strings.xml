@@ -11,4 +11,7 @@
     <string name="checkbox_1">Deals under $5</string>
     <string name="checkbox_2">Deals under $10</string>
     <string name="checkbox_3">Deals over $5</string>
+
+    <string name="change_range_title">Dollar Deals</string>
+    <string name="meal_range_title">Meal Deals</string>
 </resources>

@@ -3,9 +3,6 @@
     <style name="AppTheme" parent="@android:style/Theme.Holo.Light">
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@drawable/background_gradient</item>
-        <item name="android:displayOptions">showHome|homeAsUp|useLogo</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
     </style>
 
 

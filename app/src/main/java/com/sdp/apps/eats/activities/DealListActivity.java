@@ -1,44 +1,94 @@
 package com.sdp.apps.eats.activities;
 
-import android.app.Activity;
+import android.app.ActionBar;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 
 import com.sdp.apps.eats.R;
+import com.sdp.apps.eats.fragments.DealsListFragment;
 
 /**
  * Created by Simon on 21/01/2015.
  */
-public class DealListActivity extends Activity {
-
-    private static String DEBUG_TAG = "SDUPZ DEBUG";
+public class DealListActivity extends FragmentActivity implements ActionBar.TabListener{
+    ViewPager mPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deal_list);
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+        PagerAdapter adapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                switch (position){
+                    case 0:
+                        DealsListFragment frag = new DealsListFragment();
+                        frag.setPriceFilter(0);
+                        return frag;
+                    case 1:
+                        DealsListFragment frag2 = new DealsListFragment();
+                        frag2.setPriceFilter(1);
+                        return frag2;
+                }
+                return null;
+            }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+            @Override
+            public int getCount() {
+                return 2;
+            }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+            @Override
+            public CharSequence getPageTitle(int position) {
+                switch (position) {
+                    case 0:
+                        return getString(R.string.change_range_title);
+                    case 1:
+                        return getString(R.string.meal_range_title);
+                }
+                return null;
+            }
+        };
+
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager.setAdapter(adapter);
+        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+            @Override
+            public void onPageSelected(int position){
+                getActionBar().setSelectedNavigationItem(position);
+            }
+        });
+        mPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.page_margin));
+
+        getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        for (int position = 0; position < adapter.getCount(); position++) {
+            getActionBar().addTab(getActionBar().newTab()
+                    .setText(adapter.getPageTitle(position))
+                    .setTabListener(this));
         }
 
-        return super.onOptionsItemSelected(item);
+        getActionBar().setDisplayShowHomeEnabled(false);
+        getActionBar().setDisplayShowTitleEnabled(false);
     }
+
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        mPager.setCurrentItem(tab.getPosition());
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
+
 }

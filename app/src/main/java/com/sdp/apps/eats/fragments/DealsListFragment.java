@@ -1,6 +1,7 @@
 package com.sdp.apps.eats.fragments;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -36,7 +37,16 @@ import java.util.List;
 
 public class DealsListFragment extends Fragment implements DatabaseListener{
 
+    public static final double changeRangePrice     =   3;
+    public static final double priceRangeOverlap    =   0.25;
+    //This should be either 0 or 1: 0=change range. 1=Rest of deals
+    int priceFilter;
+
     private CustomDealArrayAdapter dealsAdapter;
+    private ProgressDialog mDialog;
+
+
+
     DisplayImageOptions options;                        //Options for 3rd party image loader
 
     //----------------------------------------------------------------------------------------------
@@ -118,11 +128,17 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
         return rootView;
     }
 
+
     public void databaseUpdated(){
         ((ProgressBar)getActivity().findViewById(R.id.deals_list_progress_bar))
                 .setVisibility(View.GONE);
         updateAdapter();
     }
+
+    public void setPriceFilter(int priceFilter){
+        this.priceFilter = priceFilter;
+    }
+
 
     //----------------------------------------------------------------------------------------------
     // Helper Methods
@@ -134,8 +150,13 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
 
         for (Deal deal:allDeals){
             double price = Double.parseDouble(deal.getPrice());
-            dealsAdapter.add(deal);
-            viewableDeals.add(deal);
+            if (priceFilter == 0 && price < (changeRangePrice + changeRangePrice * priceRangeOverlap)) {
+                dealsAdapter.add(deal);
+                viewableDeals.add(deal);
+            }else if (priceFilter==1 && price > changeRangePrice){
+                dealsAdapter.add(deal);
+                viewableDeals.add(deal);
+            }
         }
         MyDeals.getDeals().setViewableDeals(viewableDeals);
     }
