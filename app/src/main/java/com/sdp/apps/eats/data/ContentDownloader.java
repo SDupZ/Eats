@@ -107,6 +107,15 @@ public class ContentDownloader extends AsyncTask<Void, Void, Deal[]>{
         }
         try {
             Deal[] myDeals = getDealsDataFromJson(dealsJsonStr);
+            if(myDeals != null){
+                DealDbHelper db = DealDbHelper.getHelper(context);
+                db.deleteAllData();
+                for(int i = 0; i <myDeals.length; i++){
+                    long id = db.insertData(myDeals[i]);
+                    myDeals[i].setID(id);
+                }
+                MyDeals.getDeals().updateDealsList(Arrays.asList(myDeals));
+            }
             return myDeals;
         }catch(JSONException e){
             e.printStackTrace();
@@ -117,13 +126,6 @@ public class ContentDownloader extends AsyncTask<Void, Void, Deal[]>{
     @Override
     protected void onPostExecute(Deal[] result) {
         if(result != null){
-            DealDbHelper db = DealDbHelper.getHelper(context);
-            db.deleteAllData();
-            for(int i = 0; i <result.length; i++){
-                long id = db.insertData(result[i]);
-                result[i].setID(id);
-            }
-            MyDeals.getDeals().updateDealsList(Arrays.asList(result));
             notifyListeners();
         }
     }

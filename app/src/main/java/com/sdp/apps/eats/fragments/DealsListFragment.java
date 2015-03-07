@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -37,7 +38,7 @@ import java.util.List;
  * it will populate with the deals that are $5 or under
  */
 
-public class DealsListFragment extends Fragment implements DatabaseListener{
+public class DealsListFragment extends Fragment implements DatabaseListener, SwipeRefreshLayout.OnRefreshListener{
 
     public static final double changeRangePrice     =   3;
     public static final double priceRangeOverlap    =   0.25;
@@ -48,6 +49,8 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
     private ProgressDialog mDialog;
 
     DisplayImageOptions options;                        //Options for 3rd party image loader
+
+    SwipeRefreshLayout swipeLayout;
 
     //----------------------------------------------------------------------------------------------
     // Lifecycle methods: oncreates, onresumes, onstops
@@ -65,6 +68,11 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
                 .showImageOnLoading(getResources().getDrawable(R.drawable.ic_image_loading))
                 .resetViewBeforeLoading(true)
                 .build();
+    }
+
+    @Override
+    public void onRefresh() {
+        updateDatabase();
     }
 
     @Override
@@ -104,15 +112,19 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_deal_list, container, false);
 
         Intent intent =  getActivity().getIntent();
 
+        swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_view);
+        swipeLayout.setOnRefreshListener(this);
+        swipeLayout.setColorScheme(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
         List<Deal> currentDeals = new ArrayList<Deal>();
         dealsAdapter = new CustomDealArrayAdapter(getActivity(),currentDeals, options);
-
-
-        View rootView = inflater.inflate(R.layout.fragment_deal_list, container, false);
-
         ListView view = (ListView) rootView.findViewById(R.id.listview_deals);
 
         view.setAdapter(dealsAdapter);
@@ -134,6 +146,7 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
         ((ProgressBar)getActivity().findViewById(R.id.deals_list_progress_bar))
                 .setVisibility(View.GONE);
         updateAdapter();
+        swipeLayout.setRefreshing(false);
     }
 
     public void setPriceFilter(int priceFilter){
