@@ -49,8 +49,6 @@ public class ContentDownloader extends AsyncTask<Void, Void, Deal[]>{
 
     @Override
     protected Deal[] doInBackground(Void... params){
-        // These two need to be declared outside the try/catch
-        // so that they can be closed in the finally block.
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 
@@ -114,7 +112,6 @@ public class ContentDownloader extends AsyncTask<Void, Void, Deal[]>{
             e.printStackTrace();
             return null;
         }
-
     }
 
     @Override

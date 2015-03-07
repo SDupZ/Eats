@@ -15,8 +15,6 @@ public class MyDeals {
     private List<Deal> myDeals;
     private List<Deal> changeRangeDeals;
     private List<Deal> mealRangeDeals;
-
-
     private static MyDeals instance;
 
     //-----------------------------------------------------------------------------------------------
@@ -36,7 +34,10 @@ public class MyDeals {
 
     //Private constructor to ensure a new instance cannot be made by anything other than this class.
     private MyDeals(){
+
         myDeals = new ArrayList<Deal>();
+        changeRangeDeals = new ArrayList<Deal>();
+        mealRangeDeals = new ArrayList<Deal>();
     }
 
     public void updateDealsList(List<Deal> myDeals){

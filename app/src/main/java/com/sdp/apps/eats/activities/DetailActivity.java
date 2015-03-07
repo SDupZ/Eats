@@ -107,7 +107,7 @@ public class DetailActivity extends FragmentActivity {
                     deal = MyDeals.getDeals().getChangeRangeDeals().get(position);
                 else
                     deal = MyDeals.getDeals().getMealRangeDeals().get(position);
-                
+
                 if(deal != null) {
                     ImageView imageView = (ImageView) rootView.findViewById(R.id.detail_image);
                     TextView nameView = (TextView) rootView.findViewById(R.id.detail_name);

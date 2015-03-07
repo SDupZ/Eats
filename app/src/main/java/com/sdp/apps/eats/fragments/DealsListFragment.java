@@ -1,9 +1,9 @@
 package com.sdp.apps.eats.fragments;
 
-import android.support.v4.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +26,8 @@ import com.sdp.apps.eats.data.ContentDownloader;
 import com.sdp.apps.eats.data.DatabaseListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -44,8 +46,6 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
 
     private CustomDealArrayAdapter dealsAdapter;
     private ProgressDialog mDialog;
-
-
 
     DisplayImageOptions options;                        //Options for 3rd party image loader
 
@@ -108,8 +108,8 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
         Intent intent =  getActivity().getIntent();
 
         List<Deal> currentDeals = new ArrayList<Deal>();
-
         dealsAdapter = new CustomDealArrayAdapter(getActivity(),currentDeals, options);
+
 
         View rootView = inflater.inflate(R.layout.fragment_deal_list, container, false);
 
@@ -159,10 +159,19 @@ public class DealsListFragment extends Fragment implements DatabaseListener{
                 viewableDeals.add(deal);
             }
         }
+        Collections.sort(viewableDeals);
+
         if (priceFilter==0)
             MyDeals.getDeals().setChangeRangeDeals(viewableDeals);
         else
             MyDeals.getDeals().setMealRangeDeals(viewableDeals);
+
+        dealsAdapter.sort(new Comparator<Deal>() {
+            @Override
+            public int compare(Deal lhs, Deal rhs) {
+                return lhs.compareTo(rhs);
+            }
+        });
     }
 
     private void updateDatabase(){

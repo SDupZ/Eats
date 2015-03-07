@@ -3,7 +3,7 @@ package com.sdp.apps.eats;
 /**
  * Created by Simon on 12/01/2015.
  */
-public class Deal{
+public class Deal implements Comparable{
     private long id;
     private String businessName;
     private String shortDesc;
@@ -61,5 +61,18 @@ public class Deal{
     public long getID(){ return id; }
 
     public void setID(long id){this.id = id;}
+
+    @Override
+    public int compareTo(Object arg0){
+        Deal other = (Deal) arg0;
+
+        if (this.getPrice().equals(other.getPrice())){
+            return 0;
+        }else if (Double.parseDouble(this.getPrice()) < Double.parseDouble(other.getPrice())){
+            return -1;
+        }else {
+            return 1;
+        }
+    }
 
 }
