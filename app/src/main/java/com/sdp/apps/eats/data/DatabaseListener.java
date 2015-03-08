@@ -5,6 +5,6 @@ package com.sdp.apps.eats.data;
  */
 public interface DatabaseListener {
 
-    void databaseUpdated();
+    void databaseUpdated(boolean success);
 
 }

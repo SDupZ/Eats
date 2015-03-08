@@ -21,10 +21,10 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.sdp.apps.eats.Deal;
 import com.sdp.apps.eats.MyDeals;
 import com.sdp.apps.eats.R;
+import com.sdp.apps.eats.activities.DealListActivity;
 import com.sdp.apps.eats.activities.DetailActivity;
 import com.sdp.apps.eats.adapters.CustomDealArrayAdapter;
 import com.sdp.apps.eats.data.ContentDownloader;
-import com.sdp.apps.eats.data.DatabaseListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,10 +38,11 @@ import java.util.List;
  * it will populate with the deals that are $5 or under
  */
 
-public class DealsListFragment extends Fragment implements DatabaseListener, SwipeRefreshLayout.OnRefreshListener{
+public class DealsListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
-    public static final double changeRangePrice     =   3;
-    public static final double priceRangeOverlap    =   0.25;
+    private static final double changeRangePrice     =   3;
+    private static final double priceRangeOverlap    =   0.25;
+
     //This should be either 0 or 1: 0=change range. 1=Rest of deals
     int priceFilter;
 
@@ -49,7 +50,7 @@ public class DealsListFragment extends Fragment implements DatabaseListener, Swi
     private ProgressDialog mDialog;
 
     DisplayImageOptions options;                        //Options for 3rd party image loader
-
+    ContentDownloader cd;
     SwipeRefreshLayout swipeLayout;
 
     //----------------------------------------------------------------------------------------------
@@ -72,7 +73,7 @@ public class DealsListFragment extends Fragment implements DatabaseListener, Swi
 
     @Override
     public void onRefresh() {
-        updateDatabase();
+        ((DealListActivity)getActivity()).updateDatabase();
     }
 
     @Override
@@ -95,8 +96,8 @@ public class DealsListFragment extends Fragment implements DatabaseListener, Swi
                     .setVisibility(View.VISIBLE);
         }
 
+        ((DealListActivity)getActivity()).updateDatabase();
         updateAdapter();
-        updateDatabase();
     }
 
     //----------------------------------------------------------------------------------------------
@@ -141,14 +142,6 @@ public class DealsListFragment extends Fragment implements DatabaseListener, Swi
         return rootView;
     }
 
-
-    public void databaseUpdated(){
-        ((ProgressBar)getActivity().findViewById(R.id.deals_list_progress_bar))
-                .setVisibility(View.GONE);
-        updateAdapter();
-        swipeLayout.setRefreshing(false);
-    }
-
     public void setPriceFilter(int priceFilter){
         this.priceFilter = priceFilter;
     }
@@ -157,7 +150,7 @@ public class DealsListFragment extends Fragment implements DatabaseListener, Swi
     //----------------------------------------------------------------------------------------------
     // Helper Methods
     //----------------------------------------------------------------------------------------------
-    private void updateAdapter(){
+    public void updateAdapter(){
         dealsAdapter.clear();
         List<Deal> allDeals = MyDeals.getDeals().getDealsList();
         List<Deal> viewableDeals = new ArrayList<Deal>();
@@ -187,11 +180,18 @@ public class DealsListFragment extends Fragment implements DatabaseListener, Swi
         });
     }
 
-    private void updateDatabase(){
-        ContentDownloader cd = new ContentDownloader(getActivity());
-        cd.addDatabaseListener(this);
-        cd.updateDatabase();
+    public void databaseUpdated(boolean success){
+        View childView1 = this.getView();
+        if(childView1 != null) {
+            childView1.findViewById(R.id.deals_list_progress_bar).setVisibility(View.GONE);
 
+            if (success) {
+                childView1.findViewById(R.id.deals_list_swipe_down_text).setVisibility(View.GONE);
+                updateAdapter();
+            } else {
+                childView1.findViewById(R.id.deals_list_swipe_down_text).setVisibility(View.VISIBLE);
+            }
+            ((SwipeRefreshLayout) childView1.findViewById(R.id.swipe_refresh_view)).setRefreshing(false);
+        }
     }
-
 }

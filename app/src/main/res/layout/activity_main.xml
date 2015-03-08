@@ -25,8 +25,7 @@
         android:padding="2dp"
         android:textSize="@dimen/abc_text_size_subtitle_material_toolbar"
         android:gravity="center_horizontal"
-        android:textColor="@color/color_splash_logo_filter"
-        android:background="@color/color_splash"/>
+        android:textColor="@color/color_splash_logo_filter"/>
 
     <ProgressBar
         android:id="@+id/splash_progress_bar"

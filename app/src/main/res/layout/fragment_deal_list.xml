@@ -12,6 +12,15 @@
         android:layout_height="wrap_content"
         android:visibility="gone"/>
 
+    <TextView
+        android:id="@+id/deals_list_swipe_down_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/refresh_hint"
+        android:gravity="center"
+        android:padding="5dp"
+        android:visibility="gone"/>
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_view"
         android:layout_width="match_parent"

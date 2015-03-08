@@ -23,7 +23,7 @@
 
     <!-- Action Bar Color -->
     <color name="actionbar_color">#76A045</color>
-    <color name="color_splash">#ff000000</color>
+    <color name="color_splash">#000000</color>
 
     <color name="color_splash_logo_filter">#ffffffff</color>
 

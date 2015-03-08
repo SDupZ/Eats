@@ -14,4 +14,7 @@
 
     <string name="change_range_title">Dollar Deals</string>
     <string name="meal_range_title">Meal Deals</string>
+
+    <string name="no_internet_toast">Please check your internet connection.</string>
+    <string name="refresh_hint">No connection found. Swipe down to reload...</string>
 </resources>

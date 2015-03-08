@@ -1,6 +1,8 @@
 package com.sdp.apps.eats.data;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -27,23 +29,33 @@ public class ContentDownloader extends AsyncTask<Void, Void, Deal[]>{
 
     private Context context;
     private ArrayList<DatabaseListener> listeners;
+    private boolean updating;
 
     public ContentDownloader(Context context){
         this.context = context;
         this.listeners = new ArrayList<DatabaseListener>();
+        updating = false;
     }
 
     public void updateDatabase(){
-        this.execute();
+        if (!updating) {
+            if (isConnected()) {
+                updating = true;
+                this.execute();
+            } else {
+                notifyListeners(false);
+            }
+        }
     }
 
     public void addDatabaseListener(DatabaseListener databaseListener){
         this.listeners.add(databaseListener);
     }
 
-    private void notifyListeners(){
+    //true for successful, false for non sucessful
+    private void notifyListeners(boolean success){
         for (DatabaseListener listener: this.listeners){
-            listener.databaseUpdated();
+            listener.databaseUpdated(success);
         }
     }
 
@@ -126,8 +138,9 @@ public class ContentDownloader extends AsyncTask<Void, Void, Deal[]>{
     @Override
     protected void onPostExecute(Deal[] result) {
         if(result != null){
-            notifyListeners();
+            notifyListeners(true);
         }
+        this.updating=false;
     }
 
     //------------------------------------------------------------------------------------------
@@ -172,5 +185,14 @@ public class ContentDownloader extends AsyncTask<Void, Void, Deal[]>{
             resultDeals[i] = deal;
         }
         return resultDeals;
+    }
+
+    private boolean isConnected(){
+        ConnectivityManager cm =
+                (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        return isConnected;
     }
 }
