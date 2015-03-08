@@ -3,8 +3,17 @@
     <style name="AppTheme" parent="@android:style/Theme.Holo.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@drawable/background_gradient</item>
+
+        <item name="android:actionBarStyle">@style/MyActionBarStyle</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_action_back</item>
+        <item name="homeAsUpIndicator">@drawable/ic_action_back</item>
     </style>
 
+    <style name="MyActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/actionbar_color</item>
+
+
+    </style>
 
     <!-- Theme for main activity needs to be done separetly since it has no actionbar-->
     <style name="ActionBar.Solid.Eats.MainActivity"
@@ -13,6 +22,5 @@
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
     </style>
-
 
 </resources>
