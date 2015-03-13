@@ -17,7 +17,7 @@
             <ImageView
                 android:id="@+id/detail_image"
                 android:layout_width="match_parent"
-                android:layout_height="260dp"
+                android:layout_height="250dp"
                 android:scaleType="centerCrop"
                 tools:src="@drawable/splash_logo"/>
 
@@ -26,32 +26,61 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:padding="15dp"
                 android:background="@drawable/box_with_border_background">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="2dp">
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:padding="3dp">
+
                     <TextView
-                        android:id="@+id/detail_name"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="left"
-                        android:padding="12dp"
-                        android:layout_weight="1"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@color/black"
-                        tools:text="Subway"/>
-                    <TextView
-                        android:id="@+id/detail_price"
+                        android:id="@+id/detail_sticky_desc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="12dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@color/actionbar_color"
-                        tools:text="$10"/>
-                </LinearLayout>
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        tools:text="$10.00 from Love a Duck Balmoral"/>
+
+                    </LinearLayout>
+
+                <TextView
+                    android:id="@+id/voucher_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:text="Voucher code: 12345"/>
+                
+            </LinearLayout>
+                  
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/box_with_border_background">
+
+                <TextView
+                    android:text="Deal Description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:paddingLeft="12dp"
+                    android:paddingTop="4dp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/subtitle_grey"/>
 
                 <TextView
                     android:id="@+id/detail_desc"
@@ -59,10 +88,9 @@
                     android:layout_height="wrap_content"
                     android:gravity="left"
                     android:padding="12dp"
+                    tools:text="This is a test descrioption"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/subtitle_grey"
-                    tools:text="Description of the deal. Yep this is a deal. More stuff to describe"/>
-
+                    android:textColor="@color/black"/>
             </LinearLayout>
 
             <ImageView
@@ -70,34 +98,20 @@
                 android:layout_height="10dp"/>
 
             <LinearLayout
-                android:id="@+id/viewgroup_voucher_code"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@drawable/box_with_border_background">
 
                 <TextView
-                    android:id="@+id/voucher_code"
+                    android:text="Location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:padding="12dp"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/subtitle_grey"
-                    android:text="Voucher code: 12345"/>
-
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="10dp"/>
-
-            <LinearLayout
-                android:id="@+id/viewgroup_location"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@drawable/box_with_border_background">
+                    android:paddingLeft="12dp"
+                    android:paddingTop="4dp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/subtitle_grey"/>
 
                 <TextView
                     android:id="@+id/location"
@@ -105,11 +119,44 @@
                     android:layout_height="wrap_content"
                     android:gravity="left"
                     android:padding="12dp"
+                    tools:text="123 Queen Street"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/subtitle_grey"
-                    android:text="Location Information"/>
-
+                    android:textColor="@color/black"/>
             </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/box_with_border_background">
+
+                <TextView
+                    android:id="@+id/about_desc_label"
+                    android:text="About "
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:paddingLeft="12dp"
+                    android:paddingTop="4dp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/subtitle_grey"/>
+
+                <TextView
+                    android:id="@+id/about_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:padding="12dp"
+                    tools:text="This is a test descrioption"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+
         </LinearLayout>
-        </ScrollView>
+    </ScrollView>
 </LinearLayout>

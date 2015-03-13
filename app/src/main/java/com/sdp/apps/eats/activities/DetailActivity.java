@@ -1,7 +1,6 @@
 package com.sdp.apps.eats.activities;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -110,18 +109,22 @@ public class DetailActivity extends FragmentActivity {
 
                 if(deal != null) {
                     ImageView imageView = (ImageView) rootView.findViewById(R.id.detail_image);
-                    TextView nameView = (TextView) rootView.findViewById(R.id.detail_name);
                     TextView descView = (TextView) rootView.findViewById(R.id.detail_desc);
-                    TextView priceView = (TextView) rootView.findViewById(R.id.detail_price);
+                    TextView stickyDescView = (TextView) rootView.findViewById(R.id.detail_sticky_desc);
+                    TextView voucherView = (TextView) rootView.findViewById(R.id.voucher_code);
+                    TextView aboutTitleView = (TextView) rootView.findViewById(R.id.about_desc);
 
                     ImageLoader.getInstance().displayImage(deal.getPhotoURL(), imageView);
-                    nameView.setText(deal.getBusinessName());
-                    descView.setText(deal.getLongDesc());
-                    priceView.setText("$" + deal.getPrice());
 
-                    Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "vintage.ttf");
-                    priceView.setTypeface(font);
-                    nameView.setTypeface(font);
+                    stickyDescView.setText("$" + deal.getPrice() + " from " + deal.getBusinessName());
+                    descView.setText(deal.getLongDesc());
+                    aboutTitleView.setText("About " + deal.getBusinessName());
+
+                    if (deal.getVoucherCode() != null && !deal.getVoucherCode().equals("")){
+                        voucherView.setText("Voucher code: " + deal.getVoucherCode());
+                    }else{
+                        voucherView.setVisibility(View.GONE);
+                    }
                 }
             }
             return rootView;
