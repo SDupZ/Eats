@@ -2,6 +2,7 @@ package com.sdp.apps.eats.activities;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -20,6 +21,8 @@ import com.sdp.apps.eats.fragments.DealsListFragment;
  */
 public class DealListActivity extends FragmentActivity implements ActionBar.TabListener,
         DatabaseListener{
+
+    public static final String PREFS_NAME = "MyPrefsFile";
     ViewPager mPager;
     DealsListFragment childFrag1;
     DealsListFragment childFrag2;
@@ -118,5 +121,25 @@ public class DealListActivity extends FragmentActivity implements ActionBar.TabL
         ContentDownloader cd = new ContentDownloader(this);
         cd.addDatabaseListener(this);
         cd.updateDatabase();
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+
+        // Restore preferences
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        int tabSelection = settings.getInt("tab_selection", 0);
+        mPager.setCurrentItem(tabSelection);
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt("tab_selection", mPager.getCurrentItem());
+        // Commit the edits!
+        editor.commit();
     }
 }

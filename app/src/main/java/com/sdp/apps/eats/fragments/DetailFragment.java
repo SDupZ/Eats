@@ -16,8 +16,8 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.sdp.apps.eats.Deal;
+import com.sdp.apps.eats.MyDeals;
 import com.sdp.apps.eats.R;
-import com.sdp.apps.eats.data.DealDbHelper;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -34,28 +34,30 @@ public class DetailFragment extends Fragment {
             long dealId = intent.getLongExtra("deal_id", -1);
 
             if(dealId != -1) {
-                Deal deal = DealDbHelper.getHelper(getActivity()).getDealWithID(dealId);
-                ImageView imageView = (ImageView) rootView.findViewById(R.id.detail_image);
-                TextView descView = (TextView) rootView.findViewById(R.id.detail_desc);
-                TextView stickyDescView = (TextView) rootView.findViewById(R.id.detail_sticky_desc);
-                TextView voucherView = (TextView) rootView.findViewById(R.id.voucher_code);
-                TextView aboutTitleView = (TextView) rootView.findViewById(R.id.about_desc);
+                Deal deal = MyDeals.getDeals().getDealWithId(dealId, getActivity());
+                if (deal !=null){
+                    ImageView imageView = (ImageView) rootView.findViewById(R.id.detail_image);
+                    TextView descView = (TextView) rootView.findViewById(R.id.detail_desc);
+                    TextView stickyDescView = (TextView) rootView.findViewById(R.id.detail_sticky_desc);
+                    TextView voucherView = (TextView) rootView.findViewById(R.id.voucher_code);
+                    TextView aboutTitleView = (TextView) rootView.findViewById(R.id.about_desc_label);
 
-                if(!ImageLoader.getInstance().isInited()) {
-                    ImageLoaderConfiguration config = new ImageLoaderConfiguration.
-                            Builder(getActivity()).build();
-                    ImageLoader.getInstance().init(config);
-                }
-                ImageLoader.getInstance().displayImage(deal.getPhotoURL(), imageView);
+                    if(!ImageLoader.getInstance().isInited()) {
+                        ImageLoaderConfiguration config = new ImageLoaderConfiguration.
+                                Builder(getActivity()).build();
+                        ImageLoader.getInstance().init(config);
+                    }
+                    ImageLoader.getInstance().displayImage(deal.getPhotoURL(), imageView);
 
-                stickyDescView.setText("$" + deal.getPrice() + " from " + deal.getBusinessName());
-                descView.setText(deal.getLongDesc());
-                aboutTitleView.setText("About " + deal.getBusinessName());
+                    stickyDescView.setText("$" + deal.getPrice() + " from " + deal.getBusinessName());
+                    descView.setText(deal.getLongDesc());
+                    aboutTitleView.setText("About " + deal.getBusinessName());
 
-                if (deal.getVoucherCode() != null && !deal.getVoucherCode().equals("")){
-                    voucherView.setText("Voucher code: " + deal.getVoucherCode());
-                }else{
-                    voucherView.setVisibility(View.GONE);
+                    if (deal.getVoucherCode() != null && !deal.getVoucherCode().equals("")){
+                        voucherView.setText("Voucher code: " + deal.getVoucherCode());
+                    }else{
+                        voucherView.setVisibility(View.GONE);
+                    }
                 }
             }
         }

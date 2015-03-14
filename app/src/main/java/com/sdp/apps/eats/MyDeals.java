@@ -1,5 +1,9 @@
 package com.sdp.apps.eats;
 
+import android.content.Context;
+
+import com.sdp.apps.eats.data.DealDbHelper;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,12 +51,12 @@ public class MyDeals {
         return myDeals;
     }
 
-    public Deal getDealWithId(long id){
+    public Deal getDealWithId(long id, Context context){
         for (Deal deal: myDeals){
             if (deal.getID() == id){
                 return deal;
             }
         }
-        return null;
+        return DealDbHelper.getHelper(context).getDealWithID(id);
     }
 }

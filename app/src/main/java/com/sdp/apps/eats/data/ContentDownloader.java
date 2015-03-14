@@ -126,7 +126,6 @@ public class ContentDownloader extends AsyncTask<Void, Void, Deal[]>{
                     long id = db.insertData(myDeals[i]);
                     myDeals[i].setID(id);
                 }
-                MyDeals.getDeals().updateDealsList(Arrays.asList(myDeals));
             }
             return myDeals;
         }catch(JSONException e){
@@ -138,6 +137,7 @@ public class ContentDownloader extends AsyncTask<Void, Void, Deal[]>{
     @Override
     protected void onPostExecute(Deal[] result) {
         if(result != null){
+            MyDeals.getDeals().updateDealsList(Arrays.asList(result));
             notifyListeners(true);
         }
         this.updating=false;

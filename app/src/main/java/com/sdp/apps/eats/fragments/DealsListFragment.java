@@ -24,7 +24,6 @@ import com.sdp.apps.eats.R;
 import com.sdp.apps.eats.activities.DealListActivity;
 import com.sdp.apps.eats.activities.DetailActivity;
 import com.sdp.apps.eats.adapters.CustomDealArrayAdapter;
-import com.sdp.apps.eats.data.ContentDownloader;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -49,7 +48,6 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
     private ProgressDialog mDialog;
 
     DisplayImageOptions options;                        //Options for 3rd party image loader
-    ContentDownloader cd;
     SwipeRefreshLayout swipeLayout;
 
     //----------------------------------------------------------------------------------------------
@@ -94,9 +92,11 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
             ((ProgressBar)getActivity().findViewById(R.id.deals_list_progress_bar))
                     .setVisibility(View.VISIBLE);
         }
-
-        ((DealListActivity)getActivity()).updateDatabase();
-        updateAdapter();
+        if (MyDeals.getDeals().getDealsList().size() == 0){
+            ((DealListActivity)getActivity()).updateDatabase();
+        }else{
+            updateAdapter();
+        }
     }
 
     //----------------------------------------------------------------------------------------------
@@ -151,7 +151,6 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
     public void updateAdapter(){
         dealsAdapter.clear();
         List<Deal> allDeals = MyDeals.getDeals().getDealsList();
-        List<Deal> viewableDeals = new ArrayList<Deal>();
 
         for (Deal deal:allDeals){
             double price = Double.parseDouble(deal.getPrice());

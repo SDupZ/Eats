@@ -117,22 +117,24 @@ public class DealDbHelper extends SQLiteOpenHelper{
                 DealContract.DealEntry.TABLE_NAME + " where " +
                 DealContract.DealEntry._ID + "='" + id + "'" , null);
 
-        c.moveToFirst();
-        String businessName;    String shortDesc;   String longDesc     =   null;
-        double price;           String photoURI;    String voucherCode  =   null;
-        int locationKey     =   -1;
+        if( c != null && c.moveToFirst()){
+            String businessName;    String shortDesc;   String longDesc     =   null;
+            double price;           String photoURI;    String voucherCode  =   null;
+            int locationKey     =   -1;
 
-        businessName    = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_BUSINESS_NAME));
-        shortDesc       = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_SHORT_DESC));
-        longDesc        = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_LONG_DESC));
-        price           = c.getDouble(c.getColumnIndex(DealContract.DealEntry.COLUMN_PRICE));
-        photoURI        = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_PHOTO_URI));
-        voucherCode     = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_VOUCHER_CODE));
+            businessName    = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_BUSINESS_NAME));
+            shortDesc       = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_SHORT_DESC));
+            longDesc        = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_LONG_DESC));
+            price           = c.getDouble(c.getColumnIndex(DealContract.DealEntry.COLUMN_PRICE));
+            photoURI        = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_PHOTO_URI));
+            voucherCode     = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_VOUCHER_CODE));
 
-        Deal deal = new Deal(businessName,shortDesc,longDesc,price,photoURI,voucherCode,
-                locationKey);
-
-        return deal;
+            Deal deal = new Deal(businessName,shortDesc,longDesc,price,photoURI,voucherCode,
+                    locationKey);
+            c.close();
+            return deal;
+        }
+        return null;
     }
 
     /**
@@ -147,8 +149,6 @@ public class DealDbHelper extends SQLiteOpenHelper{
 
         long newRowId;
         newRowId = db.insert(DealContract.DealEntry.TABLE_NAME, null, contentValues);
-        db.close();
-
         return newRowId;
     }
 
@@ -157,20 +157,17 @@ public class DealDbHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
         db.update(DealContract.DealEntry.TABLE_NAME, contentValues,
                 DealContract.DealEntry._ID +"="+ deal.getID(), null);
-        db.close();
     }
 
     public void deleteContact(Deal deal){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(DealContract.DealEntry.TABLE_NAME,  DealContract.DealEntry._ID +"="+
                 deal.getID(), null);
-        db.close();
     }
 
     public void deleteAllData(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM  " + DealContract.DealEntry.TABLE_NAME);
-        db.close();
     }
 
     //----------------------------------------------------------------------------------------------
