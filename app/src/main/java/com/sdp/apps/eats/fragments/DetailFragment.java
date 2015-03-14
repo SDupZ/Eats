@@ -14,26 +14,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.sdp.apps.eats.Deal;
-import com.sdp.apps.eats.MyDeals;
 import com.sdp.apps.eats.R;
+import com.sdp.apps.eats.data.DealDbHelper;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class DetailFragment extends Fragment {
-
-    /**
-     * Factory method for this fragment class. Constructs a new fragment for the given page number.
-     */
-    public static  DetailFragment create(int dealPosition, int priceFilter) {
-        DetailFragment fragment = new  DetailFragment();
-        Bundle args = new Bundle();
-        args.putInt("deal_position", dealPosition);
-        args.putInt("price_filter", priceFilter);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,23 +30,22 @@ public class DetailFragment extends Fragment {
         Intent intent = getActivity().getIntent();
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
-        if(intent != null && intent.hasExtra("deal_position") && intent.hasExtra("price_filter")){
-            int position = getArguments().getInt("deal_position");
-            int priceFilter = getArguments().getInt("price_filter");
-            Deal deal;
+        if(intent != null && intent.hasExtra("deal_id")){
+            long dealId = intent.getLongExtra("deal_id", -1);
 
-            if (priceFilter == 0)
-                deal = MyDeals.getDeals().getChangeRangeDeals().get(position);
-            else
-                deal = MyDeals.getDeals().getMealRangeDeals().get(position);
-
-            if(deal != null) {
+            if(dealId != -1) {
+                Deal deal = DealDbHelper.getHelper(getActivity()).getDealWithID(dealId);
                 ImageView imageView = (ImageView) rootView.findViewById(R.id.detail_image);
                 TextView descView = (TextView) rootView.findViewById(R.id.detail_desc);
                 TextView stickyDescView = (TextView) rootView.findViewById(R.id.detail_sticky_desc);
                 TextView voucherView = (TextView) rootView.findViewById(R.id.voucher_code);
                 TextView aboutTitleView = (TextView) rootView.findViewById(R.id.about_desc);
 
+                if(!ImageLoader.getInstance().isInited()) {
+                    ImageLoaderConfiguration config = new ImageLoaderConfiguration.
+                            Builder(getActivity()).build();
+                    ImageLoader.getInstance().init(config);
+                }
                 ImageLoader.getInstance().displayImage(deal.getPhotoURL(), imageView);
 
                 stickyDescView.setText("$" + deal.getPrice() + " from " + deal.getBusinessName());

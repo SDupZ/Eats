@@ -27,7 +27,6 @@ import com.sdp.apps.eats.adapters.CustomDealArrayAdapter;
 import com.sdp.apps.eats.data.ContentDownloader;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -133,8 +132,7 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent detailActivity = new Intent(getActivity(), DetailActivity.class)
-                        .putExtra("deal_position", position);
-                detailActivity.putExtra("price_filter", priceFilter);
+                        .putExtra("deal_id", dealsAdapter.getItem(position).getID());
                 startActivity(detailActivity);
             }
         });
@@ -159,19 +157,10 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
             double price = Double.parseDouble(deal.getPrice());
             if (priceFilter == 0 && price < (changeRangePrice + changeRangePrice * priceRangeOverlap)) {
                 dealsAdapter.add(deal);
-                viewableDeals.add(deal);
             }else if (priceFilter==1 && price > changeRangePrice){
                 dealsAdapter.add(deal);
-                viewableDeals.add(deal);
             }
         }
-        Collections.sort(viewableDeals);
-
-        if (priceFilter==0)
-            MyDeals.getDeals().setChangeRangeDeals(viewableDeals);
-        else
-            MyDeals.getDeals().setMealRangeDeals(viewableDeals);
-
         dealsAdapter.sort(new Comparator<Deal>() {
             @Override
             public int compare(Deal lhs, Deal rhs) {

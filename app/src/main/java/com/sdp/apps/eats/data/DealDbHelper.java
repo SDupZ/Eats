@@ -111,13 +111,28 @@ public class DealDbHelper extends SQLiteOpenHelper{
         return c;
     }
 
-    public Cursor getDealWithID(long id){
+    public Deal getDealWithID(long id){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery("select * from " +
                 DealContract.DealEntry.TABLE_NAME + " where " +
                 DealContract.DealEntry._ID + "='" + id + "'" , null);
 
-        return c;
+        c.moveToFirst();
+        String businessName;    String shortDesc;   String longDesc     =   null;
+        double price;           String photoURI;    String voucherCode  =   null;
+        int locationKey     =   -1;
+
+        businessName    = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_BUSINESS_NAME));
+        shortDesc       = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_SHORT_DESC));
+        longDesc        = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_LONG_DESC));
+        price           = c.getDouble(c.getColumnIndex(DealContract.DealEntry.COLUMN_PRICE));
+        photoURI        = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_PHOTO_URI));
+        voucherCode     = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_VOUCHER_CODE));
+
+        Deal deal = new Deal(businessName,shortDesc,longDesc,price,photoURI,voucherCode,
+                locationKey);
+
+        return deal;
     }
 
     /**
