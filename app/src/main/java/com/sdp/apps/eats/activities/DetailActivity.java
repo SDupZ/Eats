@@ -8,22 +8,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.sdp.apps.eats.Deal;
 import com.sdp.apps.eats.MyDeals;
 import com.sdp.apps.eats.R;
+import com.sdp.apps.eats.ZoomOutPageTransformer;
+import com.sdp.apps.eats.fragments.DetailFragment;
 
 
 public class DetailActivity extends FragmentActivity {
-
     private int numDeals;
     private int priceFilter;
     private ViewPager   mPager;
@@ -45,7 +39,7 @@ public class DetailActivity extends FragmentActivity {
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), priceFilter);
         mPager.setAdapter(mPagerAdapter);
 
-        //mPager.setPageTransformer(true, new ZoomOutPageTransformer());
+        mPager.setPageTransformer(true, new ZoomOutPageTransformer());
 
         Intent intent = getIntent();
         int position = intent.getIntExtra("deal_position", -1);
@@ -74,62 +68,6 @@ public class DetailActivity extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        /**
-         * Factory method for this fragment class. Constructs a new fragment for the given page number.
-         */
-        public static PlaceholderFragment create(int dealPosition, int priceFilter) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt("deal_position", dealPosition);
-            args.putInt("price_filter", priceFilter);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            Intent intent = getActivity().getIntent();
-            View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-
-            if(intent != null && intent.hasExtra("deal_position") && intent.hasExtra("price_filter")){
-                int position = getArguments().getInt("deal_position");
-                int priceFilter = getArguments().getInt("price_filter");
-                Deal deal;
-
-                if (priceFilter == 0)
-                    deal = MyDeals.getDeals().getChangeRangeDeals().get(position);
-                else
-                    deal = MyDeals.getDeals().getMealRangeDeals().get(position);
-
-                if(deal != null) {
-                    ImageView imageView = (ImageView) rootView.findViewById(R.id.detail_image);
-                    TextView descView = (TextView) rootView.findViewById(R.id.detail_desc);
-                    TextView stickyDescView = (TextView) rootView.findViewById(R.id.detail_sticky_desc);
-                    TextView voucherView = (TextView) rootView.findViewById(R.id.voucher_code);
-                    TextView aboutTitleView = (TextView) rootView.findViewById(R.id.about_desc);
-
-                    ImageLoader.getInstance().displayImage(deal.getPhotoURL(), imageView);
-
-                    stickyDescView.setText("$" + deal.getPrice() + " from " + deal.getBusinessName());
-                    descView.setText(deal.getLongDesc());
-                    aboutTitleView.setText("About " + deal.getBusinessName());
-
-                    if (deal.getVoucherCode() != null && !deal.getVoucherCode().equals("")){
-                        voucherView.setText("Voucher code: " + deal.getVoucherCode());
-                    }else{
-                        voucherView.setVisibility(View.GONE);
-                    }
-                }
-            }
-            return rootView;
-        }
-    }
 
     /**
      * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
@@ -144,13 +82,15 @@ public class DetailActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return PlaceholderFragment.create(position, pricefilter);
+            return DetailFragment.create(position, pricefilter);
         }
 
         @Override
         public int getCount() {
             return numDeals;
         }
+
+
     }
 
 }
