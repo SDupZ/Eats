@@ -8,17 +8,11 @@
         <item name="android:actionBarStyle">@style/MyActionBarStyle</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_action_back</item>
         <item name="homeAsUpIndicator">@drawable/ic_action_back</item>
+
     </style>
 
     <style name="MyActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/actionbar_color</item>
-        <item name="android:actionBarTabStyle">@style/MyActionBarTabs</item>
-
-    </style>
-
-    <!-- ActionBar tabs styles -->
-    <style name="MyActionBarTabs"
-        parent="@android:style/Widget.Holo.ActionBar.TabView">
     </style>
 
     <!-- Theme for main activity needs to be done separetly since it has no actionbar-->

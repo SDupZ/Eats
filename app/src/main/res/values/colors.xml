@@ -25,7 +25,8 @@
     <color name="actionbar_color">#3A9AD9</color>
     <color name="color_splash">#3A9AD9</color>
 
-    <color name="color_splash_logo_filter">#ffffffff</color>
+    <color name="color_splash_logo_filter">#ffffff</color>
+    <color name="splash_overlay">#64000000</color>
 
     <!-- Color Palette
     #354458 - Dark Blue
