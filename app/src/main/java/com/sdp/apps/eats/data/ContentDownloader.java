@@ -164,7 +164,7 @@ public class ContentDownloader extends AsyncTask<Void, Void, Deal[]>{
         for (int i=0; i< dealsArray.length(); i++){
             String businessName;    String shortDesc;   String longDesc     =   null;
             double price;           String photoURI;    String voucherCode  =   null;
-            int locationKey     =   -1;
+            int locationKey=-1;     String aboutPlace;
 
             businessName = dealsArray.getJSONArray(i).getString(columnNamesArrayList.indexOf(
                     DealContract.DealEntry.COLUMN_BUSINESS_NAME));
@@ -178,9 +178,11 @@ public class ContentDownloader extends AsyncTask<Void, Void, Deal[]>{
                     DealContract.DealEntry.COLUMN_PHOTO_URI)).trim();
             voucherCode = dealsArray.getJSONArray(i).getString(columnNamesArrayList.indexOf(
                     DealContract.DealEntry.COLUMN_VOUCHER_CODE));
+            aboutPlace = dealsArray.getJSONArray(i).getString(columnNamesArrayList.indexOf(
+                    DealContract.DealEntry.COLUMN_ABOUT_PLACE));
 
             Deal deal = new Deal(businessName,shortDesc,longDesc,price,photoURI,voucherCode,
-                    locationKey);
+                    locationKey, aboutPlace);
 
             resultDeals[i] = deal;
         }

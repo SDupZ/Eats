@@ -42,6 +42,7 @@ public class DetailFragment extends Fragment {
                     TextView stickyDescView = (TextView) rootView.findViewById(R.id.detail_sticky_desc);
                     TextView voucherView = (TextView) rootView.findViewById(R.id.voucher_code);
                     TextView aboutTitleView = (TextView) rootView.findViewById(R.id.about_desc_label);
+                    TextView aboutView  = (TextView) rootView.findViewById(R.id.about_desc);
 
                     if(!ImageLoader.getInstance().isInited()) {
                         ImageLoaderConfiguration config = new ImageLoaderConfiguration.
@@ -61,6 +62,9 @@ public class DetailFragment extends Fragment {
 
                     aboutTitleView.setText("About " + deal.getBusinessName());
                     aboutTitleView.setTypeface(font2);
+
+                    aboutView.setText(deal.getAboutPlace());
+                    aboutView.setTypeface(font2);
 
                     if (deal.getVoucherCode() != null && !deal.getVoucherCode().equals("")){
                         voucherView.setText("Voucher code: " + deal.getVoucherCode());

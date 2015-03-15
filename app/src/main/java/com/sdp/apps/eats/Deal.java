@@ -12,6 +12,7 @@ public class Deal implements Comparable{
     private String photoURL;
     private String voucherCode;
     private int locationKey;
+    private String aboutPlace;
 
     public Deal(String businessName,
                 String shortDesc,
@@ -19,7 +20,8 @@ public class Deal implements Comparable{
                 double price,
                 String photoURL,
                 String voucherCode,
-                int locationKey){
+                int locationKey,
+                String aboutPlace){
         this.businessName   = businessName;
         this.shortDesc      = shortDesc;
         this.longDesc       = longDesc;
@@ -27,6 +29,7 @@ public class Deal implements Comparable{
         this.photoURL       = photoURL;
         this.voucherCode    = voucherCode;
         this.locationKey    = locationKey;
+        this.aboutPlace     = aboutPlace;
     }
 
     public String getBusinessName() {
@@ -61,6 +64,10 @@ public class Deal implements Comparable{
     public long getID(){ return id; }
 
     public void setID(long id){this.id = id;}
+
+    public String getAboutPlace() {return aboutPlace;}
+
+    public void setAboutPlace(String aboutPlace) {this.aboutPlace = aboutPlace;}
 
     @Override
     public int compareTo(Object arg0){

@@ -27,6 +27,7 @@ public class DealDbHelper extends SQLiteOpenHelper{
             DealContract.DealEntry.COLUMN_PRICE         + " REAL NOT NULL,"+
             DealContract.DealEntry.COLUMN_PHOTO_URI     + " TEXT,"+
             DealContract.DealEntry.COLUMN_VOUCHER_CODE  + " TEXT," +
+            DealContract.DealEntry.COLUMN_ABOUT_PLACE   + " TEXT," +
 
             // Set up the location column as a foreign key to the location table
             " FOREIGN KEY (" + DealContract.DealEntry.COLUMN_LOC_KEY + ") REFERENCES " +
@@ -49,6 +50,7 @@ public class DealDbHelper extends SQLiteOpenHelper{
             DealContract.DealEntry.COLUMN_PRICE,
             DealContract.DealEntry.COLUMN_PHOTO_URI,
             DealContract.DealEntry.COLUMN_VOUCHER_CODE,
+            DealContract.DealEntry.COLUMN_ABOUT_PLACE
     };
 
     //----------------------------------------------------------------------------------------------
@@ -120,7 +122,7 @@ public class DealDbHelper extends SQLiteOpenHelper{
         if( c != null && c.moveToFirst()){
             String businessName;    String shortDesc;   String longDesc     =   null;
             double price;           String photoURI;    String voucherCode  =   null;
-            int locationKey     =   -1;
+            int locationKey= -1;    String aboutPlace;
 
             businessName    = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_BUSINESS_NAME));
             shortDesc       = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_SHORT_DESC));
@@ -128,9 +130,10 @@ public class DealDbHelper extends SQLiteOpenHelper{
             price           = c.getDouble(c.getColumnIndex(DealContract.DealEntry.COLUMN_PRICE));
             photoURI        = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_PHOTO_URI));
             voucherCode     = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_VOUCHER_CODE));
+            aboutPlace      = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_ABOUT_PLACE));
 
             Deal deal = new Deal(businessName,shortDesc,longDesc,price,photoURI,voucherCode,
-                    locationKey);
+                    locationKey, aboutPlace);
             c.close();
             return deal;
         }
@@ -189,6 +192,7 @@ public class DealDbHelper extends SQLiteOpenHelper{
         contentValues.put(DealContract.DealEntry.COLUMN_PRICE ,         deal.getPrice());
         contentValues.put(DealContract.DealEntry.COLUMN_PHOTO_URI ,     deal.getPhotoURL());
         contentValues.put(DealContract.DealEntry.COLUMN_VOUCHER_CODE ,  deal.getVoucherCode());
+        contentValues.put(DealContract.DealEntry.COLUMN_ABOUT_PLACE,    deal.getAboutPlace());
         return contentValues;
     }
 }
