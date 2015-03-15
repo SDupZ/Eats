@@ -6,6 +6,11 @@
         <item name="android:windowBackground">@drawable/background_gradient</item>
         <item name="android:actionBarStyle">@style/MyActionBarStyle</item>
         <item name="android:actionBarTabStyle">@style/TabStyle</item>
+        <item name="android:actionBarTabTextStyle">@style/MyTabTextStyle</item>
+    </style>
+
+    <style name="MyTabTextStyle" parent="@android:style/Widget.Holo.Light.ActionBar.TabText">
+        <item name="android:textColor">#ff5b9bd5</item>
     </style>
 
     <style name="TabStyle" parent="@android:style/Widget.Holo.ActionBar.TabView">
