@@ -26,7 +26,8 @@
         </activity>
         <activity
             android:name=".activities.DetailActivity"
-            android:label="@string/title_activity_detail"
+            android:label="Deal Details"
+            android:theme="@style/ActionBar.Solid.Eats.DetailActivity"
             android:parentActivityName=".activities.DealListActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden">
@@ -36,7 +37,7 @@
         </activity>
         <activity
             android:name=".activities.DealListActivity"
-            android:label="Uni Eats"
+            android:label=""
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden">
         </activity>
