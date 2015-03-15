@@ -8,18 +8,14 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.model.LatLng;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.sdp.apps.eats.Deal;
@@ -44,6 +40,7 @@ public class DetailFragment extends Fragment {
                 Deal deal = MyDeals.getDeals().getDealWithId(dealId, getActivity());
                 if (deal !=null){
                     ImageView imageView = (ImageView) rootView.findViewById(R.id.detail_image);
+                    ImageView mapView = (ImageView) rootView.findViewById(R.id.map_image);
                     TextView descView = (TextView) rootView.findViewById(R.id.detail_desc);
                     TextView stickyDescView = (TextView) rootView.findViewById(R.id.detail_sticky_desc);
                     TextView voucherView = (TextView) rootView.findViewById(R.id.voucher_code);
@@ -58,8 +55,22 @@ public class DetailFragment extends Fragment {
                     }
                     ImageLoader.getInstance().displayImage(deal.getPhotoURL(), imageView);
 
+                    DisplayMetrics displaymetrics = new DisplayMetrics();
+                    getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+
+                    float ht_px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, getResources().getDisplayMetrics());
+                    int height = (int) ht_px;
+                    int width = displaymetrics.widthPixels;
+
+                    String mapUrl = "http://maps.google.com/maps/api/staticmap?center=" + deal.getLat()
+                            + "," + deal.getLongi() + "&zoom=17&size="+
+                            width + "x" + height + "&sensor=false&markers=color:blue" +
+                            "&markers=color:blue%7Clabel:A%7C"+deal.getLat()+","
+                    +deal.getLongi();
+                    ImageLoader.getInstance().displayImage(mapUrl, mapView);
+
                     Typeface font1 = Typeface.createFromAsset(getActivity().getAssets(), "Ubuntu-B.ttf");
-                    Typeface font2 = Typeface.createFromAsset(getActivity().getAssets(), "Ubuntu-R.ttf");
+                    Typeface font2 = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Regular.ttf");
 
                     stickyDescView.setText("$" + deal.getPrice() + " from " + deal.getBusinessName());
                     stickyDescView.setTypeface(font1);
@@ -75,44 +86,6 @@ public class DetailFragment extends Fragment {
 
                     addressView.setText(deal.getAddress());
                     addressView.setTypeface(font2);
-
-                    MapFragment mapFragment = (MapFragment) getFragmentManager()
-                            .findFragmentById(R.id.map);
-
-                    GoogleMap map = mapFragment.getMap();
-                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                            new LatLng(deal.getLat(), deal.getLongi()), 15
-                    ));
-
-                    ImageView transparentImageView = (ImageView) rootView.findViewById(R.id.transparent_image);
-
-                    transparentImageView.setOnTouchListener(new View.OnTouchListener() {
-
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-                            ScrollView mainScrollView = (ScrollView) rootView.findViewById(R.id.detail_scrollview);
-                            int action = event.getAction();
-                            switch (action) {
-                                case MotionEvent.ACTION_DOWN:
-                                    // Disallow ScrollView to intercept touch events.
-                                    mainScrollView.requestDisallowInterceptTouchEvent(true);
-                                    // Disable touch on transparent view
-                                    return false;
-
-                                case MotionEvent.ACTION_UP:
-                                    // Allow ScrollView to intercept touch events.
-                                    mainScrollView.requestDisallowInterceptTouchEvent(false);
-                                    return true;
-
-                                case MotionEvent.ACTION_MOVE:
-                                    mainScrollView.requestDisallowInterceptTouchEvent(true);
-                                    return false;
-
-                                default:
-                                    return true;
-                            }
-                        }
-                    });
 
                     if (deal.getVoucherCode() != null && !deal.getVoucherCode().equals("")){
                         voucherView.setText("Voucher code: " + deal.getVoucherCode());
