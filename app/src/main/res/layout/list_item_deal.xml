@@ -44,10 +44,4 @@
         android:padding="5dp"
         android:textColor="@color/white"/>
 
-    <ImageView
-        android:layout_width="3dp"
-        android:layout_height="match_parent"
-        android:background="@color/color_eats_red"
-        android:id="@+id/rectangleColor" />
-
 </LinearLayout>

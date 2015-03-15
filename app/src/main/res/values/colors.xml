@@ -10,12 +10,6 @@
     <color name="bgnd_color_start">#F5F5F5</color>
     <color name="bgnd_color_end">#F5F5F5</color>
 
-
-    <!-- Colors for the color coding-->
-    <color name="color_eats_red">#8BC34A</color>
-    <color name="color_eats_green">#FFEB3B</color>
-    <color name="color_eats_purple">#FF9800</color>
-
     <color name="main_transparent_black">#64737373</color>
     <color name="subtitle_grey">#cccccc</color>
     <color name="text_grey">#ff5f5f5f</color>
@@ -28,11 +22,4 @@
     <color name="color_splash_logo_filter">#ffffff</color>
     <color name="splash_overlay">#64000000</color>
 
-    <!-- Color Palette
-    #354458 - Dark Blue
-    #3A9AD9 - Blue
-    #29ABA4 - Teal
-    #E9E0D6 - Grey
-    #EB7260 - Red
-    -->
     </resources>

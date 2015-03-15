@@ -11,7 +11,8 @@
         android:layout_height="180dp"
         android:scaleType="centerCrop"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/box_with_border_background"/>
+        android:background="@drawable/box_with_border_background"
+        tools:src="@drawable/ic_image_loading"/>
 
     <LinearLayout
         android:id="@+id/list_item_viewgroup"
