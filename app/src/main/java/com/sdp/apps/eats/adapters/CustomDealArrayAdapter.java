@@ -51,9 +51,10 @@ public class CustomDealArrayAdapter extends ArrayAdapter<Deal> {
         description.setText(deal.getShortDesc());
         price.setText("$" + deal.getPrice());
 
-        Typeface font = Typeface.createFromAsset(getContext().getAssets(), "BebasNeue Regular.ttf");
+        Typeface font = Typeface.createFromAsset(getContext().getAssets(), "Ubuntu-M.ttf");
         price.setTypeface(font);
         businessName.setTypeface(font);
+        description.setTypeface(font);
 
         ImageLoader.getInstance().displayImage(deal.getPhotoURL(), photo, options);
         // Return the completed view to render on screen
