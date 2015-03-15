@@ -5,6 +5,7 @@ package com.sdp.apps.eats.fragments;
  */
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -49,12 +50,21 @@ public class DetailFragment extends Fragment {
                     }
                     ImageLoader.getInstance().displayImage(deal.getPhotoURL(), imageView);
 
+                    Typeface font1 = Typeface.createFromAsset(getActivity().getAssets(), "Ubuntu-B.ttf");
+                    Typeface font2 = Typeface.createFromAsset(getActivity().getAssets(), "Ubuntu-R.ttf");
+
                     stickyDescView.setText("$" + deal.getPrice() + " from " + deal.getBusinessName());
+                    stickyDescView.setTypeface(font1);
+
                     descView.setText(deal.getLongDesc());
+                    descView.setTypeface(font2);
+
                     aboutTitleView.setText("About " + deal.getBusinessName());
+                    aboutTitleView.setTypeface(font2);
 
                     if (deal.getVoucherCode() != null && !deal.getVoucherCode().equals("")){
                         voucherView.setText("Voucher code: " + deal.getVoucherCode());
+                        voucherView.setTypeface(font2);
                     }else{
                         voucherView.setVisibility(View.GONE);
                     }
