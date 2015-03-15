@@ -76,6 +76,7 @@ public class DealListActivity extends FragmentActivity implements ActionBar.TabL
         });
         mPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.page_margin));
 
+
         getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         for (int position = 0; position < adapter.getCount(); position++) {
@@ -84,8 +85,8 @@ public class DealListActivity extends FragmentActivity implements ActionBar.TabL
                     .setTabListener(this));
         }
 
-        getActionBar().setDisplayShowHomeEnabled(false);
-        getActionBar().setDisplayShowTitleEnabled(false);
+        //getActionBar().setDisplayShowHomeEnabled(false);
+        //getActionBar().setDisplayShowTitleEnabled(false);
     }
 
     @Override

@@ -4,11 +4,7 @@
     <style name="AppTheme" parent="@android:style/Theme.Holo.Light">
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@drawable/background_gradient</item>
-
         <item name="android:actionBarStyle">@style/MyActionBarStyle</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_action_back</item>
-        <item name="homeAsUpIndicator">@drawable/ic_action_back</item>
-
         <item name="android:actionBarTabStyle">@style/TabStyle</item>
     </style>
 
@@ -18,7 +14,13 @@
     </style>
 
     <style name="MyActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="displayOptions">useLogo|showHome</item>
+        <item name="logo">@mipmap/ic_logo</item>
+
         <item name="android:background">@color/actionbar_color</item>
+        <item name="android:backgroundStacked">@drawable/ab_stacked_solid_example</item>
+        <item name="android:backgroundSplit">@drawable/ab_bottom_solid_example</item>
+
     </style>
 
     <!-- Theme for main activity needs to be done separetly since it has no actionbar-->

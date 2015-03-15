@@ -18,19 +18,11 @@
     </item>
 
     <!-- draw tab background -->
-    <item
-        android:left="@dimen/tab_space"
-        android:right="@dimen/tab_space">
-        <shape android:shape="rectangle" >
-            <corners
-                android:bottomLeftRadius="0.1dp"
-                android:bottomRightRadius="0.1dp"
-                android:topLeftRadius="@dimen/corner_radius"
-                android:topRightRadius="@dimen/corner_radius" />
-
+    <item>
+        <shape android:shape="rectangle">
             <gradient
                 android:angle="90"
-                android:endColor="#ccc"
+                android:endColor="@color/white"
                 android:startColor="@color/white" />
 
             <stroke
