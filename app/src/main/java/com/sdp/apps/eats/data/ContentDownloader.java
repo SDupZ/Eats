@@ -164,7 +164,8 @@ public class ContentDownloader extends AsyncTask<Void, Void, Deal[]>{
         for (int i=0; i< dealsArray.length(); i++){
             String businessName;    String shortDesc;   String longDesc     =   null;
             double price;           String photoURI;    String voucherCode  =   null;
-            int locationKey=-1;     String aboutPlace;
+            int locationKey= -1;    String aboutPlace;  String address;
+            double lat;             double longi;
 
             businessName = dealsArray.getJSONArray(i).getString(columnNamesArrayList.indexOf(
                     DealContract.DealEntry.COLUMN_BUSINESS_NAME));
@@ -180,9 +181,20 @@ public class ContentDownloader extends AsyncTask<Void, Void, Deal[]>{
                     DealContract.DealEntry.COLUMN_VOUCHER_CODE));
             aboutPlace = dealsArray.getJSONArray(i).getString(columnNamesArrayList.indexOf(
                     DealContract.DealEntry.COLUMN_ABOUT_PLACE));
+            try {
+                lat = Double.parseDouble((dealsArray.getJSONArray(i).getString(columnNamesArrayList.indexOf(
+                        DealContract.DealEntry.COLUMN_LAT))));
+                longi = Double.parseDouble((dealsArray.getJSONArray(i).getString(columnNamesArrayList.indexOf(
+                        DealContract.DealEntry.COLUMN_LONGI))));
+            }catch(NumberFormatException e){
+                lat = -36.8505778;
+                longi = 174.7666621;
+            }
+            address = dealsArray.getJSONArray(i).getString(columnNamesArrayList.indexOf(
+                    DealContract.DealEntry.COLUMN_ADDRESS));
 
             Deal deal = new Deal(businessName,shortDesc,longDesc,price,photoURI,voucherCode,
-                    locationKey, aboutPlace);
+                    locationKey, aboutPlace, lat, longi, address);
 
             resultDeals[i] = deal;
         }

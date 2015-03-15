@@ -1,11 +1,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.sdp.apps.eats.activities.DetailActivity$PlaceholderFragment">
 
     <ScrollView
+        android:id="@+id/detail_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -113,17 +115,33 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/color_splash"/>
 
+                <RelativeLayout
+                    android:id="@+id/map_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp">
+
+                    <fragment
+                        android:id="@+id/map"
+                        android:layout_width="match_parent"
+                        android:layout_height="220dp"
+                        android:name="com.google.android.gms.maps.MapFragment"/>
+
+                    <ImageView
+                        android:id="@+id/transparent_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@color/transparent" />
+
+                </RelativeLayout>
                 <TextView
-                    android:id="@+id/location"
+                    android:id="@+id/location_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:padding="12dp"
-                    tools:text="123 Queen Street"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:padding="6dp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black"/>
             </LinearLayout>
-
 
             <ImageView
                 android:layout_width="match_parent"

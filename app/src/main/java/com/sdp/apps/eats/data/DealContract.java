@@ -36,6 +36,9 @@ public class DealContract {
         public static final String COLUMN_PHOTO_URI         =   "photo_uri";
         public static final String COLUMN_VOUCHER_CODE      =   "voucher_code";
         public static final String COLUMN_ABOUT_PLACE       =   "about_place";
+        public static final String COLUMN_LAT               =   "lat";
+        public static final String COLUMN_LONGI             =   "long";
+        public static final String COLUMN_ADDRESS           =   "address";
     }
 
 }

@@ -28,6 +28,9 @@ public class DealDbHelper extends SQLiteOpenHelper{
             DealContract.DealEntry.COLUMN_PHOTO_URI     + " TEXT,"+
             DealContract.DealEntry.COLUMN_VOUCHER_CODE  + " TEXT," +
             DealContract.DealEntry.COLUMN_ABOUT_PLACE   + " TEXT," +
+            DealContract.DealEntry.COLUMN_LAT           + " REAL," +
+            DealContract.DealEntry.COLUMN_LONGI         + " REAL," +
+            DealContract.DealEntry.COLUMN_ADDRESS       + " TEXT," +
 
             // Set up the location column as a foreign key to the location table
             " FOREIGN KEY (" + DealContract.DealEntry.COLUMN_LOC_KEY + ") REFERENCES " +
@@ -50,7 +53,10 @@ public class DealDbHelper extends SQLiteOpenHelper{
             DealContract.DealEntry.COLUMN_PRICE,
             DealContract.DealEntry.COLUMN_PHOTO_URI,
             DealContract.DealEntry.COLUMN_VOUCHER_CODE,
-            DealContract.DealEntry.COLUMN_ABOUT_PLACE
+            DealContract.DealEntry.COLUMN_ABOUT_PLACE,
+            DealContract.DealEntry.COLUMN_LAT,
+            DealContract.DealEntry.COLUMN_LONGI,
+            DealContract.DealEntry.COLUMN_ADDRESS,
     };
 
     //----------------------------------------------------------------------------------------------
@@ -122,7 +128,8 @@ public class DealDbHelper extends SQLiteOpenHelper{
         if( c != null && c.moveToFirst()){
             String businessName;    String shortDesc;   String longDesc     =   null;
             double price;           String photoURI;    String voucherCode  =   null;
-            int locationKey= -1;    String aboutPlace;
+            int locationKey= -1;    String aboutPlace;  String address;
+            double lat;             double longi;
 
             businessName    = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_BUSINESS_NAME));
             shortDesc       = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_SHORT_DESC));
@@ -131,9 +138,12 @@ public class DealDbHelper extends SQLiteOpenHelper{
             photoURI        = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_PHOTO_URI));
             voucherCode     = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_VOUCHER_CODE));
             aboutPlace      = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_ABOUT_PLACE));
+            lat             = c.getDouble(c.getColumnIndex(DealContract.DealEntry.COLUMN_LAT));
+            longi           = c.getDouble(c.getColumnIndex(DealContract.DealEntry.COLUMN_LONGI));
+            address         = c.getString(c.getColumnIndex(DealContract.DealEntry.COLUMN_ADDRESS));
 
             Deal deal = new Deal(businessName,shortDesc,longDesc,price,photoURI,voucherCode,
-                    locationKey, aboutPlace);
+                    locationKey, aboutPlace, lat, longi, address);
             c.close();
             return deal;
         }
@@ -193,6 +203,9 @@ public class DealDbHelper extends SQLiteOpenHelper{
         contentValues.put(DealContract.DealEntry.COLUMN_PHOTO_URI ,     deal.getPhotoURL());
         contentValues.put(DealContract.DealEntry.COLUMN_VOUCHER_CODE ,  deal.getVoucherCode());
         contentValues.put(DealContract.DealEntry.COLUMN_ABOUT_PLACE,    deal.getAboutPlace());
+        contentValues.put(DealContract.DealEntry.COLUMN_LAT,            deal.getLat());
+        contentValues.put(DealContract.DealEntry.COLUMN_LONGI,          deal.getLongi());
+        contentValues.put(DealContract.DealEntry.COLUMN_ADDRESS,        deal.getAddress());
         return contentValues;
     }
 }
