@@ -19,7 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:scaleType="centerCrop"
-                tools:src="@drawable/splash_logo"/>
+                tools:src="@drawable/ic_image_loading"/>
 
             <LinearLayout
                 android:id="@+id/viewgroup_description"
@@ -42,7 +42,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@color/black"
+                        android:textColor="@color/color_splash"
                         android:textStyle="bold"
                         android:gravity="center"
                         tools:text="$10.00 from Love a Duck Balmoral"/>
@@ -80,7 +80,7 @@
                     android:paddingLeft="12dp"
                     android:paddingTop="4dp"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/subtitle_grey"/>
+                    android:textColor="@color/color_splash"/>
 
                 <TextView
                     android:id="@+id/detail_desc"
@@ -111,7 +111,7 @@
                     android:paddingLeft="12dp"
                     android:paddingTop="4dp"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/subtitle_grey"/>
+                    android:textColor="@color/color_splash"/>
 
                 <TextView
                     android:id="@+id/location"
@@ -144,7 +144,7 @@
                     android:paddingLeft="12dp"
                     android:paddingTop="4dp"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/subtitle_grey"/>
+                    android:textColor="@color/color_splash"/>
 
                 <TextView
                     android:id="@+id/about_desc"
