@@ -40,7 +40,7 @@ public class Deal implements Comparable{
         if(price == (long) price)
             return String.format("%d",(long)price);
         else
-            return String.format("%s",price);
+            return String.format("%.2f",price);
     }
 
     public void setPrice(double price) {
