@@ -10,12 +10,15 @@
     android:background="@color/actionbar_color"
     tools:context=".ActivitySplash">
 
-    <ImageView
+    <TextView
         android:id="@+id/splash_eats_logo"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:padding="5dp"
-        android:src="@drawable/splash_logo" />
+        android:layout_height="wrap_content"
+        android:padding="1dp"
+        android:gravity="center"
+        android:textSize="52dp"
+        android:textColor="@color/white"
+        android:text="Uni Eats"/>
 
     <TextView
         android:id="@+id/splash_blurb"
