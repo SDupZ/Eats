@@ -118,10 +118,9 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
 
         swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_view);
         swipeLayout.setOnRefreshListener(this);
-        swipeLayout.setColorScheme(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
+        swipeLayout.setColorScheme(R.color.eats_blue,
+                R.color.eats_green,
+                R.color.eats_black);
 
         List<Deal> currentDeals = new ArrayList<Deal>();
         dealsAdapter = new CustomDealArrayAdapter(getActivity(),currentDeals, options);
