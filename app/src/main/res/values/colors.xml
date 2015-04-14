@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="ColorPrimary">#1E88E5</color>
+    <color name="ColorPrimaryDark">#1976D2</color>
+    <color name="ColorAccent">#E91E63</color>
+
+    <!--- All things to do with the tabs -->
+    <color name="TabColorBackground">#1E88E5</color>
+    <color name="TabsScrollColor">#FFFFFF</color>
+
+        <!-- Tab's Text Color -->
+        <color name="TabFocused">#FFFFFF</color>
+        <color name="TabSelected">#FFFFFF</color>
+        <color name="TabPressed">#FFFFFF</color>
+        <color name="TabDefault">#0D47A1</color>
+
 
     <!-- Basic Colors -->
     <color name="grey">#cccccc</color>

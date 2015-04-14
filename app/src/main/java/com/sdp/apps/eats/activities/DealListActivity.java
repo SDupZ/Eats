@@ -1,105 +1,57 @@
 package com.sdp.apps.eats.activities;
 
-import android.app.ActionBar;
-import android.app.FragmentTransaction;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.widget.Toast;
 
 import com.sdp.apps.eats.R;
 import com.sdp.apps.eats.data.ContentDownloader;
 import com.sdp.apps.eats.data.DatabaseListener;
-import com.sdp.apps.eats.fragments.DealsListFragment;
+import com.sdp.apps.eats.tabs.SlidingTabLayout;
+import com.sdp.apps.eats.tabs.ViewPagerAdapter;
 
 /**
  * Created by Simon on 21/01/2015.
  */
-public class DealListActivity extends FragmentActivity implements ActionBar.TabListener,
-        DatabaseListener{
+public class DealListActivity extends ActionBarActivity implements DatabaseListener{
 
     public static final String PREFS_NAME = "MyPrefsFile";
-    ViewPager mPager;
-    DealsListFragment childFrag1;
-    DealsListFragment childFrag2;
+
+    ViewPager pager;
+    ViewPagerAdapter adapter;
+    SlidingTabLayout tabs;
+    CharSequence titles[]={"Dollar Deals","Meal Menu"};
+    int numTabs = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deal_list);
 
-        childFrag1 = new DealsListFragment();
-        childFrag1.setPriceFilter(0);
-        childFrag2 = new DealsListFragment();
-        childFrag2.setPriceFilter(1);
+        // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
+        adapter =  new ViewPagerAdapter(getSupportFragmentManager(),titles,numTabs);
 
-        PagerAdapter adapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                switch (position){
-                    case 0:
-                        return childFrag1;
-                    case 1:
-                        return childFrag2;
-                }
-                return null;
-            }
+        // Assigning ViewPager View and setting the adapter
+        pager = (ViewPager) findViewById(R.id.pager);
+        pager.setAdapter(adapter);
 
-            @Override
-            public int getCount() {
-                return 2;
-            }
+        // Assiging the Sliding Tab Layout View
+        tabs = (SlidingTabLayout) findViewById(R.id.tabs);
+        tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
 
+        // Setting Custom Color for the Scroll bar indicator of the Tab View
+        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
-            public CharSequence getPageTitle(int position) {
-                switch (position) {
-                    case 0:
-                        return getString(R.string.change_range_title);
-                    case 1:
-                        return getString(R.string.meal_range_title);
-                }
-                return null;
-            }
-        };
-
-        mPager = (ViewPager) findViewById(R.id.pager);
-        mPager.setAdapter(adapter);
-        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
-            @Override
-            public void onPageSelected(int position){
-                getActionBar().setSelectedNavigationItem(position);
+            public int getIndicatorColor(int position) {
+                return getResources().getColor(R.color.TabsScrollColor);
             }
         });
-        mPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.page_margin));
 
-        getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        for (int position = 0; position < adapter.getCount(); position++) {
-            getActionBar().addTab(getActionBar().newTab()
-                    .setText(adapter.getPageTitle(position))
-                    .setTabListener(this));
+        // Setting the ViewPager For the SlidingTabsLayout
+        tabs.setViewPager(pager);
+     }
 
-        }
-
-        //getActionBar().setDisplayShowHomeEnabled(false);
-        //getActionBar().setDisplayShowTitleEnabled(false);
-    }
-
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        mPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
 
     public void databaseUpdated(boolean success){
         if (!success){
@@ -109,37 +61,12 @@ public class DealListActivity extends FragmentActivity implements ActionBar.TabL
                     Toast.LENGTH_SHORT
             ).show();
         }
-        if(childFrag1 != null) {
-            childFrag1.databaseUpdated(success);
-        }
-        if (childFrag2 != null) {
-            childFrag2.databaseUpdated(success);
-        }
+        adapter.databaseUpdated(success);
     }
 
     public void updateDatabase(){
         ContentDownloader cd = new ContentDownloader(this);
         cd.addDatabaseListener(this);
         cd.updateDatabase();
-    }
-
-    @Override
-    public void onStart(){
-        super.onStart();
-
-        // Restore preferences
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        int tabSelection = settings.getInt("tab_selection", 0);
-        mPager.setCurrentItem(tabSelection);
-    }
-
-    @Override
-    public void onStop(){
-        super.onStop();
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putInt("tab_selection", mPager.getCurrentItem());
-        // Commit the edits!
-        editor.commit();
     }
 }
