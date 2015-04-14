@@ -4,6 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!-- UNCOMMENT TO INCLUDE TOOLBAR
+    <include android:id="@+id/tool_bar"
+        layout="@layout/toolbar"/>
+    -->
+
     <com.sdp.apps.eats.tabs.SlidingTabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"

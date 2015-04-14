@@ -3,6 +3,7 @@ package com.sdp.apps.eats.activities;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.sdp.apps.eats.R;
@@ -15,9 +16,7 @@ import com.sdp.apps.eats.tabs.ViewPagerAdapter;
  * Created by Simon on 21/01/2015.
  */
 public class DealListActivity extends ActionBarActivity implements DatabaseListener{
-
-    public static final String PREFS_NAME = "MyPrefsFile";
-
+    private Toolbar toolbar;
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
@@ -29,7 +28,12 @@ public class DealListActivity extends ActionBarActivity implements DatabaseListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deal_list);
 
-        // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
+        // Creating The Toolbar and setting it as the Toolbar for the activity
+        //UNCOMMENT TO INCLUDE TOOLBAR
+        //toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        //setSupportActionBar(toolbar);
+
+        // Creating The ViewPagerAdapter and Passing Ftoolbar.xmlragment Manager, Titles fot the Tabs and Number Of Tabs.
         adapter =  new ViewPagerAdapter(getSupportFragmentManager(),titles,numTabs);
 
         // Assigning ViewPager View and setting the adapter
