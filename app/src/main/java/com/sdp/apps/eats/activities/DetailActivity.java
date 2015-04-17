@@ -18,7 +18,7 @@ public class DetailActivity extends ActionBarActivity {
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         toolbar.setNavigationIcon(R.drawable.ic_action_back);
         toolbar.setTitle("Title");
-        toolbar.setBackgroundColor(R.color.actionbar_color_transparent);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.actionbar_color_transparent));
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
