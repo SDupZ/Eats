@@ -1,17 +1,31 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@null">
 
-    <fragment android:name="com.sdp.apps.eats.fragments.DetailFragment"
-        android:id="@+id/detail_fragment"
+    <com.sdp.apps.eats.util.ObservableScrollView
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout="@layout/fragment_detail" />
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <fragment android:name="com.sdp.apps.eats.fragments.DetailFragment"
+                android:id="@+id/detail_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout="@layout/fragment_detail" />
+        </LinearLayout>
+
+    </com.sdp.apps.eats.util.ObservableScrollView>
 
     <include android:id="@+id/tool_bar"
         layout="@layout/toolbar"/>
 
-
-</RelativeLayout>
+    </FrameLayout>

@@ -5,162 +5,149 @@
     android:orientation="vertical"
     tools:context="com.sdp.apps.eats.activities.DetailActivity$PlaceholderFragment">
 
-    <ScrollView
-        android:id="@+id/detail_scrollview"
+    <ImageView
+        android:id="@+id/detail_image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="250dp"
+        android:scaleType="centerCrop"
+        tools:src="@drawable/ic_image_loading"/>
+
+    <LinearLayout
+        android:id="@+id/viewgroup_description"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="15dp"
+        android:background="@drawable/box_with_border_background">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:padding="3dp">
 
-            <ImageView
-                android:id="@+id/detail_image"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:scaleType="centerCrop"
-                tools:src="@drawable/ic_image_loading"/>
-
-            <LinearLayout
-                android:id="@+id/viewgroup_description"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="15dp"
-                android:background="@drawable/box_with_border_background">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:padding="3dp">
-
-                    <TextView
-                        android:id="@+id/detail_sticky_desc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@color/color_splash"
-                        android:textStyle="bold"
-                        android:gravity="center"
-                        tools:text="$10.00 from Love a Duck Balmoral"/>
-
-                    </LinearLayout>
-
-                <TextView
-                    android:id="@+id/voucher_code"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="4dp"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/soft_black"
-                    android:gravity="center"/>
-                
-            </LinearLayout>
-                  
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="10dp"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/detail_sticky_desc"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/box_with_border_background">
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/color_splash"
+                android:textStyle="bold"
+                android:gravity="center"
+                tools:text="$10.00 from Love a Duck Balmoral"/>
 
-                <TextView
-                    android:text="Deal Description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:paddingLeft="12dp"
-                    android:paddingTop="4dp"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/color_splash"/>
-
-                <TextView
-                    android:id="@+id/detail_desc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:padding="12dp"
-                    tools:text="This is a test descrioption"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/soft_black"/>
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="10dp"/>
+        <TextView
+            android:id="@+id/voucher_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/soft_black"
+            android:gravity="center"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/box_with_border_background">
+    </LinearLayout>
 
-                <TextView
-                    android:text="Location"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:paddingLeft="12dp"
-                    android:paddingTop="4dp"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/color_splash"/>
 
-                <ImageView
-                    android:id="@+id/map_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:scaleType="centerCrop"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
 
-                <TextView
-                    android:id="@+id/location_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/soft_black"/>
-            </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/box_with_border_background">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="10dp"/>
+        <TextView
+            android:text="Deal Description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:paddingLeft="12dp"
+            android:paddingTop="4dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/color_splash"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/box_with_border_background">
+        <TextView
+            android:id="@+id/detail_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:padding="12dp"
+            tools:text="This is a test descrioption"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/soft_black"/>
+    </LinearLayout>
 
-                <TextView
-                    android:id="@+id/about_desc_label"
-                    android:text="About "
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:paddingLeft="12dp"
-                    android:paddingTop="4dp"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/color_splash"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
 
-                <TextView
-                    android:id="@+id/about_desc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:padding="12dp"
-                    tools:text="This is a test descrioption"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/soft_black"/>
-            </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/box_with_border_background">
 
-        </LinearLayout>
-    </ScrollView>
+        <TextView
+            android:text="Location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:paddingLeft="12dp"
+            android:paddingTop="4dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/color_splash"/>
+
+        <ImageView
+            android:id="@+id/map_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:id="@+id/location_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/soft_black"/>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/box_with_border_background">
+
+        <TextView
+            android:id="@+id/about_desc_label"
+            android:text="About "
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:paddingLeft="12dp"
+            android:paddingTop="4dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/color_splash"/>
+
+        <TextView
+            android:id="@+id/about_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:padding="12dp"
+            tools:text="This is a test descrioption"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/soft_black"/>
+    </LinearLayout>
 </LinearLayout>
