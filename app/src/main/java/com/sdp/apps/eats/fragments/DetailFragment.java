@@ -31,6 +31,7 @@ public class DetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Intent intent = getActivity().getIntent();
+
         final View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
         if(intent != null && intent.hasExtra("deal_id")){

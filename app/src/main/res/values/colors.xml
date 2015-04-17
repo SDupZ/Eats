@@ -31,6 +31,7 @@
 
     <!-- Action Bar Color -->
     <color name="actionbar_color">#5b9bd5</color>
+    <color name="actionbar_color_transparent">#27000000</color>
     <color name="color_splash">#5b9bd5</color>
 
     <color name="color_splash_logo_filter">#ffffff</color>
