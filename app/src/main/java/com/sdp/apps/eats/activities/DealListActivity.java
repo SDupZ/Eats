@@ -30,8 +30,8 @@ public class DealListActivity extends ActionBarActivity implements DatabaseListe
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
         //UNCOMMENT TO INCLUDE TOOLBAR
-        toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        setSupportActionBar(toolbar);
+        //toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        //setSupportActionBar(toolbar);
 
         // Creating The ViewPagerAdapter and Passing Ftoolbar.xmlragment Manager, Titles fot the Tabs and Number Of Tabs.
         adapter =  new ViewPagerAdapter(getSupportFragmentManager(),titles,numTabs);

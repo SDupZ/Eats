@@ -45,7 +45,6 @@ public class DetailFragment extends Fragment {
                     TextView descView = (TextView) rootView.findViewById(R.id.detail_desc);
                     TextView stickyDescView = (TextView) rootView.findViewById(R.id.detail_sticky_desc);
                     TextView voucherView = (TextView) rootView.findViewById(R.id.voucher_code);
-                    TextView aboutTitleView = (TextView) rootView.findViewById(R.id.about_desc_label);
                     TextView aboutView  = (TextView) rootView.findViewById(R.id.about_desc);
                     TextView addressView  = (TextView) rootView.findViewById(R.id.location_address);
 
@@ -78,9 +77,6 @@ public class DetailFragment extends Fragment {
 
                     descView.setText(deal.getLongDesc());
                     descView.setTypeface(font2);
-
-                    aboutTitleView.setText("About " + deal.getBusinessName());
-                    aboutTitleView.setTypeface(font2);
 
                     aboutView.setText(deal.getAboutPlace());
                     aboutView.setTypeface(font2);

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context="com.sdp.apps.eats.activities.DetailActivity$PlaceholderFragment">
 
     <ImageView
@@ -13,83 +14,40 @@
         tools:src="@drawable/ic_image_loading"/>
 
     <LinearLayout
-        android:id="@+id/viewgroup_description"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="fill_parent"
         android:orientation="vertical"
-        android:padding="15dp">
+        android:padding="16dp"
+        android:background="@android:color/white">
 
         <TextView
             android:id="@+id/detail_sticky_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/color_splash"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/ColorPrimary"
             android:textStyle="bold"
             android:gravity="center"
-            tools:text="$10.00 from Love a Duck Balmoral"/>
-
-        <TextView
-            android:id="@+id/voucher_code"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/soft_black"
-            android:gravity="center"
-            tools:text="Voucher Code: ASBCA1234"/>
-
-    </LinearLayout>
-
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="10dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:text="Deal Description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:paddingLeft="12dp"
-            android:paddingTop="4dp"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/color_splash"/>
+            tools:text="$10 from Love a Duck Balmoral"/>
 
         <TextView
             android:id="@+id/detail_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:padding="12dp"
             tools:text="This is a test descrioption"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/soft_black"/>
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="10dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <TextView
-            android:text="Location"
+            android:id="@+id/voucher_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="left"
-            android:paddingLeft="12dp"
-            android:paddingTop="4dp"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/color_splash"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            tools:text="Voucher Code: ASBCA1234"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
 
         <ImageView
             android:id="@+id/map_image"
@@ -105,36 +63,20 @@
             android:padding="8dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/soft_black"/>
-    </LinearLayout>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="10dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/about_desc_label"
-            android:text="About "
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:paddingLeft="12dp"
-            android:paddingTop="4dp"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/color_splash"/>
+            android:layout_height="10dp"/>
 
         <TextView
             android:id="@+id/about_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:padding="12dp"
             tools:text="This is a test descrioption"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/soft_black"/>
-    </LinearLayout>
+
+        </LinearLayout>
+
 </LinearLayout>
