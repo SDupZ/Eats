@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.sdp.apps.eats.Deal;
 import com.sdp.apps.eats.MyDeals;
 import com.sdp.apps.eats.R;
@@ -63,11 +64,11 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
         setHasOptionsMenu(true);
 
         options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true)
                 .cacheOnDisk(true)
+                .showImageOnLoading(getResources().getDrawable(R.drawable.ic_image_loading))
                 .considerExifParams(true)
                 .bitmapConfig(Bitmap.Config.RGB_565)
-                .showImageOnLoading(getResources().getDrawable(R.drawable.ic_image_loading))
+                .imageScaleType(ImageScaleType.EXACTLY)
                 .resetViewBeforeLoading(true)
                 .build();
     }
@@ -152,7 +153,7 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
 
         //mRecyclerView.setVisibility(View.GONE);
 
-       /* mShortAnimationDuration = getResources().getInteger(android.R.integer.config_longAnimTime);
+        /*mShortAnimationDuration = getResources().getInteger(android.R.integer.config_longAnimTime);
         mContentView = mRecyclerView;
         mLoadingView = v.findViewById(R.id.initLoadProgressBar); */
 
