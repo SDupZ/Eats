@@ -5,14 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -22,11 +23,9 @@ import com.sdp.apps.eats.Deal;
 import com.sdp.apps.eats.MyDeals;
 import com.sdp.apps.eats.R;
 import com.sdp.apps.eats.activities.DealListActivity;
-import com.sdp.apps.eats.activities.DetailActivity;
-import com.sdp.apps.eats.adapters.CustomDealArrayAdapter;
+import com.sdp.apps.eats.adapters.DealsAdapter;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -38,13 +37,17 @@ import java.util.List;
 
 public class DealsListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
+    private RecyclerView mRecyclerView;
+    private DealsAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
     private static final double changeRangePrice     =   3;
     private static final double priceRangeOverlap    =   0.25;
 
     //This should be either 0 or 1: 0=change range. 1=Rest of deals
     int priceFilter;
 
-    private CustomDealArrayAdapter dealsAdapter;
+    //private CustomDealArrayAdapter dealsAdapter;
     private ProgressDialog mDialog;
 
     DisplayImageOptions options;                        //Options for 3rd party image loader
@@ -112,16 +115,17 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_deal_list, container, false);
+        View v = inflater.inflate(R.layout.fragment_deal_list, container, false);
 
         Intent intent =  getActivity().getIntent();
 
-        swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_view);
+        swipeLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_refresh_view);
         swipeLayout.setOnRefreshListener(this);
         swipeLayout.setColorScheme(R.color.eats_blue,
                 R.color.eats_green,
                 R.color.eats_black);
 
+        /*
         List<Deal> currentDeals = new ArrayList<Deal>();
         dealsAdapter = new CustomDealArrayAdapter(getActivity(),currentDeals, options);
         ListView view = (ListView) rootView.findViewById(R.id.listview_deals);
@@ -134,9 +138,26 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
                         .putExtra("deal_id", dealsAdapter.getItem(position).getID());
                 startActivity(detailActivity);
             }
-        });
+        });*/
 
-        return rootView;
+        mRecyclerView = (RecyclerView) v.findViewById(R.id.deals_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this.getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        // specify an adapter (see also next example)
+        mAdapter = new DealsAdapter(getActivity(), this.options);
+        mRecyclerView.setAdapter(mAdapter);
+
+        //mRecyclerView.setVisibility(View.GONE);
+
+       /* mShortAnimationDuration = getResources().getInteger(android.R.integer.config_longAnimTime);
+        mContentView = mRecyclerView;
+        mLoadingView = v.findViewById(R.id.initLoadProgressBar); */
+
+        swipeLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_refresh_view);
+        swipeLayout.setOnRefreshListener(this);
+        return v;
     }
 
     public void setPriceFilter(int priceFilter){
@@ -148,26 +169,23 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
     // Helper Methods
     //----------------------------------------------------------------------------------------------
     public void updateAdapter(){
-        dealsAdapter.clear();
+        Log.d("UNI EATS", "ADAPTER UPDATED");
         List<Deal> allDeals = MyDeals.getDeals().getDealsList();
-
+        List<Deal> showingDeals = new ArrayList<Deal>();
         for (Deal deal:allDeals){
             double price = Double.parseDouble(deal.getPrice());
             if (priceFilter == 0 && price < (changeRangePrice + changeRangePrice * priceRangeOverlap)) {
-                dealsAdapter.add(deal);
+                showingDeals.add(deal);
             }else if (priceFilter==1 && price > changeRangePrice){
-                dealsAdapter.add(deal);
+                showingDeals.add(deal);
             }
         }
-        dealsAdapter.sort(new Comparator<Deal>() {
-            @Override
-            public int compare(Deal lhs, Deal rhs) {
-                return lhs.compareTo(rhs);
-            }
-        });
+
+        mAdapter.replaceAll(showingDeals);
     }
 
     public void databaseUpdated(boolean success){
+        Log.d("UNI EATS", "DATABASE UPDATED");
         View childView1 = this.getView();
         if(childView1 != null) {
             childView1.findViewById(R.id.deals_list_progress_bar).setVisibility(View.GONE);
