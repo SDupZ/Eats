@@ -2,6 +2,7 @@ package com.sdp.apps.eats.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -47,7 +48,6 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
     //This should be either 0 or 1: 0=change range. 1=Rest of deals
     int priceFilter;
 
-    //private CustomDealArrayAdapter dealsAdapter;
     private ProgressDialog mDialog;
 
     DisplayImageOptions options;                        //Options for 3rd party image loader
@@ -66,6 +66,7 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
                 .considerExifParams(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
                 .showImageOnLoading(getResources().getDrawable(R.drawable.ic_image_loading))
                 .resetViewBeforeLoading(true)
                 .build();
