@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/list_item_container">
+    android:id="@+id/list_item_container"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingBottom="5dp">
 
     <ImageView
         android:id="@+id/list_item_image"
@@ -12,55 +15,53 @@
         android:layout_height="180dp"
         android:scaleType="centerCrop"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/box_with_border_background"
+        android:background="@drawable/toolbar_trans_grad"
         tools:src="@drawable/ic_image_loading"/>
 
-    <LinearLayout
-        android:id="@+id/list_item_viewgroup"
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:layout_alignBottom="@id/list_item_image"
-        android:background="@color/main_transparent_black">
+        android:layout_height="180dp"
+        android:background="@color/main_transparent_black"/>
 
-        <LinearLayout
-            android:layout_width="0dp"
+    <RelativeLayout
+        android:id="@+id/view_group"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/list_item_buisness_name"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_width="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold"
+            android:paddingLeft="5dp"
+            android:textColor="@color/white"
+            android:layout_above="@+id/list_item_small_deal_description"
+            tools:text="Business Name"/>
 
-            <TextView
-                android:id="@+id/list_item_buisness_name"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textStyle="bold"
-                android:paddingLeft="5dp"
-                android:textColor="@color/white"
+        <TextView
+            android:id="@+id/list_item_small_deal_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:paddingLeft="5dp"
+            android:textColor="@color/white"
+            tools:text="Small description"
+            android:layout_alignParentBottom="true"/>
 
-                tools:text="Business Name"/>
+        <TextView
+            android:id="@+id/list_item_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textColor="@color/white"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            tools:text="$4.5" />
 
-            <TextView
-                android:id="@+id/list_item_small_deal_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:paddingLeft="5dp"
-                android:textColor="@color/white"
-
-                tools:text="Small description"/>
-
-            </LinearLayout>
-            <TextView
-                android:id="@+id/list_item_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:textColor="@color/white"
-                tools:text="$4.5"/>
-        </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

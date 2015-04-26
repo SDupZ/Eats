@@ -86,7 +86,6 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
         scrollRatio = (scrollRatio - 0.9f) * 10;
         scrollRatio = scrollRatio < 0 ? 0 : scrollRatio;
         int newAlpha = (int) (scrollRatio * 255);
-        Log.d("UNI EATS", "" + scrollRatio);
 
         mActionBarBackgroundDrawable.setAlpha(newAlpha);
 

@@ -2,6 +2,7 @@ package com.sdp.apps.eats.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,12 +48,24 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsAdapter.ViewHolder> 
             priceTextView = (TextView) v.findViewById(R.id.list_item_price);
             photoImageView = (ImageView) v.findViewById(R.id.list_item_image);
             container = (RelativeLayout) v.findViewById(R.id.list_item_container);
+
+
+            Typeface font = Typeface.createFromAsset(v.getContext().getAssets(), "Roboto-Bold.ttf");
+            Typeface font2 = Typeface.createFromAsset(v.getContext().getAssets(), "Roboto-Light.ttf");
+            Typeface font3 = Typeface.createFromAsset(v.getContext().getAssets(), "Roboto-Regular.ttf");
+            businessNameTextView.setTypeface(font);
+            shortDescTextView.setTypeface(font2);
+            priceTextView.setTypeface(font3);
+
             v.setOnClickListener(this);
         }
 
         public void bindDeal(Deal deal, DisplayImageOptions options){
             this.deal = deal;
-            businessNameTextView.setText(deal.getBusinessName());
+            String buisnessNameText  = deal.getBusinessName();
+            //buisnessNameText = buisnessNameText.toUpperCase();
+
+            businessNameTextView.setText(buisnessNameText);
             shortDescTextView.setText(deal.getShortDesc());
             priceTextView.setText("$" + deal.getPrice());
 

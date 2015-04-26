@@ -72,6 +72,7 @@ public class DetailFragment extends Fragment {
                     Typeface font1 = Typeface.createFromAsset(getActivity().getAssets(), "Ubuntu-B.ttf");
                     Typeface font2 = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Regular.ttf");
 
+
                     stickyDescView.setText("$" + deal.getPrice() + " from " + deal.getBusinessName());
                     stickyDescView.setTypeface(font1);
 
