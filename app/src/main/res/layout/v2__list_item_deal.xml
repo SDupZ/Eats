@@ -10,18 +10,18 @@
     android:paddingBottom="5dp">
 
     <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@android:color/black"/>
+
+    <ImageView
         android:id="@+id/list_item_image"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:scaleType="centerCrop"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/toolbar_trans_grad"
-        tools:src="@drawable/ic_image_loading"/>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:background="@color/main_transparent_black"/>
+        tools:src="@drawable/ic_image_loading"
+        android:alpha="0.86"/>
 
     <RelativeLayout
         android:id="@+id/view_group"
@@ -63,5 +63,7 @@
             tools:text="$4.5" />
 
     </RelativeLayout>
+
+
 
 </RelativeLayout>
