@@ -13,17 +13,6 @@
         android:scaleType="centerCrop"
         tools:src="@drawable/ic_image_loading"/>
 
-    <TextView
-        android:id="@+id/place_name"
-        android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:background="@color/ColorPrimary"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        android:gravity="center"
-        tools:text="Love a Duck Balmoral"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
