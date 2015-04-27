@@ -29,22 +29,17 @@ public class ContentDownloader extends AsyncTask<Void, Void, Deal[]>{
 
     private Context context;
     private ArrayList<DatabaseListener> listeners;
-    private boolean updating;
 
     public ContentDownloader(Context context){
         this.context = context;
         this.listeners = new ArrayList<DatabaseListener>();
-        updating = false;
     }
 
     public void updateDatabase(){
-        if (!updating) {
-            if (isConnected()) {
-                updating = true;
-                this.execute();
-            } else {
-                notifyListeners(false);
-            }
+        if (isConnected()) {
+            this.execute();
+        } else {
+            notifyListeners(false);
         }
     }
 
@@ -140,7 +135,6 @@ public class ContentDownloader extends AsyncTask<Void, Void, Deal[]>{
             MyDeals.getDeals().updateDealsList(Arrays.asList(result));
             notifyListeners(true);
         }
-        this.updating=false;
     }
 
     //------------------------------------------------------------------------------------------

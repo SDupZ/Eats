@@ -22,11 +22,14 @@ public class DealListActivity extends ActionBarActivity implements DatabaseListe
     SlidingTabLayout tabs;
     CharSequence titles[]={"Dollar Deals","Meal Menu"};
     int numTabs = 2;
+    boolean updating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deal_list);
+
+        updating = false;
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
         //UNCOMMENT TO INCLUDE TOOLBAR
@@ -66,11 +69,15 @@ public class DealListActivity extends ActionBarActivity implements DatabaseListe
             ).show();
         }
         adapter.databaseUpdated(success);
+        updating = false;
     }
 
-    public void updateDatabase(){
-        ContentDownloader cd = new ContentDownloader(this);
-        cd.addDatabaseListener(this);
-        cd.updateDatabase();
+    public synchronized void updateDatabase(){
+        if (!updating) {
+            updating = true;
+            ContentDownloader cd = new ContentDownloader(this);
+            cd.addDatabaseListener(this);
+            cd.updateDatabase();
+        }
     }
 }

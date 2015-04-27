@@ -5,7 +5,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 
 import com.sdp.apps.eats.R;
@@ -31,7 +30,6 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         toolbar.setNavigationIcon(R.drawable.ic_action_back);
-        toolbar.setTitle("Title");
 
         //int sdk = android.os.Build.VERSION.SDK_INT;
 

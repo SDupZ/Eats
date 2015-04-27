@@ -86,7 +86,7 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
     @Override
     public void onStart() {
         super.onStart();
-
+        Log.d("UNI EATS", "Start method called on fragment: " + priceFilter);
         if(!ImageLoader.getInstance().isInited()) {
             ImageLoaderConfiguration config = new ImageLoaderConfiguration.
                     Builder(getActivity()).build();
@@ -171,7 +171,6 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
     // Helper Methods
     //----------------------------------------------------------------------------------------------
     public void updateAdapter(){
-        Log.d("UNI EATS", "ADAPTER UPDATED");
         List<Deal> allDeals = MyDeals.getDeals().getDealsList();
         List<Deal> showingDeals = new ArrayList<Deal>();
         for (Deal deal:allDeals){
@@ -187,7 +186,6 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
     }
 
     public void databaseUpdated(boolean success){
-        Log.d("UNI EATS", "DATABASE UPDATED");
         View childView1 = this.getView();
         if(childView1 != null) {
             childView1.findViewById(R.id.deals_list_progress_bar).setVisibility(View.GONE);
