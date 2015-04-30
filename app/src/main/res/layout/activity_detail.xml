@@ -9,19 +9,14 @@
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:clipToPadding="false">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <fragment android:name="com.sdp.apps.eats.fragments.DetailFragment"
+            android:id="@+id/detail_fragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <fragment android:name="com.sdp.apps.eats.fragments.DetailFragment"
-                android:id="@+id/detail_fragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:layout="@layout/fragment_detail" />
-        </LinearLayout>
+            android:layout_height="match_parent"
+            tools:layout="@layout/fragment_detail" />
 
     </com.sdp.apps.eats.util.ObservableScrollView>
 

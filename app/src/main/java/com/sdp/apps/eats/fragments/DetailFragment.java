@@ -69,13 +69,14 @@ public class DetailFragment extends Fragment {
                     +deal.getLongi();
                     ImageLoader.getInstance().displayImage(mapUrl, mapView);
 
-                    Typeface font1 = Typeface.createFromAsset(getActivity().getAssets(), "Ubuntu-B.ttf");
-                    Typeface font2 = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Regular.ttf");
-
-
-
-                    //stickyDescView.setText("$" + deal.getPrice() + " from " + deal.getBusinessName());
-                    //stickyDescView.setTypeface(font1);
+                    Typeface font1 = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Regular.ttf");
+                    Typeface font2 = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Light.ttf");
+                    Typeface font3 = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Bold.ttf");
+                    businessName.setTypeface(font2);
+                    shortDescView.setTypeface(font3);
+                    descView.setTypeface(font2);
+                    price.setTypeface(font3);
+                    addressView.setTypeface(font2);
 
                     shortDescView.setText(deal.getShortDesc());
                     price.setText("$" + deal.getPrice());
@@ -83,11 +84,7 @@ public class DetailFragment extends Fragment {
                     descView.setText(deal.getLongDesc());
                     addressView.setText(deal.getAddress());
 
-                    descView.setTypeface(font2);
-                    addressView.setTypeface(font2);
-                    shortDescView.setTypeface(font2);
-                    price.setTypeface(font2);
-                    businessName.setTypeface(font2);
+
 
                     /*if (deal.getVoucherCode() != null && !deal.getVoucherCode().equals("")){
                         voucherView.setText("Voucher code: " + deal.getVoucherCode());

@@ -46,11 +46,14 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("");
 
         mStatusBarManager = new SystemBarTintManager(this);
         mStatusBarManager.setStatusBarTintEnabled(true);
         mInitialStatusBarColor = Color.BLACK;
         mFinalStatusBarColor = getResources().getColor(R.color.ColorPrimaryDark);
+
+        mStatusBarManager.setTintColor(getResources().getColor(R.color.black));
         mHeader = findViewById(R.id.detail_fragment).findViewById(R.id.detail_view_image);
 
         ObservableScrollable scrollView = (ObservableScrollable) findViewById(R.id.scrollview);
@@ -67,7 +70,7 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
             ratio = (float) Math.min(Math.max(scrollPosition, 0), headerHeight) / headerHeight;
 
         updateActionBarTransparency(ratio);
-        updateStatusBarColor(ratio);
+        //updateStatusBarColor(ratio);
         updateParallaxEffect(scrollPosition);
     }
 
@@ -97,10 +100,11 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
     }
 
     private void updateStatusBarColor(float scrollRatio) {
-        int r = interpolate(Color.red(mInitialStatusBarColor), Color.red(mFinalStatusBarColor), 1 - scrollRatio);
-        int g = interpolate(Color.green(mInitialStatusBarColor), Color.green(mFinalStatusBarColor), 1 - scrollRatio);
-        int b = interpolate(Color.blue(mInitialStatusBarColor), Color.blue(mFinalStatusBarColor), 1 - scrollRatio);
-        mStatusBarManager.setTintColor(Color.rgb(r, g, b));
+        int r = interpolate(Color.red(mInitialStatusBarColor), Color.red(mFinalStatusBarColor), 0);
+        int g = interpolate(Color.green(mInitialStatusBarColor), Color.green(mFinalStatusBarColor), 0);
+        int b = interpolate(Color.blue(mInitialStatusBarColor), Color.blue(mFinalStatusBarColor), 0);
+
+        mStatusBarManager.setTintColor(Color.rgb(0, 0, 0));
     }
 
     private int interpolate(int from, int to, float param) {

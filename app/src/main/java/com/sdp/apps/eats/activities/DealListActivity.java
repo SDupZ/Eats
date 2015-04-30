@@ -11,6 +11,7 @@ import com.sdp.apps.eats.data.ContentDownloader;
 import com.sdp.apps.eats.data.DatabaseListener;
 import com.sdp.apps.eats.tabs.SlidingTabLayout;
 import com.sdp.apps.eats.tabs.ViewPagerAdapter;
+import com.sdp.apps.eats.util.SystemBarTintManager;
 
 /**
  * Created by Simon on 21/01/2015.
@@ -29,6 +30,10 @@ public class DealListActivity extends ActionBarActivity implements DatabaseListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deal_list);
 
+        SystemBarTintManager mStatusBarManager;
+        mStatusBarManager = new SystemBarTintManager(this);
+        mStatusBarManager.setStatusBarTintEnabled(true);
+        mStatusBarManager.setTintColor(getResources().getColor(R.color.ColorPrimaryDark));
         updating = false;
 
         // Creating The Toolbar and setting it as the Toolbar for the activity

@@ -27,8 +27,8 @@
             android:layout_height="wrap_content"
             android:paddingTop="16dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#383838"
             android:textStyle="bold"
+            android:textColor="#383838"
             android:gravity="center_vertical"
             tools:text="Rodeo Burger"/>
 
@@ -39,7 +39,6 @@
             android:paddingBottom="16dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#555555"
-            android:textStyle="bold"
             android:gravity="center_vertical"
             tools:text="Burger King"/>
 
@@ -51,7 +50,7 @@
             android:paddingBottom="16dp"
             android:textColor="#555555"
             tools:text="Various toppings and sauce available including maple, honey, cinnamon. As well was MM's or choc chips"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <TextView
             android:id="@+id/detail_view_price"
