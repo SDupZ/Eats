@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.sdp.apps.eats.R;
@@ -52,8 +53,6 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
         mStatusBarManager.setStatusBarTintEnabled(true);
         mInitialStatusBarColor = Color.BLACK;
         mFinalStatusBarColor = getResources().getColor(R.color.ColorPrimaryDark);
-
-        mStatusBarManager.setTintColor(getResources().getColor(R.color.black));
         mHeader = findViewById(R.id.detail_fragment).findViewById(R.id.detail_view_image);
 
         ObservableScrollable scrollView = (ObservableScrollable) findViewById(R.id.scrollview);
@@ -70,7 +69,7 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
             ratio = (float) Math.min(Math.max(scrollPosition, 0), headerHeight) / headerHeight;
 
         updateActionBarTransparency(ratio);
-        //updateStatusBarColor(ratio);
+        updateStatusBarColor(ratio);
         updateParallaxEffect(scrollPosition);
     }
 
@@ -100,11 +99,16 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
     }
 
     private void updateStatusBarColor(float scrollRatio) {
-        int r = interpolate(Color.red(mInitialStatusBarColor), Color.red(mFinalStatusBarColor), 0);
-        int g = interpolate(Color.green(mInitialStatusBarColor), Color.green(mFinalStatusBarColor), 0);
-        int b = interpolate(Color.blue(mInitialStatusBarColor), Color.blue(mFinalStatusBarColor), 0);
+        scrollRatio = (scrollRatio - 0.9f) * 10;
+        scrollRatio = scrollRatio < 0 ? 0 : scrollRatio;
+        float tintRatio = scrollRatio;
+        Log.d("UNI EATS", "TINT RATIO: "+tintRatio);
 
-        mStatusBarManager.setTintColor(Color.rgb(0, 0, 0));
+        int r = interpolate(Color.red(mInitialStatusBarColor), Color.red(mFinalStatusBarColor), 1-tintRatio);
+        int g = interpolate(Color.green(mInitialStatusBarColor), Color.green(mFinalStatusBarColor), 1-tintRatio);
+        int b = interpolate(Color.blue(mInitialStatusBarColor), Color.blue(mFinalStatusBarColor), 1-tintRatio);
+
+        mStatusBarManager.setTintColor(Color.rgb(r, g, b));
     }
 
     private int interpolate(int from, int to, float param) {

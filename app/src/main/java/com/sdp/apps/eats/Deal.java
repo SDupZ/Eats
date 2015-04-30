@@ -16,6 +16,7 @@ public class Deal implements Comparable{
     private double lat;
     private double longi;
     private String address;
+    private String phoneNumber;
 
     public Deal(String businessName,
                 String shortDesc,
@@ -27,7 +28,8 @@ public class Deal implements Comparable{
                 String aboutPlace,
                 double lat,
                 double longi,
-                String address){
+                String address,
+                String phoneNumber){
         this.businessName   = businessName;
         this.shortDesc      = shortDesc;
         this.longDesc       = longDesc;
@@ -39,6 +41,7 @@ public class Deal implements Comparable{
         this.lat            = lat;
         this.longi          = longi;
         this.address        = address;
+        this.phoneNumber    = phoneNumber;
     }
 
     public String getBusinessName() {
@@ -89,6 +92,10 @@ public class Deal implements Comparable{
     public String getAddress() {return address;}
 
     public void setAddress(String address) {this.address = address;}
+
+    public String getPhoneNumber() { return phoneNumber; }
+
+    public void setPhoneNumber(String phoneNumber) {this.phoneNumber = phoneNumber;}
 
     @Override
     public int compareTo(Object arg0){

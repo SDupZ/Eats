@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:gravity="left"
             android:paddingBottom="16dp"
-            android:textColor="#555555"
+            android:textColor="#383838"
             tools:text="Various toppings and sauce available including maple, honey, cinnamon. As well was MM's or choc chips"
             android:textAppearance="?android:attr/textAppearanceMedium"/>
 
@@ -58,14 +58,34 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:paddingBottom="16dp"
-            android:textColor="@color/ColorPrimaryDark"
+            android:textColor="@color/ColorPrimary"
             tools:text="$3.20"
             android:textAppearance="?android:attr/textAppearanceLarge"/>
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:background="@android:color/darker_gray"/>
+            android:background="#555555"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_ic_local_phone_black_48dp"/>
+            <TextView
+                android:id="@+id/phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                tools:text="123 Queen street auckland"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#555555"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,6 +106,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#555555"/>
             </LinearLayout>
+
+
 
         <ImageView
             android:id="@+id/map_image"

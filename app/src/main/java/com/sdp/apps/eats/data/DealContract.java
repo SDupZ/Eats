@@ -39,6 +39,7 @@ public class DealContract {
         public static final String COLUMN_LAT               =   "lat";
         public static final String COLUMN_LONGI             =   "long";
         public static final String COLUMN_ADDRESS           =   "address";
+        public static final String COLUMN_PHONE_NUMBER      =   "phone_number";
     }
 
 }
