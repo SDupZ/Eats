@@ -46,9 +46,6 @@ public class DetailFragment extends Fragment {
                     TextView businessName = (TextView) rootView.findViewById(R.id.detail_view_business_name);
                     TextView price = (TextView) rootView.findViewById(R.id.detail_view_price);
                     TextView descView = (TextView) rootView.findViewById(R.id.detail_view_detail_desc);
-                    //TextView stickyDescView = (TextView) rootView.findViewById(R.id.detail_sticky_desc);
-                    //TextView voucherView = (TextView) rootView.findViewById(R.id.voucher_code);
-                    TextView aboutView  = (TextView) rootView.findViewById(R.id.about_desc);
                     TextView addressView  = (TextView) rootView.findViewById(R.id.location_address);
 
                     if(!ImageLoader.getInstance().isInited()) {
@@ -84,11 +81,9 @@ public class DetailFragment extends Fragment {
                     price.setText("$" + deal.getPrice());
                     businessName.setText(deal.getBusinessName());
                     descView.setText(deal.getLongDesc());
-                    aboutView.setText(deal.getAboutPlace());
                     addressView.setText(deal.getAddress());
 
                     descView.setTypeface(font2);
-                    aboutView.setTypeface(font2);
                     addressView.setTypeface(font2);
                     shortDescView.setTypeface(font2);
                     price.setTypeface(font2);
