@@ -51,7 +51,7 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
         mStatusBarManager.setStatusBarTintEnabled(true);
         mInitialStatusBarColor = Color.BLACK;
         mFinalStatusBarColor = getResources().getColor(R.color.ColorPrimaryDark);
-        mHeader = findViewById(R.id.detail_fragment).findViewById(R.id.detail_image);
+        mHeader = findViewById(R.id.detail_fragment).findViewById(R.id.detail_view_image);
 
         ObservableScrollable scrollView = (ObservableScrollable) findViewById(R.id.scrollview);
         scrollView.setOnScrollChangedCallback(this);

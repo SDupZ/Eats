@@ -7,7 +7,7 @@
     tools:context="com.sdp.apps.eats.activities.DetailActivity$PlaceholderFragment">
 
     <ImageView
-        android:id="@+id/detail_image"
+        android:id="@+id/detail_view_image"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:scaleType="centerCrop"
@@ -16,34 +16,57 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:orientation="vertical"
-        android:padding="16dp"
         android:background="@android:color/white">
 
         <TextView
-            android:id="@+id/detail_sticky_desc"
+            android:id="@+id/detail_view_short_desc"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/ColorPrimary"
+            android:textColor="#383838"
             android:textStyle="bold"
             android:gravity="center_vertical"
-            tools:text="$10 from Love a Duck Balmoral"/>
+            tools:text="Rodeo Burger"/>
 
         <TextView
-            android:id="@+id/detail_desc"
+            android:id="@+id/detail_view_business_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#555555"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            tools:text="Burger King"/>
+
+        <TextView
+            android:id="@+id/detail_view_detail_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
-            tools:text="This is a test descrioption"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:paddingBottom="16dp"
+            android:textColor="#555555"
+            tools:text="Various toppings and sauce available including maple, honey, cinnamon. As well was MM's or choc chips"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
 
         <TextView
-            android:id="@+id/voucher_code"
+            android:id="@+id/detail_view_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            tools:text="Voucher Code: ASBCA1234"/>
+            android:gravity="right"
+            android:paddingBottom="16dp"
+            android:textColor="@color/ColorPrimaryDark"
+            tools:text="$3.20"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
 
         <ImageView
             android:layout_width="match_parent"

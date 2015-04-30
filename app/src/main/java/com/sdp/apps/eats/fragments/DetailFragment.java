@@ -40,11 +40,14 @@ public class DetailFragment extends Fragment {
             if(dealId != -1) {
                 Deal deal = MyDeals.getDeals().getDealWithId(dealId, getActivity());
                 if (deal !=null){
-                    ImageView imageView = (ImageView) rootView.findViewById(R.id.detail_image);
+                    ImageView imageView = (ImageView) rootView.findViewById(R.id.detail_view_image);
                     ImageView mapView = (ImageView) rootView.findViewById(R.id.map_image);
-                    TextView descView = (TextView) rootView.findViewById(R.id.detail_desc);
-                    TextView stickyDescView = (TextView) rootView.findViewById(R.id.detail_sticky_desc);
-                    TextView voucherView = (TextView) rootView.findViewById(R.id.voucher_code);
+                    TextView shortDescView = (TextView) rootView.findViewById(R.id.detail_view_short_desc);
+                    TextView businessName = (TextView) rootView.findViewById(R.id.detail_view_business_name);
+                    TextView price = (TextView) rootView.findViewById(R.id.detail_view_price);
+                    TextView descView = (TextView) rootView.findViewById(R.id.detail_view_detail_desc);
+                    //TextView stickyDescView = (TextView) rootView.findViewById(R.id.detail_sticky_desc);
+                    //TextView voucherView = (TextView) rootView.findViewById(R.id.voucher_code);
                     TextView aboutView  = (TextView) rootView.findViewById(R.id.about_desc);
                     TextView addressView  = (TextView) rootView.findViewById(R.id.location_address);
 
@@ -73,24 +76,30 @@ public class DetailFragment extends Fragment {
                     Typeface font2 = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Regular.ttf");
 
 
-                    stickyDescView.setText("$" + deal.getPrice() + " from " + deal.getBusinessName());
-                    stickyDescView.setTypeface(font1);
 
+                    //stickyDescView.setText("$" + deal.getPrice() + " from " + deal.getBusinessName());
+                    //stickyDescView.setTypeface(font1);
+
+                    shortDescView.setText(deal.getShortDesc());
+                    price.setText("$" + deal.getPrice());
+                    businessName.setText(deal.getBusinessName());
                     descView.setText(deal.getLongDesc());
-                    descView.setTypeface(font2);
-
                     aboutView.setText(deal.getAboutPlace());
-                    aboutView.setTypeface(font2);
-
                     addressView.setText(deal.getAddress());
-                    addressView.setTypeface(font2);
 
-                    if (deal.getVoucherCode() != null && !deal.getVoucherCode().equals("")){
+                    descView.setTypeface(font2);
+                    aboutView.setTypeface(font2);
+                    addressView.setTypeface(font2);
+                    shortDescView.setTypeface(font2);
+                    price.setTypeface(font2);
+                    businessName.setTypeface(font2);
+
+                    /*if (deal.getVoucherCode() != null && !deal.getVoucherCode().equals("")){
                         voucherView.setText("Voucher code: " + deal.getVoucherCode());
                         voucherView.setTypeface(font2);
                     }else{
                         voucherView.setVisibility(View.GONE);
-                    }
+                    }*/
                 }
             }
         }
