@@ -35,13 +35,13 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         if(position == 0) // if the position is 0 we are returning the First tab
         {
             tab1 = new DealsListFragment();
-            tab1.setPriceFilter(0);
+            tab1.setPriceFilter(1);
             return tab1;
         }
         else             // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
         {
             tab2 = new DealsListFragment();
-            tab2.setPriceFilter(1);
+            tab2.setPriceFilter(0);
             return tab2;
         }
 

@@ -21,8 +21,8 @@ public class DealListActivity extends ActionBarActivity implements DatabaseListe
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence titles[]={"Dollar Deals","Meal Menu"};
-    int numTabs = 2;
+    CharSequence titles[]={"PLATE", "Dollar Deals"};
+    int numTabs = 1;
     boolean updating;
 
     @Override

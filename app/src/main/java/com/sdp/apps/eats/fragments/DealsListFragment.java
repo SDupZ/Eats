@@ -28,6 +28,7 @@ import com.sdp.apps.eats.activities.DealListActivity;
 import com.sdp.apps.eats.adapters.DealsAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -180,8 +181,8 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
             }else if (priceFilter==1 && price > changeRangePrice){
                 showingDeals.add(deal);
             }
+            Collections.sort(showingDeals);
         }
-
         mAdapter.replaceAll(showingDeals);
     }
 
