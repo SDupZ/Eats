@@ -4,3 +4,13 @@
 /.idea/libraries
 .DS_Store
 /build
+tasks.xml
+workspace.xml
+.iws
+
+# Android Studio
+*.iml
+.idea
+#.idea/workspace.xml - remove # and delete .idea if it better suit your needs.
+.gradle
+build/
