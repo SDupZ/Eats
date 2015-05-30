@@ -19,7 +19,6 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
     private Toolbar toolbar;
     private Drawable mActionBarBackgroundDrawable;
     private View mHeader;
-    private int mLastDampedScroll;
     private int mInitialStatusBarColor;
     private int mFinalStatusBarColor;
     private SystemBarTintManager mStatusBarManager;
@@ -51,7 +50,7 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
 
         mStatusBarManager = new SystemBarTintManager(this);
         mStatusBarManager.setStatusBarTintEnabled(true);
-        mInitialStatusBarColor = Color.BLACK;
+        mInitialStatusBarColor = getResources().getColor(R.color.transparent);
         mFinalStatusBarColor = getResources().getColor(R.color.ColorPrimaryDark);
         mHeader = findViewById(R.id.detail_fragment).findViewById(R.id.detail_view_image);
 
@@ -102,7 +101,7 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
         int r = interpolate(Color.red(mInitialStatusBarColor), Color.red(mFinalStatusBarColor), 1-tintRatio);
         int g = interpolate(Color.green(mInitialStatusBarColor), Color.green(mFinalStatusBarColor), 1-tintRatio);
         int b = interpolate(Color.blue(mInitialStatusBarColor), Color.blue(mFinalStatusBarColor), 1-tintRatio);
-
+        mStatusBarManager.setTintAlpha(scrollRatio);
         mStatusBarManager.setTintColor(Color.rgb(r, g, b));
     }
 
