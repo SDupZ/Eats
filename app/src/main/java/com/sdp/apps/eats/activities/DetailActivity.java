@@ -74,12 +74,8 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
     }
 
     private void updateParallaxEffect(int scrollPosition) {
-        float damping = 0.5f;
-        int dampedScroll = (int) (scrollPosition * damping);
-        int offset = mLastDampedScroll - dampedScroll;
-        mHeader.offsetTopAndBottom(-offset);
-
-        mLastDampedScroll = dampedScroll;
+        int parallaxRatio = 2;
+        mHeader.setTranslationY(scrollPosition/parallaxRatio);
     }
 
     private void updateActionBarTransparency(float scrollRatio) {
@@ -102,7 +98,6 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
         scrollRatio = (scrollRatio - 0.9f) * 10;
         scrollRatio = scrollRatio < 0 ? 0 : scrollRatio;
         float tintRatio = scrollRatio;
-        Log.d("UNI EATS", "TINT RATIO: "+tintRatio);
 
         int r = interpolate(Color.red(mInitialStatusBarColor), Color.red(mFinalStatusBarColor), 1-tintRatio);
         int g = interpolate(Color.green(mInitialStatusBarColor), Color.green(mFinalStatusBarColor), 1-tintRatio);
