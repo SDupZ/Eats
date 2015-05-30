@@ -101,7 +101,7 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
         Deal currentDeal = mDataset.get(position);
         holder.bindDeal(currentDeal, this.options);
-        setAnimation(holder.container, position);
+        //setAnimation(holder.container, position);
     }
 
     @Override
