@@ -14,7 +14,6 @@ import com.sdp.apps.eats.tabs.ViewPagerAdapter;
 import com.sdp.apps.eats.util.SystemBarTintManager;
 
 public class DealListActivity extends ActionBarActivity implements DatabaseListener{
-    private Toolbar toolbar;
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
@@ -33,23 +32,13 @@ public class DealListActivity extends ActionBarActivity implements DatabaseListe
         mStatusBarManager.setTintColor(getResources().getColor(R.color.ColorPrimaryDark));
         updating = false;
 
-        // Creating The Toolbar and setting it as the Toolbar for the activity
-        //UNCOMMENT TO INCLUDE TOOLBAR
-        //toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        //setSupportActionBar(toolbar);
-
-        // Creating The ViewPagerAdapter and Passing Ftoolbar.xmlragment Manager, Titles fot the Tabs and Number Of Tabs.
         adapter =  new ViewPagerAdapter(getSupportFragmentManager(),titles,numTabs);
-
-        // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(adapter);
 
-        // Assiging the Sliding Tab Layout View
         tabs = (SlidingTabLayout) findViewById(R.id.tabs);
-        tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
+        tabs.setDistributeEvenly(true);
 
-        // Setting Custom Color for the Scroll bar indicator of the Tab View
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
@@ -57,7 +46,6 @@ public class DealListActivity extends ActionBarActivity implements DatabaseListe
             }
         });
 
-        // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
      }
 

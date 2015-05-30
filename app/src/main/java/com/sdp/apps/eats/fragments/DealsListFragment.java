@@ -85,11 +85,6 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.dealslistfragement, menu);
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
         Log.d("UNI EATS", "Start method called on fragment: " + priceFilter);

@@ -63,7 +63,6 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsAdapter.ViewHolder> 
         public void bindDeal(Deal deal, DisplayImageOptions options){
             this.deal = deal;
             String buisnessNameText  = deal.getBusinessName();
-            //buisnessNameText = buisnessNameText.toUpperCase();
 
             businessNameTextView.setText(buisnessNameText);
             shortDescTextView.setText(deal.getShortDesc());
@@ -83,11 +82,6 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsAdapter.ViewHolder> 
         }
     }
 
-    public DealsAdapter(List<Deal> myDataset, Context context, DisplayImageOptions options) {
-        mDataset = myDataset;
-        this.context = context;
-        this.options = options;
-    }
     public DealsAdapter(Context context, DisplayImageOptions options) {
         mDataset = new ArrayList<Deal>();
         this.context = context;
