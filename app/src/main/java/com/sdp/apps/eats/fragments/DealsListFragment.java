@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -39,6 +41,7 @@ import java.util.List;
  */
 
 public class DealsListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
+    public static final String SCROLL_STATE_TAG = "LAYOUT_STATE_PARCELABLE";
 
     private RecyclerView mRecyclerView;
     private DealsAdapter mAdapter;
@@ -54,6 +57,8 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
 
     DisplayImageOptions options;                        //Options for 3rd party image loader
     SwipeRefreshLayout swipeLayout;
+
+    private static Parcelable state;
 
     //----------------------------------------------------------------------------------------------
     // Lifecycle methods: oncreates, onresumes, onstops
@@ -106,13 +111,6 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
     }
 
     //----------------------------------------------------------------------------------------------
-    // onOptionsItemSelected
-    //----------------------------------------------------------------------------------------------
-    public boolean onOptionsItemSelected(MenuItem item){
-        return super.onOptionsItemSelected(item);
-    }
-
-    //----------------------------------------------------------------------------------------------
     // Creates and returns view hierachy associated with the fragment
     //----------------------------------------------------------------------------------------------
     @Override
@@ -120,28 +118,11 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_deal_list, container, false);
 
-        Intent intent =  getActivity().getIntent();
-
         swipeLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_refresh_view);
         swipeLayout.setOnRefreshListener(this);
         swipeLayout.setColorScheme(R.color.eats_blue,
                 R.color.eats_green,
                 R.color.eats_black);
-
-        /*
-        List<Deal> currentDeals = new ArrayList<Deal>();
-        dealsAdapter = new CustomDealArrayAdapter(getActivity(),currentDeals, options);
-        ListView view = (ListView) rootView.findViewById(R.id.listview_deals);
-
-        view.setAdapter(dealsAdapter);
-        view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent detailActivity = new Intent(getActivity(), DetailActivity.class)
-                        .putExtra("deal_id", dealsAdapter.getItem(position).getID());
-                startActivity(detailActivity);
-            }
-        });*/
 
         mRecyclerView = (RecyclerView) v.findViewById(R.id.deals_recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -152,12 +133,7 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
         mAdapter = new DealsAdapter(getActivity(), this.options);
         mRecyclerView.setAdapter(mAdapter);
 
-        //mRecyclerView.setVisibility(View.GONE);
-
-        /*mShortAnimationDuration = getResources().getInteger(android.R.integer.config_longAnimTime);
-        mContentView = mRecyclerView;
-        mLoadingView = v.findViewById(R.id.initLoadProgressBar); */
-
+        mLayoutManager.onSaveInstanceState();
         swipeLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_refresh_view);
         swipeLayout.setOnRefreshListener(this);
         return v;
@@ -199,5 +175,26 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
             }
             ((SwipeRefreshLayout) childView1.findViewById(R.id.swipe_refresh_view)).setRefreshing(false);
         }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    // StateRestoration
+    //----------------------------------------------------------------------------------------------
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        this.state = mRecyclerView.getLayoutManager().onSaveInstanceState();
+        savedInstanceState.putParcelable(SCROLL_STATE_TAG, state);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        if(savedInstanceState != null){
+            this.state = savedInstanceState.getParcelable(SCROLL_STATE_TAG);
+        }
+        mRecyclerView.getLayoutManager().onRestoreInstanceState(state);
     }
 }

@@ -78,6 +78,7 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsAdapter.ViewHolder> 
                 Intent detailActivity = new Intent(v.getContext(),DetailActivity.class)
                         .putExtra("deal_id", deal.getID());
                 v.getContext().startActivity(detailActivity);
+
             }
         }
     }

@@ -13,15 +13,12 @@ import com.sdp.apps.eats.tabs.SlidingTabLayout;
 import com.sdp.apps.eats.tabs.ViewPagerAdapter;
 import com.sdp.apps.eats.util.SystemBarTintManager;
 
-/**
- * Created by Simon on 21/01/2015.
- */
 public class DealListActivity extends ActionBarActivity implements DatabaseListener{
     private Toolbar toolbar;
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence titles[]={"PLATE", "Dollar Deals"};
+    CharSequence titles[]={"Uni Eats", "Dollar Deals"};
     int numTabs = 1;
     boolean updating;
 
