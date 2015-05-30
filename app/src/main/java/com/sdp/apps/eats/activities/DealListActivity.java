@@ -47,7 +47,20 @@ public class DealListActivity extends ActionBarActivity implements DatabaseListe
         });
 
         tabs.setViewPager(pager);
+
+        // Set the padding to match the Status Bar height
+        tabs.setPadding(0, getStatusBarHeight(), 0, 0);
      }
+
+    // A method to find height of the status bar
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
 
 
     public void databaseUpdated(boolean success){
