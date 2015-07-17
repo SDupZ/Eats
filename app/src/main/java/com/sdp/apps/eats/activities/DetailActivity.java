@@ -23,6 +23,8 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
     private int mFinalStatusBarColor;
     private SystemBarTintManager mStatusBarManager;
 
+    private int statusBarHeight;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,20 +58,43 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
 
         ObservableScrollable scrollView = (ObservableScrollable) findViewById(R.id.scrollview);
         scrollView.setOnScrollChangedCallback(this);
-
         onScroll(-1, 0);
+
+        statusBarHeight = getStatusBarHeight();
+    }
+
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 
     @Override
     public void onScroll(int l, int scrollPosition) {
-        int headerHeight = mHeader.getHeight() - toolbar.getHeight();
+        int headerHeight = mHeader.getHeight() - (toolbar.getHeight() + statusBarHeight);
         float ratio = 0;
         if (scrollPosition > 0 && headerHeight > 0)
             ratio = (float) Math.min(Math.max(scrollPosition, 0), headerHeight) / headerHeight;
 
+
         updateActionBarTransparency(ratio);
         updateStatusBarColor(ratio);
         updateParallaxEffect(scrollPosition);
+        updateToolBarPosition(ratio, scrollPosition);
+    }
+
+    private void updateToolBarPosition(float scrollRatio, int scrollPosition){
+        Log.d("UNI EATS", "Scroll Ratio: " + scrollRatio + " ScrollPosition: " + scrollPosition + " " +
+                " ToolbarHeight: " + toolbar.getHeight() + " Header Height: " + mHeader.getHeight() + " ActionBarHeight " +
+        getSupportActionBar().getHeight() + "Status Bar Height: " + statusBarHeight);
+        if (scrollRatio == 1.0){
+            toolbar.setTranslationY(-(scrollPosition - (mHeader.getHeight() - (toolbar.getHeight()+ statusBarHeight))));
+        }else{
+            toolbar.setTranslationY(0);
+        }
     }
 
     private void updateParallaxEffect(int scrollPosition) {

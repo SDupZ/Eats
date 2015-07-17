@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ColorPrimary">#1E88E5</color>
-    <color name="ColorPrimaryDark">#1976D2</color>
+    <color name="ColorPrimary">#2196F3</color>
+    <color name="ColorPrimaryDark">#1565C0</color>
     <color name="ColorAccent">#E91E63</color>
 
     <!--- All things to do with the tabs -->
-    <color name="TabColorBackground">#1E88E5</color>
+    <color name="TabColorBackground">#2196F3</color>
     <color name="TabsScrollColor">#FFFFFF</color>
 
         <!-- Tab's Text Color -->
@@ -29,9 +29,9 @@
     <color name="color_eats_blue">#2F3540</color>
 
     <!-- Action Bar Color -->
-    <color name="actionbar_color">#1E88E5</color>
+    <color name="actionbar_color">#2196F3</color>
     <color name="actionbar_color_transparent">#2d000000</color>
-    <color name="color_splash">#1E88E5</color>
+    <color name="color_splash">#2196F3</color>
 
     <color name="color_splash_logo_filter">#ffffff</color>
     <color name="splash_overlay">#64000000</color>
