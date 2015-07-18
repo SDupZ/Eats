@@ -24,7 +24,26 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:clipToPadding="false">
-        <include android:id="@+id/tool_bar"
-            layout="@layout/toolbar" />
+
+        <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark"
+            app:popupTheme="@style/Theme.AppCompat.Light"
+            android:id="@+id/tool_bar"
+            android:minHeight="?android:attr/actionBarSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/ColorPrimary"
+            android:elevation="2dp">
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"/>
+
+        </android.support.v7.widget.Toolbar>
+
     </LinearLayout>
 </FrameLayout>

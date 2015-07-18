@@ -8,6 +8,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.sdp.apps.eats.Deal;
 import com.sdp.apps.eats.MyDeals;
 import com.sdp.apps.eats.R;
+import com.sdp.apps.eats.activities.DetailActivity;
 
 /**
  * A placeholder fragment containing a simple view.

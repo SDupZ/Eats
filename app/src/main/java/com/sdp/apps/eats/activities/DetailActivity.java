@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.sdp.apps.eats.R;
 import com.sdp.apps.eats.util.ObservableScrollable;
@@ -23,6 +24,7 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
     private static final int SCROLL_BUFFER = 5;
 
     private Toolbar toolbar;
+    private TextView toolbarTitle;
     private Drawable mActionBarBackgroundDrawable;
     private View mHeader;
     private int mInitialStatusBarColor;
@@ -72,6 +74,12 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
         statusBarHeight = getStatusBarHeight();
         state = STATE_ONSCREEN;
         previousScrollPosition = 0;
+
+        String title = ((TextView)findViewById(R.id.detail_fragment).findViewById(R.id.detail_view_short_desc)).getText().toString();
+        toolbar.setTitle("");
+        toolbarTitle = ((TextView)toolbar.findViewById(R.id.toolbar_title));
+        toolbarTitle.setText(title);
+        toolbarTitle.setAlpha(0);
     }
 
     public int getStatusBarHeight() {
@@ -98,11 +106,11 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
         previousScrollPosition = scrollPosition;
     }
 
-    private void updateToolBarPosition(float scrollRatio, int scrollPosition){
+    private void updateToolBarPosition(float scrollRatio, int scrollPosition) {
         Log.d("UNI EATS", "Scroll Ratio: " + scrollRatio + " ScrollPosition: " + scrollPosition + " " +
                 " ToolbarHeight: " + toolbar.getHeight() + " Header Height: " + mHeader.getHeight() + " ActionBarHeight " +
-        getSupportActionBar().getHeight() + " Status Bar Height: " + statusBarHeight + " STATE: " + state
-        + " Zero Position: " + zeroPosition + " Toolbar Position: " + toolbar.getTranslationY());
+                getSupportActionBar().getHeight() + " Status Bar Height: " + statusBarHeight + " STATE: " + state
+                + " Zero Position: " + zeroPosition + " Toolbar Position: " + toolbar.getTranslationY());
 
         if (scrollRatio == 1.0){
             //Scrolling up
@@ -147,6 +155,9 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
         int newAlpha = (int) (scrollRatio * 255);
 
         mActionBarBackgroundDrawable.setAlpha(newAlpha);
+        if (toolbarTitle != null)
+            toolbarTitle.setAlpha(newAlpha);
+
 
         int sdk = android.os.Build.VERSION.SDK_INT;
         if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
