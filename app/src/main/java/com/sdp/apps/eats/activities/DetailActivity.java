@@ -15,6 +15,12 @@ import com.sdp.apps.eats.util.SystemBarTintManager;
 
 
 public class DetailActivity extends ActionBarActivity implements OnScrollChangedCallback {
+    private static final int STATE_RETURNING = 0;
+    private static final int STATE_ONSCREEN = 1;
+    private static final int STATE_OFFSCREEN = 2;
+
+    //Scroll buffer until quick return comes into effect
+    private static final int SCROLL_BUFFER = 5;
 
     private Toolbar toolbar;
     private Drawable mActionBarBackgroundDrawable;
@@ -22,8 +28,11 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
     private int mInitialStatusBarColor;
     private int mFinalStatusBarColor;
     private SystemBarTintManager mStatusBarManager;
-
     private int statusBarHeight;
+
+    private int state;
+    private int previousScrollPosition;
+    private int zeroPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +70,8 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
         onScroll(-1, 0);
 
         statusBarHeight = getStatusBarHeight();
+        state = STATE_ONSCREEN;
+        previousScrollPosition = 0;
     }
 
     public int getStatusBarHeight() {
@@ -79,21 +90,49 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
         if (scrollPosition > 0 && headerHeight > 0)
             ratio = (float) Math.min(Math.max(scrollPosition, 0), headerHeight) / headerHeight;
 
-
         updateActionBarTransparency(ratio);
         updateStatusBarColor(ratio);
         updateParallaxEffect(scrollPosition);
         updateToolBarPosition(ratio, scrollPosition);
+
+        previousScrollPosition = scrollPosition;
     }
 
     private void updateToolBarPosition(float scrollRatio, int scrollPosition){
         Log.d("UNI EATS", "Scroll Ratio: " + scrollRatio + " ScrollPosition: " + scrollPosition + " " +
                 " ToolbarHeight: " + toolbar.getHeight() + " Header Height: " + mHeader.getHeight() + " ActionBarHeight " +
-        getSupportActionBar().getHeight() + "Status Bar Height: " + statusBarHeight);
+        getSupportActionBar().getHeight() + " Status Bar Height: " + statusBarHeight + " STATE: " + state
+        + " Zero Position: " + zeroPosition + " Toolbar Position: " + toolbar.getTranslationY());
+
         if (scrollRatio == 1.0){
-            toolbar.setTranslationY(-(scrollPosition - (mHeader.getHeight() - (toolbar.getHeight()+ statusBarHeight))));
+            //Scrolling up
+            if (scrollPosition < previousScrollPosition){
+                Log.d("UNI EATS", "UP");
+                if (state == STATE_OFFSCREEN){
+                    zeroPosition = scrollPosition - toolbar.getHeight();
+                    state = STATE_RETURNING;
+                }
+                if (zeroPosition - scrollPosition >= 0 ){
+                    toolbar.setTranslationY(0);
+                    state = STATE_ONSCREEN;
+                }else{
+                    toolbar.setTranslationY(zeroPosition - scrollPosition);
+                }
+            //Scrolling Down
+            }else if (scrollPosition > previousScrollPosition){
+                Log.d("UNI EATS", "DOWN");
+                if (state == STATE_ONSCREEN) {
+                    zeroPosition = scrollPosition;
+                    state = STATE_RETURNING;
+                }
+                toolbar.setTranslationY(zeroPosition - scrollPosition);
+                if (toolbar.getTranslationY() <= -toolbar.getHeight()){
+                    state = STATE_OFFSCREEN;
+                }
+            }
         }else{
             toolbar.setTranslationY(0);
+            state = STATE_ONSCREEN;
         }
     }
 
