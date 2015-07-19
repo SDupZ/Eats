@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:gravity="center"
 
-    android:background="@color/actionbar_color"
+    android:background="?attr/colorPrimary"
     tools:context=".ActivitySplash">
 
     <TextView
@@ -17,7 +17,7 @@
         android:padding="1dp"
         android:gravity="center"
         android:textSize="52dp"
-        android:textColor="@color/white"
+        android:textColor="@android:color/white"
         android:text="Uni Eats"/>
 
     <TextView
@@ -29,7 +29,7 @@
         android:padding="2dp"
         android:textSize="@dimen/abc_text_size_subtitle_material_toolbar"
         android:gravity="center_horizontal"
-        android:textColor="@color/color_splash_logo_filter"/>
+        android:textColor="@android:color/white"/>
 
     <ProgressBar
         android:id="@+id/splash_progress_bar"

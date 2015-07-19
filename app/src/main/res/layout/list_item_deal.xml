@@ -36,7 +36,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold"
             android:paddingLeft="5dp"
-            android:textColor="@color/white"
+            android:textColor="@android:color/white"
             android:layout_above="@+id/list_item_small_deal_description"
             tools:text="Business Name"/>
 
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:paddingLeft="5dp"
-            android:textColor="@color/white"
+            android:textColor="@android:color/white"
             tools:text="Small description"
             android:layout_alignParentBottom="true"/>
 
@@ -57,7 +57,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:textColor="@color/white"
+            android:textColor="@android:color/white"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             tools:text="$4.5" />

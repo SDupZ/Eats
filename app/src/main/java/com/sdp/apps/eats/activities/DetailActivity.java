@@ -43,16 +43,7 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         toolbar.setNavigationIcon(R.drawable.ic_action_back);
-
-        //int sdk = android.os.Build.VERSION.SDK_INT;
-
         toolbar.setBackgroundColor(getResources().getColor(R.color.ColorPrimary));
-
-        /*if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-            //toolbar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_trans_grad));
-        } else {
-            //toolbar.setBackground(getResources().getDrawable(R.drawable.toolbar_trans_grad));
-        }*/
 
         mActionBarBackgroundDrawable = toolbar.getBackground();
         setSupportActionBar(toolbar);
