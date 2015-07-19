@@ -2,6 +2,7 @@ package com.sdp.apps.eats.activities;
 
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -84,7 +85,13 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
 
     @Override
     public void onScroll(int l, int scrollPosition) {
-        int headerHeight = mHeader.getHeight() - (toolbar.getHeight() + statusBarHeight);
+        int headerHeight;
+        if (Build.VERSION.SDK_INT < 19){
+            headerHeight = mHeader.getHeight() - toolbar.getHeight();
+        }else{
+            headerHeight = mHeader.getHeight() - (toolbar.getHeight() + statusBarHeight);
+        }
+
         float ratio = 0;
         if (scrollPosition > 0 && headerHeight > 0)
             ratio = (float) Math.min(Math.max(scrollPosition, 0), headerHeight) / headerHeight;
