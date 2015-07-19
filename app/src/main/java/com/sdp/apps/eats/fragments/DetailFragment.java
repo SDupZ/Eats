@@ -4,9 +4,12 @@ package com.sdp.apps.eats.fragments;
  * Created by Simon on 14/03/2015.
  */
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
@@ -24,6 +27,8 @@ import com.sdp.apps.eats.Deal;
 import com.sdp.apps.eats.MyDeals;
 import com.sdp.apps.eats.R;
 
+import java.util.Locale;
+
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -40,7 +45,7 @@ public class DetailFragment extends Fragment {
             long dealId = intent.getLongExtra("deal_id", -1);
 
             if(dealId != -1) {
-                Deal deal = MyDeals.getDeals().getDealWithId(dealId, getActivity());
+                final Deal deal = MyDeals.getDeals().getDealWithId(dealId, getActivity());
                 if (deal !=null){
                     ImageView imageView = (ImageView) rootView.findViewById(R.id.detail_view_image);
                     ImageView mapView = (ImageView) rootView.findViewById(R.id.map_image);
@@ -72,9 +77,25 @@ public class DetailFragment extends Fragment {
                             "&markers=color:blue%7Clabel:A%7C"+deal.getLat()+","
                     +deal.getLongi();
                     ImageLoader.getInstance().displayImage(mapUrl, mapView);
+                    mapView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String uri = String.format(Locale.ENGLISH, "geo:%f,%f", deal.getLat(), deal.getLongi());
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                            try {
+                                getActivity().startActivity(intent);
+                            }catch (ActivityNotFoundException e){
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                builder.setTitle("Oops...")
+                                        .setMessage("Could not find a suitable map application.")
+                                        .setPositiveButton("Ok", null)
+                                        .show();
+                            }
+                        }
+                    });
 
                     Typeface font1 = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Regular.ttf");
-                    Typeface font2 = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Light.ttf");
+                Typeface font2 = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Light.ttf");
                     Typeface font3 = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Bold.ttf");
 
                     businessName.setTypeface(font2);
