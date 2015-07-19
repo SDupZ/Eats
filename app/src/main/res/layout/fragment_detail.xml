@@ -68,35 +68,61 @@
             android:background="#555555"/>
 
         <LinearLayout
+            android:id="@+id/voucher_view_group"
             android:layout_width="match_parent"
             android:layout_height="72dp"
             android:gravity="center"
             android:orientation="horizontal">
 
             <ImageView
+                android:tint="?attr/colorPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_ic_local_phone_black_48dp"/>
+                android:src="@drawable/ic_action_local_offer"/>
             <TextView
-                android:id="@+id/phone_number"
+                android:id="@+id/voucher_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="8dp"
-                tools:text="123 Queen street auckland"
+                tools:text="78dASFD"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#555555"/>
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/phone_number_view_group"
             android:layout_width="match_parent"
             android:layout_height="72dp"
             android:gravity="center"
             android:orientation="horizontal">
 
             <ImageView
+                android:tint="?attr/colorPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_ic_place_black_48dp"/>
+                android:src="@drawable/ic_action_call"/>
+            <TextView
+                android:id="@+id/phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                tools:text="09 123 123"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#555555"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/address_view_group"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:tint="?attr/colorPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_place"/>
             <TextView
                 android:id="@+id/location_address"
                 android:layout_width="match_parent"
@@ -107,6 +133,7 @@
                 android:textColor="#555555"/>
             </LinearLayout>
         </LinearLayout>
+
     <ImageView
         android:id="@+id/map_image"
         android:layout_width="match_parent"

@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +23,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.sdp.apps.eats.Deal;
 import com.sdp.apps.eats.MyDeals;
 import com.sdp.apps.eats.R;
-import com.sdp.apps.eats.activities.DetailActivity;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -50,6 +50,7 @@ public class DetailFragment extends Fragment {
                     TextView descView = (TextView) rootView.findViewById(R.id.detail_view_detail_desc);
                     TextView addressView  = (TextView) rootView.findViewById(R.id.location_address);
                     TextView phoneNumberView  = (TextView) rootView.findViewById(R.id.phone_number);
+                    TextView voucherView  = (TextView) rootView.findViewById(R.id.voucher_code);
 
                     if(!ImageLoader.getInstance().isInited()) {
                         ImageLoaderConfiguration config = new ImageLoaderConfiguration.
@@ -82,6 +83,7 @@ public class DetailFragment extends Fragment {
                     price.setTypeface(font3);
                     addressView.setTypeface(font2);
                     phoneNumberView.setTypeface(font2);
+                    voucherView.setTypeface(font2);
 
                     shortDescView.setText(deal.getShortDesc());
                     price.setText("$" + deal.getPrice());
@@ -89,13 +91,14 @@ public class DetailFragment extends Fragment {
                     descView.setText(deal.getLongDesc());
                     addressView.setText(deal.getAddress());
                     phoneNumberView.setText(deal.getPhoneNumber());
+                    voucherView.setText(deal.getVoucherCode());
 
-                    /*if (deal.getVoucherCode() != null && !deal.getVoucherCode().equals("")){
-                        voucherView.setText("Voucher code: " + deal.getVoucherCode());
-                        voucherView.setTypeface(font2);
-                    }else{
-                        voucherView.setVisibility(View.GONE);
-                    }*/
+                    if (deal.getPhoneNumber().equals(""))
+                        rootView.findViewById(R.id.phone_number_view_group).setVisibility(View.GONE);
+                    if (deal.getAddress().equals(""))
+                        rootView.findViewById(R.id.address_view_group).setVisibility(View.GONE);
+                    if (deal.getVoucherCode().equals(""))
+                        rootView.findViewById(R.id.voucher_view_group).setVisibility(View.GONE);
                 }
             }
         }

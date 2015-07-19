@@ -87,7 +87,6 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
     @Override
     public void onStart() {
         super.onStart();
-        Log.d("UNI EATS", "Start method called on fragment: " + priceFilter);
         if(!ImageLoader.getInstance().isInited()) {
             ImageLoaderConfiguration config = new ImageLoaderConfiguration.
                     Builder(getActivity()).build();

@@ -105,15 +105,9 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
     }
 
     private void updateToolBarPosition(float scrollRatio, int scrollPosition) {
-        Log.d("UNI EATS", "Scroll Ratio: " + scrollRatio + " ScrollPosition: " + scrollPosition + " " +
-                " ToolbarHeight: " + toolbar.getHeight() + " Header Height: " + mHeader.getHeight() + " ActionBarHeight " +
-                getSupportActionBar().getHeight() + " Status Bar Height: " + statusBarHeight + " STATE: " + state
-                + " Zero Position: " + zeroPosition + " Toolbar Position: " + toolbar.getTranslationY());
-
         if (scrollRatio == 1.0){
             //Scrolling up
             if (scrollPosition < previousScrollPosition){
-                Log.d("UNI EATS", "UP");
                 if (state == STATE_OFFSCREEN){
                     zeroPosition = scrollPosition - toolbar.getHeight();
                     state = STATE_RETURNING;
@@ -126,7 +120,6 @@ public class DetailActivity extends ActionBarActivity implements OnScrollChanged
                 }
             //Scrolling Down
             }else if (scrollPosition > previousScrollPosition){
-                Log.d("UNI EATS", "DOWN");
                 if (state == STATE_ONSCREEN) {
                     zeroPosition = scrollPosition;
                     state = STATE_RETURNING;
