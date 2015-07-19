@@ -147,11 +147,11 @@ public class DealsListFragment extends Fragment implements SwipeRefreshLayout.On
         List<Deal> showingDeals = new ArrayList<Deal>();
         for (Deal deal:allDeals){
             double price = Double.parseDouble(deal.getPrice());
-            if (priceFilter == 0 && price < (changeRangePrice + changeRangePrice * priceRangeOverlap)) {
-                showingDeals.add(deal);
-            }else if (priceFilter==1 && price > changeRangePrice){
-                showingDeals.add(deal);
-            }
+            //if (priceFilter == 0 && price < (changeRangePrice + changeRangePrice * priceRangeOverlap)) {
+            showingDeals.add(deal);
+            //}else if (priceFilter==1 && price > changeRangePrice){
+                //showingDeals.add(deal);
+            //}
             Collections.sort(showingDeals);
         }
         mAdapter.replaceAll(showingDeals);
