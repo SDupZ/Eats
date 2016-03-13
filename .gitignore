@@ -14,3 +14,6 @@ workspace.xml
 #.idea/workspace.xml - remove # and delete .idea if it better suit your needs.
 .gradle
 build/
+.idea/gradle.xml
+.idea/misc.xml
+app/app.iml

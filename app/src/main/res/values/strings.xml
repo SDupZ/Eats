@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Eats</string>
+    <string name="app_name">FAILURE</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_detail">Uni Eats</string>
     <string name="title_activity_list_deal">Today\'s Deals!</string>
